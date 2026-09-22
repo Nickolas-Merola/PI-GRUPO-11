@@ -1,84 +1,110 @@
 CREATE DATABASE maqtemp;
 USE maqtemp;
 
-SHOW TABLES;
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
 
--- TABELA DE CADASTRO DOS USUARIOS
-CREATE TABLE usuario(
-idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-NomeCompleto VARCHAR(100) NOT NULL,
-email VARCHAR(100) UNIQUE,
-cpf VARCHAR(11) NOT NULL UNIQUE,
-numero CHAR(13) NOT NULL UNIQUE,
-CONSTRAINT chkEmail CHECK (email LIKE '%@%'),
-senha VARCHAR(100) NOT NULL,
-statuss VARCHAR(10),
-CONSTRAINT chkStatus CHECK(statuss IN('Ativo', 'Inativo'))
+CREATE TABLE Locais (
+    idLocal INT PRIMARY KEY AUTO_INCREMENT,
+    nomeLocal VARCHAR(100) NOT NULL,
+    cidade VARCHAR(50),
+    cep CHAR(8),
+    responsavelLocal VARCHAR(50)
 );
 
-INSERT INTO usuario VALUES
-	(default,'Felipe Santos Silva', 'felipe.santos@outlook.com','12345678901', 'Ativo'),
-    (default,'Cecilia Fernandes Mendonça', 'cecilia.mendonca@outlook.com','12345678902', 'Ativo'),
-    (default, 'Michele Souza Barbosa', 'evangeline.barbosa@outlook.com','12345678903', 'Inativo'),
-    (default, 'Marcos Anderson Santiago', 'marcos.santiago@outlook.com','12345678904', 'Ativo');
+INSERT INTO Locais (nomeLocal, cidade, cep, responsavelLocal) VALUES
+('Fábrica Matriz', 'São Paulo', '01001000', 'Carlos Gerente');
 
-SELECT * FROM usuario;
-UPDATE usuario SET email = 'felipe.silva@outlook.com' WHERE idUsuario = 1;
-SELECT CONCAT('Cliente: ', NomeCompleto, ' | E-mail: ', email ) AS Contato FROM usuario;
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
 
+CREATE TABLE usuario(
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    NomeCompleto VARCHAR(100) NOT NULL,
+    idLocal INT, 
+    email VARCHAR(100) UNIQUE,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    numero VARCHAR(15) NOT NULL UNIQUE,
+    dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT chkEmail CHECK (email LIKE '%@%'),
+    senha VARCHAR(255) NOT NULL,
+    statuss VARCHAR(10) DEFAULT 'Ativo',
+    CONSTRAINT chkStatus CHECK(statuss IN('Ativo', 'Inativo')),
+    FOREIGN KEY (idLocal) REFERENCES Locais(idLocal)
+);
 
--- TABELA DE CADASTRO DOS MOTORES QUE SERÃO MONITORADOS
+INSERT INTO usuario (NomeCompleto, idLocal, email, cpf, numero, senha, statuss) VALUES
+('Felipe Santos Silva', 1, 'felipe.santos@outlook.com', '12345678901', '11999998888', 'senha123', 'Ativo'),
+('Cecilia Fernandes', 1, 'cecilia.mendonca@outlook.com', '12345678902', '11999997777', 'senha123', 'Ativo');
+
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
+
 CREATE TABLE motores(
-idMotor INT PRIMARY KEY AUTO_INCREMENT,
-modeloMotor VARCHAR(100),
-potencia DECIMAL(10,2), -- POTÊNCIA EM KW
-localizacao VARCHAR(100), -- SETOR QUE O MOTOR ESTÁ NA FABRICA
-statuss VARCHAR(10),
-CONSTRAINT chkStatusMotor CHECK (statuss IN ('Ativo', 'Inativo'))
+    idMotor INT PRIMARY KEY AUTO_INCREMENT,
+    idLocal INT, 
+    modeloMotor VARCHAR(100),
+    potencia DECIMAL(10,2), 
+    localizacao VARCHAR(100), 
+    statuss VARCHAR(10),
+    CONSTRAINT chkStatusMotor CHECK (statuss IN ('Ativo', 'Inativo')),
+    FOREIGN KEY (idLocal) REFERENCES Locais(idLocal)
 );
  
-INSERT INTO motores VALUES
-	(default, 'WEG W22', 15.00, 'Produção de tintas', 'Ativo'),
-    (default, 'WEG W22 Plus', 30.00, 'Mistura de tintas', 'Inativo'),
-    (default, 'WEG 22', 15.00, 'Transferência de tintas', 'Ativo');
+INSERT INTO motores (idLocal, modeloMotor, potencia, localizacao, statuss) VALUES
+(1, 'WEG W22', 15.00, 'Produção de tintas', 'Ativo'),
+(1, 'WEG W22 Plus', 30.00, 'Mistura de tintas', 'Inativo'),
+(1, 'WEG 22', 15.00, 'Transferência de tintas', 'Ativo');
     
-SELECT * FROM motores;
-UPDATE motores SET statuss = 'Inativo' WHERE idMotor = 3;
-SELECT CONCAT('Motor: ', modeloMotor, ' | Potência: ', potencia, ' KW | Status: ', statuss) AS informaçâo FROM motores;
+-- -------------------------------------------------------------------------------------------------------------------------------------------------
 
-
--- TABELA PARA ARMAZENAR A TEMPERATURA RECEBIDA
 CREATE TABLE leituraTemperatura(
-idLeitura INT PRIMARY KEY AUTO_INCREMENT,
-modeloMotor VARCHAR(100), -- AQUI O CERTO SERIA SER OS MESMOS MODELO DA TABELA ANTERIOR
-temperatura DECIMAL (5,2),
-dtLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
-situacao VARCHAR(10),
-CONSTRAINT chkSituacao CHECK (situacao IN('Normal', 'Atenção', 'Alerta'))
+    idLeitura INT PRIMARY KEY AUTO_INCREMENT,
+    idMotor INT,
+    temperatura DECIMAL (5,2),
+    dtLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
+    situacao VARCHAR(10),
+    CONSTRAINT chkSituacao CHECK (situacao IN('Normal', 'Atenção', 'Alerta')),
+    FOREIGN KEY (idMotor) REFERENCES motores(idMotor)
 );
 
-INSERT INTO leituraTemperatura (modeloMotor, temperatura, situacao) VALUES
-	('WEG W22', 62.50, 'Normal'),
-    ('WEG W22 PLUS',85.50, 'Atenção'),
-    ('WEG 22', 92.90, 'Alerta');
+INSERT INTO leituraTemperatura (idMotor, temperatura, situacao) VALUES
+(1, 62.50, 'Normal'),
+(2, 85.50, 'Atenção'),
+(3, 92.90, 'Alerta');
     
-SELECT CONCAT('Motor: ', modeloMotor, ' | Temperatura: ', temperatura, ' ºC') AS leitura FROM leituraTemperatura;
+-- -------------------------------------------------------------------------------------------------------------------------------------------------
 
-
--- 	TABELAS PARA HISTÓRICO DE ALERTAS
 CREATE TABLE alertas(
-idAlerta INT PRIMARY KEY AUTO_INCREMENT,
-modeloMotor VARCHAR(100),
-temperatura DECIMAL(5,2),
-dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP,
-nivel VARCHAR(10),
-CONSTRAINT chkNivel CHECK (nivel IN('Atenção','Alerta')),
-statuss VARCHAR(10),
-CONSTRAINT chkStatusAlerta CHECK (statuss IN ('Pendente', 'Resolvido')) 
-);
-
-INSERT INTO alertas (modeloMotor, temperatura, nivel, statuss) VALUES
-	('WEG 22', 92.90, 'Alerta', 'Resolvido'),
-    ('WEG W22', 85.50,'Atenção', 'Pendente');
+    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    idLeitura INT,
+    idMotor INT,
+    idLocal INT, 
+    idUsuarioResponsavel INT, 
+    dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP,
+    nivel VARCHAR(10),
+    dataResolucao DATETIME,
+    observacao VARCHAR(255),
+    CONSTRAINT chkNivel CHECK (nivel IN('Atenção','Alerta')),
+    statuss VARCHAR(10),
+    CONSTRAINT chkStatusAlerta CHECK (statuss IN ('Pendente', 'Resolvido')),
     
-SELECT CONCAT('Motor: ', modeloMotor, ' | Temperatura: ', temperatura, ' ºC',' | Nível: ', nivel, ' | Status: ', statuss) AS alerta FROM alertas;
+    FOREIGN KEY (idLeitura) REFERENCES leituraTemperatura(idLeitura),
+    FOREIGN KEY (idMotor) REFERENCES motores(idMotor),
+    FOREIGN KEY (idUsuarioResponsavel) REFERENCES usuario(idUsuario), 
+    FOREIGN KEY (idLocal) REFERENCES Locais(idLocal)
+);
+INSERT INTO alertas (idLeitura, idMotor, idLocal, nivel, statuss) VALUES
+(3, 3, 1, 'Alerta', 'Resolvido'),
+(2, 2, 1, 'Atenção', 'Pendente');
+
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT 
+    a.idAlerta,
+    l.nomeLocal,
+    m.modeloMotor, 
+    lt.temperatura, 
+    a.nivel, 
+    a.statuss AS status_alerta
+FROM alertas AS a
+JOIN motores AS m ON a.idMotor = m.idMotor
+JOIN leituraTemperatura AS lt ON a.idLeitura = lt.idLeitura
+JOIN Locais AS l ON a.idLocal = l.idLocal;
