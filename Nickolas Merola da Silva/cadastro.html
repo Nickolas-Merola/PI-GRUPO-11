@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <label for="ipt_NomeCompleto">Nome Completo:</label> <br>
+    <input type="text" id="ipt_NomeCompleto" placeholder="Nome"> <br>
+
+    <label for="ipt_email">Email:</label> <br>
+    <input type="text" id="ipt_email" placeholder="Email"><br>
+
+    <label for="ipt_cpf">CPF:</label> <br>
+    <input type="number" id="ipt_cpf" placeholder="CPF"><br>
+
+    <label for="ipt_numerotel">Número de telefone:</label> <br>
+    <input type="number" id="ipt_numerotel" placeholder="Número"><br>
+
+    <label for="ipt_senha">Senha:</label> <br>
+    <input type="text" oninput="testarSenha()" id="ipt_senha" placeholder="Senha:"><br>
+    <div id="caracteres"><b></b></div> 
+    <div id="maiuscula"><b></b></div> 
+    <div id="minuscula"><b></b></div> 
+    <div id="especial"><b></b></div> 
+
+    <label for="ipt_confirmsenha">Confirmar Senha:</label> <br>
+    <input type="text" id="ipt_confirmsenha" oninput="confirmsenha()" placeholder="Confirmar Senha"><br>
+    <div id="exibir_confirm_senha"></div>
+
+    <button onclick="cadastrar()">Cadastrar</button>
+    <div id="cadastro"></div>
+</body>
+  <script>
+        function testarSenha(){
+            let senha = ipt_senha.value
+            let caracteresEspeciais = ["@", "#", "$", "%", "&", "*", "!", "?", "-", "_", "+", "=", ".", ",", ";", ":"]
+            if (senha.length >= 8){
+                caracteres.innerHTML = `✅Minimo de 8 Caracteres`
+            } else {
+                caracteres.innerHTML = `❌Minimo de 8 Caracteres`
+            }
+            if (senha.toUpperCase()!=senha){
+                maiuscula.innerHTML = `✅Pelo menos uma letra minúscula (A/Z)`
+            } else {
+                maiuscula.innerHTML = `❌Pelo menos uma letra minúscula (A/Z)`
+            }
+            if (senha.toLowerCase()!=senha){
+                minuscula.innerHTML = `✅Pelo menos uma letra maiúscula(a/z)`
+            } else {
+                minuscula.innerHTML = `❌Pelo menos uma letra maiúscula(a/z)`
+            }
+            let temEspecial = 0
+            for (let i = 0; i < caracteresEspeciais.length; i++) {
+                    if (senha.includes(caracteresEspeciais[i])) {
+                    temEspecial = 1
+                    break
+                }
+            }
+            if (temEspecial==1){
+                especial.innerHTML = `✅Pelo menos um caracterer especial (!@$%...)`
+            } else {
+              especial.innerHTML = `❌Pelo menos um caracterer especial (!@$%...)`  
+            }
+        }
+
+        function confirmsenha(){
+            let senha = ipt_senha.value
+            let verificar_senha = ipt_confirmsenha.value
+            if (senha != verificar_senha){
+                exibir_confirm_senha.innerHTML = `❌Senha diferente da senha digitada anteriormente! <br>Por favor verifique sua senha`
+            } else {
+                exibir_confirm_senha.innerHTML = `✅Senha valida!`
+            }
+        }
+
+        function cadastrar(){
+            let nome = ipt_NomeCompleto.value
+            let email = ipt_email.value
+            let cpf = ipt_cpf.value
+            let telefone = ipt_numerotel.value
+            
+            let senhaTamanhoOK = caracteres.innerHTML.includes('✅');
+            let senhaMaiusculaOK = maiuscula.innerHTML.includes('✅');
+            let senhaMinusculaOK = minuscula.innerHTML.includes('✅');
+            let senhaEspecialOK = especial.innerHTML.includes('✅');
+            let confirmaSenhaOK = exibir_confirm_senha.innerHTML.includes('✅');
+
+            if(nome != '' && 
+            cpf.length == 11 && 
+            telefone.length == 11 &&
+            email.includes('@') && (email.endsWith('.com') || email.endsWith('.br') || email.endsWith('school')) && 
+            senhaTamanhoOK && senhaMaiusculaOK && senhaMinusculaOK && senhaEspecialOK && confirmaSenhaOK){
+            cadastro.innerHTML = `✅Cadastro Concluido com sucesso!`
+            } else {
+                cadastro.innerHTML = `❌ Verifique os campos ou preencha tudo corretamente.`;
+            }
+        }
+
+  </script>
+</html>
+<!--❌✅ -->

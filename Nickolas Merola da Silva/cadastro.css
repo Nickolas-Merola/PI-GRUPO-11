@@ -1,0 +1,43 @@
+body {
+    margin: 0%; /* Tira aquelas bordinhas brancas irritantes do navegador */
+    height: 100vh;
+}
+.divisao_tela {
+    display: flex; /*Isso deixa a tela dividida*/
+    flex-direction: row;/* garante que fique lado a lado */
+    height: 100%; /* Ocupa 100% do espaço do body */
+}
+.esquerda {
+    background-color: #0B132B;
+    color: white;
+    padding: 40px;
+    width: 40%;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.direita {
+    background-color: white;
+    padding: 40px;
+    width: 60%;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+input {
+  outline: none;
+  border-color: transparent;
+  width: 159px;
+  font-size: 18px;
+}
+label {
+    font-size: 20px;
+}
+button {
+    background-color: #E87722; 
+    color: white;
+    border: none; 
+    padding: 15px 32px; /* Espaço interno: 15px em cima/baixo, 32px nas laterais */
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Franklin Gothic Medium", Arial, sans-serif;
+    border-radius: 8px; /* Arredonda as pontas do botão 50px deixa pilula e 0px deixa quadrado*/
+    cursor: pointer; /* Muda o ponteiro do mouse para a "mãozinha" */
+    width: 100%; /* Faz o botão ocupar toda a largura disponível (opcional) */
+}
