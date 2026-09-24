@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Título do Documento</title>
+    <link rel="stylesheet" href="cadastro.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+  <div class="divisao_tela">
+    <div class="esquerda">
+        <h1><b style="color: #E87722;">Maq</span><span style="color: #FFFFFF;">Temp</b></h1>
+        <span style="display: inline-block; color: #E87722; margin-top: 150px;">Tecnologia IoT para industria</span> <br>
+        <b style="font-size: 40px;">Crie sua conta e proteja seus ativos industriais hoje</b> <br>
+        <span style="color: #94A3B8; font-size: 18px;">Evite paradas não planejadas, proteja seus operadores e tome decisões baseadas em dados em tempo real antes que a falha aconteça.</span> <br>
+        <b style="display: inline-block; margin-top: 40px;color: #E87722; font-size: 25px;">24/7 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMenos de 2s</b> <br>
+        <span style="color: #94A3B8; font-size: 13px;">Monitoramento Ativo &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLatência de Alerta</span> <br> 
+        <!-- &nbsp serve para dar um espaço la na pagina real -->
+        <span style="display: inline-block; color: #E87722; margin-top: 330px;font-size: 13;">SPTech — São Paulo Tech School</span> <br>
+        <span style="color: #94A3B8;font-size: 13;">Grupo 11     — Projeto de PI 2026</span>
+    </div>
+    <div class="direita">
+        <h1><b style="color: #0B132B">Comece agora mesmo</b></h1>
+        <h3><span style="color: #64748B">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35.</span></h3>
+
+        <div style="display: inline-block; margin-top: 110px;"></div>
+        <label for="ipt_NomeCompleto" >Nome Completo:</label> <br>
+        <input type="text" id="ipt_NomeCompleto" placeholder="Nome"> <br>
+
+        <label for="ipt_email" >Email:</label> <br>
+        <input type="text" id="ipt_email" placeholder="Email"><br>
+
+        <label for="ipt_cpf" >CPF:</label> <br>
+        <input type="number" id="ipt_cpf" placeholder="CPF"><br>
+
+        <label for="ipt_numerotel" >Número de telefone:</label> <br>
+        <input type="number" id="ipt_numerotel" placeholder="Número"><br>
+
+        <label for="ipt_senha" >Senha:</label> <br>
+        <input type="text" oninput="testarSenha()" id="ipt_senha" placeholder="Senha:"><br>
+        <div id="caracteres"><b></b></div> 
+        <div id="maiuscula"><b></b></div> 
+        <div id="minuscula"><b></b></div> 
+        <div id="especial"><b></b></div> 
+
+        <label for="ipt_confirmsenha" >Confirmar Senha:</label> <br>
+        <input type="text" id="ipt_confirmsenha" oninput="confirmsenha()" placeholder="Confirmar Senha"><br>
+        <div id="exibir_confirm_senha"></div>
+
+        <button onclick="cadastrar()">Cadastrar</button>
+        <div id="cadastro"></div>
+        </div>
+    </div>
+  </div>
+</body>
+  <script>
+    
+  </script>
+</html>
+<!--  -->
