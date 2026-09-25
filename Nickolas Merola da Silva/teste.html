@@ -26,26 +26,26 @@
 
         <div style="display: inline-block; margin-top: 110px;"></div>
         <label for="ipt_NomeCompleto" >Nome Completo:</label> <br>
-        <input type="text" id="ipt_NomeCompleto" placeholder="Nome"> <br>
+        <span class="material-symbols-outlined">person</span><input type="text" id="ipt_NomeCompleto" placeholder="Nome"> <br>
 
         <label for="ipt_email" >Email:</label> <br>
-        <input type="text" id="ipt_email" placeholder="Email"><br>
+        <span class="material-symbols-outlined">mail</span><input type="text" id="ipt_email" placeholder="Email"><br>
 
         <label for="ipt_cpf" >CPF:</label> <br>
-        <input type="number" id="ipt_cpf" placeholder="CPF"><br>
+        <span class="material-symbols-outlined">badge</span><input type="number" id="ipt_cpf" placeholder="CPF"><br>
 
         <label for="ipt_numerotel" >Número de telefone:</label> <br>
-        <input type="number" id="ipt_numerotel" placeholder="Número"><br>
+        <span class="material-symbols-outlined">call</span><input type="number" id="ipt_numerotel" placeholder="Número"><br>
 
         <label for="ipt_senha" >Senha:</label> <br>
-        <input type="text" oninput="testarSenha()" id="ipt_senha" placeholder="Senha:"><br>
+        <span class="material-symbols-outlined">lock</span><input type="text" oninput="testarSenha()" id="ipt_senha" placeholder="Senha:"><br>
         <div id="caracteres"><b></b></div> 
         <div id="maiuscula"><b></b></div> 
         <div id="minuscula"><b></b></div> 
         <div id="especial"><b></b></div> 
 
         <label for="ipt_confirmsenha" >Confirmar Senha:</label> <br>
-        <input type="text" id="ipt_confirmsenha" oninput="confirmsenha()" placeholder="Confirmar Senha"><br>
+        <span class="material-symbols-outlined">lock</span><input type="text" id="ipt_confirmsenha" oninput="confirmsenha()" placeholder="Confirmar Senha"><br>
         <div id="exibir_confirm_senha"></div>
 
         <button onclick="cadastrar()">Cadastrar</button>
