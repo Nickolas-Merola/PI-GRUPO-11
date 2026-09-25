@@ -16,6 +16,26 @@ INSERT INTO Locais (nomeLocal, cidade, cep, responsavelLocal) VALUES
 
 -- ---------------------------------------------------------------------------------------------------------------------------------------------------
 
+CREATE TABLE empresas (
+    idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    idLocal INT,
+    cnpj CHAR(14) UNIQUE NOT NULL,
+    data_cadastro DATE DEFAULT (CURDATE()),
+    idUsuario INT,
+    status_contrato VARCHAR(10) NOT NULL,
+    CONSTRAINT checkContrato CHECK(status_contrato IN('Ativo','Cancelado')),
+    tipo_contrato VARCHAR(20),
+    data_pagamento DATE,
+    status_pagamento TINYINT NOT NULL,
+    CONSTRAINT chkPagamento CHECK(status_pagamento IN(0, 1)),
+    FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (idLocal) REFERENCES Locais(idLocal),
+    CONSTRAINT chkContrato CHECK(tipo_contrato IN('Semestral','Anual'))
+);
+
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
+
 CREATE TABLE usuario(
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     NomeCompleto VARCHAR(100) NOT NULL,
