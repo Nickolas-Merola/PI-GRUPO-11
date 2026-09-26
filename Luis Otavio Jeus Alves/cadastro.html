@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cadastro</h1>
+    <label for="input_nome">Nome Completo:</label> <br>
+    <input type="text" id="input_nome" placeholder="Nome"> <br>
+
+    <label for="input_email">Email:</label> <br>
+    <input type="text" id="input_email" placeholder="Email"><br>
+
+    <label for="input_cpf">CPF:</label> <br>
+    <input type="number" id="input_cpf" placeholder="CPF"><br>
+
+    <label for="input_telefone">Número de telefone:</label> <br>
+    <input type="number" id="input_telefone" placeholder="Telefone"><br>
+
+    <label for="input_senha">Senha:</label> <br>
+    <input type="text" oninput="validarSenha()" id="input_senha" placeholder="Senha:"><br>
+
+    <div id="div_quantosCaracteres"></div>
+    <div id="div_letraMaiuscula"></div>
+</body>
+</html>
+
+<script>
+    function validarSenha() {
+        let nomeCompleto = input_nome.value;
+        let email = input_email.value;
+        let cpf = input_cpf.value;
+        let telefone = input_telefone.value;
+        let senha = input_senha.value;
+
+        if (senha.length >= 8) {
+            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ✅`
+        } else {
+            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ❌`
+        }
+
+        if (senha != senha.toLowerCase()) {
+            div_letraMaiuscula.innerHTML = `Contém letra maíuscula ✅`
+        } else {
+            div_letraMaiuscula.innerHTML = `Contém letra maíuscula ❌`
+        }
+    }
+</script>
