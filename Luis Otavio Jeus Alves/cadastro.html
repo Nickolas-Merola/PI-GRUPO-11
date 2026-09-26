@@ -24,6 +24,8 @@
 
     <div id="div_quantosCaracteres"></div>
     <div id="div_letraMaiuscula"></div>
+    <div id="div_letraMinuscula"></div>
+    <div id="div_charEspecial"></div>
 </body>
 </html>
 
@@ -34,17 +36,40 @@
         let cpf = input_cpf.value;
         let telefone = input_telefone.value;
         let senha = input_senha.value;
+        let charEspeciais = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";",
+        ":", "'", ",", ".", "<", ">", "/", "?", "`", "~"];
+        let temCharEspecial = false;
+
 
         if (senha.length >= 8) {
-            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ✅`
+            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ✅`;
         } else {
-            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ❌`
+            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ❌`;
         }
 
         if (senha != senha.toLowerCase()) {
-            div_letraMaiuscula.innerHTML = `Contém letra maíuscula ✅`
+            div_letraMaiuscula.innerHTML = `Contém letra maiúscula ✅`;
         } else {
-            div_letraMaiuscula.innerHTML = `Contém letra maíuscula ❌`
+            div_letraMaiuscula.innerHTML = `Contém letra maiúscula ❌`;
         }
+
+        if (senha != senha.toUpperCase()) {
+            div_letraMinuscula.innerHTML = `Contém letra minúscula ✅`;
+        } else {
+            div_letraMinuscula.innerHTML = `Contém letra minúscula ❌`;
+        }
+
+        for (let i = 0; i < charEspeciais.length; i++) {
+            if (senha.includes(charEspeciais[i])) {
+                temCharEspecial = true;
+            }
+        }
+
+        if (temCharEspecial) {
+            div_charEspecial.innerHTML = `Contém caractere especial ✅`;
+        } else {
+            div_charEspecial.innerHTML = `Contém caractere especial ❌`;
+        }
+
     }
 </script>
