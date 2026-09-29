@@ -3,59 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>Cadastro</h1>
-    <label for="input_nome">Nome Completo:</label> <br>
-    <input type="text" id="input_nome" placeholder="Nome"> <br>
+    <div class="pagina-inteira">
+        <div class="lado-esquerdo">
 
-    <label for="input_email">Email:</label> <br>
-    <input type="text" id="input_email" placeholder="Email"><br>
+        </div>
+    
+        <div class="lado-direito">
+            
+            <div class="campos">
+                <h1 class="titulo">Comece agora mesmo</h1>
+                <p class="p1">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35</p>
+                <label for="input_nome">Nome Completo</label> <br>
+                <input type="text" id="input_nome" placeholder="Digite seu nome completo"> <br>
 
-    <label for="input_cpf">CPF:</label> <br>
-    <input type="number" id="input_cpf" placeholder="CPF"><br>
+                <label for="input_email">E-mail corporativo</label> <br>
+                <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
+    
+                <label for="input_senha">Crie uma senha</label> <br>
+                <input type="text" oninput="validarSenha()" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
 
-    <label for="input_telefone">Número de telefone:</label> <br>
-    <input type="number" id="input_telefone" placeholder="Telefone"><br>
+                <label for="input_confirmarSenha">Confirme sua senha</label> <br>
+                <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
 
-    <label for="input_senha">Senha:</label> <br>
-    <input type="text" oninput="validarSenha()" id="input_senha" placeholder="Senha:"><br>
+                <button onclick="cadastrar()" class="botao">Criar minha conta</button>
+            </div>
+            
 
-    <div id="div_quantosCaracteres"></div>
-    <div id="div_letraMaiuscula"></div>
-    <div id="div_letraMinuscula"></div>
-    <div id="div_charEspecial"></div>
+            
+            <div id="div_quantosCaracteres"></div>
+            <div id="div_letraMaiuscula"></div>
+            <div id="div_letraMinuscula"></div>
+            <div id="div_charEspecial"></div>
+        </div>
+    </div>
 </body>
 </html>
 
 <script>
     function validarSenha() {
-        let nomeCompleto = input_nome.value;
-        let cpf = input_cpf.value;
-        let telefone = input_telefone.value;
         let senha = input_senha.value;
         let charEspeciais = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";",
         ":", "'", ",", ".", "<", ">", "/", "?", "`", "~"];
         let temCharEspecial = false;
+        let temCaracteres = false;
+        let temLetraMinuscula = false;
+        let temLetraMaiuscula = false;
+        let senhaTemSeguranca = false;
 
 
         if (senha.length >= 8) {
             div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ✅`;
+            temCaracteres = true;
         } else {
             div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ❌`;
+            temCaracteres = false;
         }
 
         if (senha != senha.toLowerCase()) {
             div_letraMaiuscula.innerHTML = `Contém letra maiúscula ✅`;
+            temLetraMaiuscula = true;
         } else {
             div_letraMaiuscula.innerHTML = `Contém letra maiúscula ❌`;
+            temLetraMaiuscula = false;
         }
 
         if (senha != senha.toUpperCase()) {
             div_letraMinuscula.innerHTML = `Contém letra minúscula ✅`;
+            temLetraMinuscula = true;
         } else {
             div_letraMinuscula.innerHTML = `Contém letra minúscula ❌`;
+            temLetraMinuscula = false;
         }
 
         for (let i = 0; i < charEspeciais.length; i++) {
@@ -70,25 +91,43 @@
             div_charEspecial.innerHTML = `Contém caractere especial ❌`;
         }
 
+        if (temCharEspecial && temCaracteres && temLetraMaiuscula && temLetraMinuscula) {
+            senhaTemSeguranca == true;
+        } else {
+            senhaTemSeguranca == false;
+        }
+
     }
 
     function validarEmail() {
         let email = input_email.value;
 
-        if(email == "") {
-            alert("O campo email não pode ser vazio");
-        } else {
-            if(!email.includes('@'))  {
-                alert("O email precisa conter '@'")
-            }
+        if(!email.includes('@'))  {
+            alert("O email precisa conter '@'")
+        }
 
-            if( !(email.endsWith('.com') || email.endsWith('.com.br')) ) {
-                alert("Email inválido!");
-            }
+        if( !(email.endsWith('.com') || email.endsWith('.com.br')) ) {
+            alert("Email inválido!");
+        }
 
             if(email.indexOf('@') > email.indexOf('.com')) {
-                alert("O '@' precisa vir antes do '.com'");
-            }
+            alert("O '@' precisa vir antes do '.com'");
         }
     }
+
+    function cadastrar() {
+        let nomeCompleto = input_nome.value;
+        let senha = input_senha.value;
+        let confirmacaoSenha = input_confirmarSenha.value;
+        let email = input_email.value;
+
+        if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "") {
+            alert("Todos os campos precisam ser preenchidos!")
+        } else {
+
+            validarEmail();
+            }
+        
+    }
+    
 </script>
