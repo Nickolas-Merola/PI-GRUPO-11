@@ -32,7 +32,6 @@
 <script>
     function validarSenha() {
         let nomeCompleto = input_nome.value;
-        let email = input_email.value;
         let cpf = input_cpf.value;
         let telefone = input_telefone.value;
         let senha = input_senha.value;
@@ -71,5 +70,25 @@
             div_charEspecial.innerHTML = `Contém caractere especial ❌`;
         }
 
+    }
+
+    function validarEmail() {
+        let email = input_email.value;
+
+        if(email == "") {
+            alert("O campo email não pode ser vazio");
+        } else {
+            if(!email.includes('@'))  {
+                alert("O email precisa conter '@'")
+            }
+
+            if( !(email.endsWith('.com') || email.endsWith('.com.br')) ) {
+                alert("Email inválido!");
+            }
+
+            if(email.indexOf('@') > email.indexOf('.com')) {
+                alert("O '@' precisa vir antes do '.com'");
+            }
+        }
     }
 </script>
