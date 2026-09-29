@@ -3,27 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>Cadastro</h1>
-    <label for="input_nome">Nome Completo</label> <br>
-    <input type="text" id="input_nome" placeholder="Digite seu nome completo"> <br>
+    <div class="pagina-inteira">
+        <div class="lado-esquerdo">
 
-    <label for="input_email">E-mail corporativo</label> <br>
-    <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
+        </div>
     
-    <label for="input_senha">Crie uma senha</label> <br>
-    <input type="text" oninput="validarSenha()" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
+        <div class="lado-direito">
+            
+            <div class="campos">
+                <h1 class="titulo">Comece agora mesmo</h1>
+                <p class="p1">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35</p>
+                <label for="input_nome">Nome Completo</label> <br>
+                <input type="text" id="input_nome" placeholder="Digite seu nome completo"> <br>
 
-    <label for="input_senha">Confirme sua senha</label> <br>
-    <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
+                <label for="input_email">E-mail corporativo</label> <br>
+                <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
+    
+                <label for="input_senha">Crie uma senha</label> <br>
+                <input type="text" oninput="validarSenha()" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
 
-    <button onclick="cadastrar()">Criar minha conta</button>
-    <div id="div_quantosCaracteres"></div>
-    <div id="div_letraMaiuscula"></div>
-    <div id="div_letraMinuscula"></div>
-    <div id="div_charEspecial"></div>
+                <label for="input_confirmarSenha">Confirme sua senha</label> <br>
+                <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
+
+                <button onclick="cadastrar()" class="botao">Criar minha conta</button>
+            </div>
+            
+
+            
+            <div id="div_quantosCaracteres"></div>
+            <div id="div_letraMaiuscula"></div>
+            <div id="div_letraMinuscula"></div>
+            <div id="div_charEspecial"></div>
+        </div>
+    </div>
 </body>
 </html>
 

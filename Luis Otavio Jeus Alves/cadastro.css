@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+}
+.pagina-inteira {
+    display: flex;
+    min-height: 100vh;
+}
+
+.lado-esquerdo {
+    width: 45%;
+    background-image: url(./images/background-img.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.lado-direito {
+    /* Lembrar de testar se o flex: 1 é opcional ou não*/
+    flex: 1;
+    justify-items: center;
+}
+
+.botao {
+    display: flex;
+    justify-items: center;
+    background-color: #E87722;
+    color: white;
+    width: 760px;
+    height: 35px; 
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    width: 750px;
+    height: 35px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px;
+    border-color: #E2E8F0;
+    border-style: solid;
+}
+.campos {
+    padding-top: 50px;
+}
+
+.titulo {
+    font-weight: 800;
+    font-size: 40px;
+    color: #0B132B;
+    margin-bottom: 0px;
+}
+
+label {
+    font-weight: 600;
+    color: #0B132B;
+}
+
+.p1 {
+    color: #64748B;
+    font-size: 16px;
+    margin-top: 10px;
+    padding-bottom: 60px;
+}
