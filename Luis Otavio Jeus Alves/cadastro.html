@@ -10,16 +10,16 @@
     <label for="input_nome">Nome Completo</label> <br>
     <input type="text" id="input_nome" placeholder="Digite seu nome completo"> <br>
 
-    <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
     <label for="input_email">E-mail corporativo</label> <br>
+    <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
     
     <label for="input_senha">Crie uma senha</label> <br>
     <input type="text" oninput="validarSenha()" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
 
     <label for="input_senha">Confirme sua senha</label> <br>
-    <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada:"><br>
+    <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
 
-    <button onclick="cadastrar()">Cadastrar</button>
+    <button onclick="cadastrar()">Criar minha conta</button>
     <div id="div_quantosCaracteres"></div>
     <div id="div_letraMaiuscula"></div>
     <div id="div_letraMinuscula"></div>
@@ -99,19 +99,19 @@
         }
     }
 
-        function cadastrar() {
-            let nomeCompleto = input_nome.value;
-            let senha = input_senha.value;
-            let confirmacaoSenha = input
-            let email = input_email.value;
+    function cadastrar() {
+        let nomeCompleto = input_nome.value;
+        let senha = input_senha.value;
+        let confirmacaoSenha = input_confirmarSenha.value;
+        let email = input_email.value;
 
-            if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "") {
-                alert("Todos os campos precisam ser preenchidos!")
-            } else {
+        if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "") {
+            alert("Todos os campos precisam ser preenchidos!")
+        } else {
 
-                validarEmail();
+            validarEmail();
             }
-            
-        }
+        
+    }
     
 </script>
