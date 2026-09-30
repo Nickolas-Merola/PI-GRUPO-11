@@ -22,7 +22,7 @@ CREATE TABLE empresas (
     idLocal INT,
     cnpj CHAR(14) UNIQUE NOT NULL,
     data_cadastro DATE DEFAULT (CURDATE()),
-    idUsuario INT,
+    idUsuario INT UNIQUE,
     status_contrato VARCHAR(10) NOT NULL,
     CONSTRAINT checkContrato CHECK(status_contrato IN('Ativo','Cancelado')),
     tipo_contrato VARCHAR(20),
@@ -62,7 +62,6 @@ CREATE TABLE motores(
     idLocal INT, 
     modeloMotor VARCHAR(100),
     potencia DECIMAL(10,2), 
-    localizacao VARCHAR(100), 
     statuss VARCHAR(10),
     CONSTRAINT chkStatusMotor CHECK (statuss IN ('Ativo', 'Inativo')),
     FOREIGN KEY (idLocal) REFERENCES Locais(idLocal)
@@ -95,8 +94,6 @@ INSERT INTO leituraTemperatura (idMotor, temperatura, situacao) VALUES
 CREATE TABLE alertas(
     idAlerta INT PRIMARY KEY AUTO_INCREMENT,
     idLeitura INT,
-    idMotor INT,
-    idLocal INT, 
     idUsuarioResponsavel INT, 
     dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP,
     nivel VARCHAR(10),
@@ -107,9 +104,7 @@ CREATE TABLE alertas(
     CONSTRAINT chkStatusAlerta CHECK (statuss IN ('Pendente', 'Resolvido')),
     
     FOREIGN KEY (idLeitura) REFERENCES leituraTemperatura(idLeitura),
-    FOREIGN KEY (idMotor) REFERENCES motores(idMotor),
-    FOREIGN KEY (idUsuarioResponsavel) REFERENCES usuario(idUsuario), 
-    FOREIGN KEY (idLocal) REFERENCES Locais(idLocal)
+    FOREIGN KEY (idUsuarioResponsavel) REFERENCES usuario(idUsuario)
 );
 INSERT INTO alertas (idLeitura, idMotor, idLocal, nivel, statuss) VALUES
 (3, 3, 1, 'Alerta', 'Resolvido'),
