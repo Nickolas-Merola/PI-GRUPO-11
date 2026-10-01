@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de cadastro</title>
+</head>
+<body>
+    <h2>Comece agora mesmo<h2>   
+    <label>Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35.</label>
+
+    Nome completo
+    <input placeholder="Digite seu nome completo" type="text" id="ipt_nome"><br>
+
+    E-mail corporativo 
+    <input placeholder="exemplo@suaempresa.com.br" type="text" id="ipt_email">
+
+    Crie uma senha 
+    <input placeholder="No minimo 8 caracteres" type="text" id="ipt_senha"> <br>
+
+    Confirme sua senha 
+    <input placeholder="Repita a senha criada" type="text" id="ipt_confirmacao"><br>
+
+    <!-- botao de concordancia dos termos -->
+
+    <button onclick="Criar()">Criar minha conta</button>
+</body>
+</html>
+<script>
+    function criar(){
+        let nome = ipt_nome.value
+        let email = ipt_email.value
+        let senha = ipt_senha.value
+        let confirmacao = ipt_confirmacao.value
+        let tentativas = 0
+
+        if(email.includes(@)){
+            
+        }
+    }
+</script>
