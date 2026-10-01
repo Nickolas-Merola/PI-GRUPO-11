@@ -8,8 +8,30 @@
 </head>
 <body>
     <div class="pagina-inteira">
+        
         <div class="lado-esquerdo">
+            <div class="logo">
+                <img src="images/logo.png" alt="logo">
+                <span><b class="nome-maq">Maq</b><b class="nome-temp">Temp</b></span>  
+            </div>
+            <div class="textos-esquerda">
+                <h1 class="titulo-esquerda">Crie sua conta e proteja <br>seus ativos industriais hoje</h1>
+                <p class="paragrafo-esquerda">Evite paradas não planejadas, proteja seus operadores e tome decisões <br>
+                baseadas em dados em tempo real antes que a falha aconteça.</p>
 
+                <div class="metricas">
+                    <div class="metrica">
+                        <span class="metrica-numero">24/7</span>
+                        <span class="metrica-legenda">Monitoramento Ativo</span>
+                    </div>
+                    <div class="metrica">
+                        <span class="metrica-numero">&lt;2s</span>
+                        <span class="metrica-legenda">Latência de Alerta</span>
+                </div>
+                </div>  
+            </div>
+            
+              
         </div>
     
         <div class="lado-direito">
@@ -24,58 +46,59 @@
                 <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
     
                 <label for="input_senha">Crie uma senha</label> <br>
-                <input type="text" oninput="validarSenha()" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
+                <input type="text" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
 
                 <label for="input_confirmarSenha">Confirme sua senha</label> <br>
                 <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
 
                 <button onclick="cadastrar()" class="botao">Criar minha conta</button>
-            </div>
-            
 
-            
-            <div id="div_quantosCaracteres"></div>
-            <div id="div_letraMaiuscula"></div>
-            <div id="div_letraMinuscula"></div>
-            <div id="div_charEspecial"></div>
+                <div id="div_quantosCaracteres"></div>
+                <div id="div_letraMaiuscula"></div>
+                <div id="div_letraMinuscula"></div>
+                <div id="div_charEspecial"></div>
+                
+                <p class="login-direita">Já possui uma conta? <b style="color: #f0822f;"> Faça login</b></p>
+
+
+            </div>
+                
         </div>
     </div>
 </body>
 </html>
 
 <script>
-    function validarSenha() {
-        let senha = input_senha.value;
-        let charEspeciais = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";",
-        ":", "'", ",", ".", "<", ">", "/", "?", "`", "~"];
+
         let temCharEspecial = false;
         let temCaracteres = false;
         let temLetraMinuscula = false;
         let temLetraMaiuscula = false;
         let senhaTemSeguranca = false;
-
+        
+    function validarSenha() {
+        let senha = input_senha.value;
+        let charEspeciais = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";",
+        ":", "'", ",", ".", "<", ">", "/", "?", "`", "~"];
 
         if (senha.length >= 8) {
-            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ✅`;
             temCaracteres = true;
         } else {
-            div_quantosCaracteres.innerHTML = `Mínimo de 8 caractéres ❌`;
             temCaracteres = false;
+            alert("A senha precisa conter 8 caracteres");
         }
 
         if (senha != senha.toLowerCase()) {
-            div_letraMaiuscula.innerHTML = `Contém letra maiúscula ✅`;
             temLetraMaiuscula = true;
         } else {
-            div_letraMaiuscula.innerHTML = `Contém letra maiúscula ❌`;
             temLetraMaiuscula = false;
+            alert("A senha precisa conter letra maiúscula");
         }
 
         if (senha != senha.toUpperCase()) {
-            div_letraMinuscula.innerHTML = `Contém letra minúscula ✅`;
             temLetraMinuscula = true;
         } else {
-            div_letraMinuscula.innerHTML = `Contém letra minúscula ❌`;
+            alert("A senha precisa conter letra minúscula");
             temLetraMinuscula = false;
         }
 
@@ -85,16 +108,16 @@
             }
         }
 
-        if (temCharEspecial) {
-            div_charEspecial.innerHTML = `Contém caractere especial ✅`;
-        } else {
-            div_charEspecial.innerHTML = `Contém caractere especial ❌`;
-        }
+        if (!temCharEspecial) {
+            temCharEspecial = false;
+            alert("A senha precisa conter caracter especial");
+        } 
+
 
         if (temCharEspecial && temCaracteres && temLetraMaiuscula && temLetraMinuscula) {
-            senhaTemSeguranca == true;
+            senhaTemSeguranca = true;
         } else {
-            senhaTemSeguranca == false;
+            senhaTemSeguranca = false;
         }
 
     }
@@ -124,9 +147,9 @@
         if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "") {
             alert("Todos os campos precisam ser preenchidos!")
         } else {
-
+            validarSenha();
             validarEmail();
-            }
+        }
         
     }
     
