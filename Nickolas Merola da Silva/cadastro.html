@@ -1,104 +1,190 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro</title>
+  <title>Título do Documento</title>
+  <link rel="stylesheet" href="cadastro.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
+
 <body>
-    <h1>Cadastro</h1>
-    <label for="ipt_NomeCompleto">Nome Completo:</label> <br>
-    <input type="text" id="ipt_NomeCompleto" placeholder="Nome"> <br>
+  <div class="divisao_tela">
+    <div class="esquerda">
+      <div class="comeco">
+        <img width="100px" src="imgs/icone_cores_fortes.png" alt="icone">
+        <h1 style="font-size: 80px;"><b style="color: #FFFFFF;">Maq</span><span style="color: #E87722;">Temp</b></h1>
+      </div>
+      <span style="display: inline-block; color: #E87722; margin-top: 150px;">Tecnologia IoT para industria</span> <br>
+      <b style="font-size: 40px;">Crie sua conta e proteja seus ativos industriais hoje</b> <br>
+      <span style="color: #94A3B8; font-size: 18px;">Evite paradas não planejadas, proteja seus operadores e tome
+        decisões baseadas em dados em tempo real antes que a falha aconteça.</span> <br>
+      <b style="display: inline-block; margin-top: 40px;color: #E87722; font-size: 25px;">24/7
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMenos de 2s</b> <br>
+      <span style="color: #94A3B8; font-size: 13px;">Monitoramento Ativo
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLatência de Alerta</span> <br>
+      <!-- &nbsp serve para dar um espaço la na pagina real -->
+      <span style="display: inline-block; color: #E87722; margin-top: 270px;font-size: 13;">SPTech — São Paulo Tech
+        School</span> <br>
+      <span style="color: #94A3B8;font-size: 13;">Grupo 11 — Projeto de PI 2026</span>
+    </div>
+    <div class="direita">
+      <h1><b style="color: #0B132B">Comece agora mesmo</b></h1>
+      <div class="icone-topo-direito">
+        <span class="material-symbols-outlined">home</span>
+      </div>
+      <h3><span style="color: #64748B">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e
+          LM35.</span></h3>
 
-    <label for="ipt_email">Email:</label> <br>
-    <input type="text" id="ipt_email" placeholder="Email"><br>
+      <div class="grupo-input">
+        <label for="ipt_NomeCompleto">Nome Completo:</label>
+        <div class="input-com-icone">
+          <span class="material-symbols-outlined">person</span>
+          <input type="text" id="ipt_NomeCompleto" placeholder="Nome">
+        </div>
+      </div>
 
-    <label for="ipt_cpf">CPF:</label> <br>
-    <input type="number" id="ipt_cpf" placeholder="CPF"><br>
+      <div class="grupo-input">
+        <label for="ipt_email">Email:</label>
+        <div class="input-com-icone">
+          <span class="material-symbols-outlined">mail</span>
+          <input type="text" id="ipt_email" placeholder="Email">
+        </div>
+      </div>
 
-    <label for="ipt_numerotel">Número de telefone:</label> <br>
-    <input type="number" id="ipt_numerotel" placeholder="Número"><br>
+      <div class="grupo-input">
+        <label for="ipt_cpf">CPF:</label>
+        <div class="input-com-icone">
+          <span class="material-symbols-outlined">badge</span>
+          <input type="number" id="ipt_cpf" placeholder="CPF">
+        </div>
+      </div>
 
-    <label for="ipt_senha">Senha:</label> <br>
-    <input type="text" oninput="testarSenha()" id="ipt_senha" placeholder="Senha:"><br>
-    <div id="caracteres"><b></b></div> 
-    <div id="maiuscula"><b></b></div> 
-    <div id="minuscula"><b></b></div> 
-    <div id="especial"><b></b></div> 
+      <div class="grupo-input">
+        <label for="ipt_numerotel">Número de telefone:</label>
+        <div class="input-com-icone">
+          <span class="material-symbols-outlined">call</span>
+          <input type="number" id="ipt_numerotel" placeholder="Número">
+        </div>
+      </div>
 
-    <label for="ipt_confirmsenha">Confirmar Senha:</label> <br>
-    <input type="text" id="ipt_confirmsenha" oninput="confirmsenha()" placeholder="Confirmar Senha"><br>
-    <div id="exibir_confirm_senha"></div>
+      <div class="grupo-input">
+        <label for="ipt_senha">Senha:</label>
+        <div class="input-com-icone">
+          <span class="material-symbols-outlined">lock</span>
+          <input type="password" oninput="testarSenha()" id="ipt_senha" placeholder="Senha:">
+        </div>
+        <!-- Validações movidas para fora do input-com-icone -->
+        <div class="caixa-validacoes" style="margin-top: 10px;">
+          <div class="validacoes" id="caracteres"></div>
+          <div class="validacoes" id="maiuscula"></div>
+          <div class="validacoes" id="minuscula"></div>
+          <div class="validacoes" id="especial"></div>
+        </div>
+      </div>
 
-    <button onclick="cadastrar()">Cadastrar</button>
-    <div id="cadastro"></div>
+      <div class="grupo-input">
+        <label for="ipt_confirmsenha">Confirmar Senha:</label>
+        <div class="input-com-icone">
+          <span class="material-symbols-outlined">lock</span>
+          <input type="password" id="ipt_confirmsenha" oninput="confirmsenha()" placeholder="Confirmar Senha">
+        </div>
+        <div class="validacoes" id="exibir_confirm_senha" style="margin-top: 10px;"></div>
+      </div>
+      <input type="checkbox" style="width: 15px; padding: 0; margin-bottom: 0;">
+      <span>Li e aceito os Termos de Uso e as Políticas de Privacidade.</span><br>
+      <button onclick="cadastrar()">Cadastrar</button>
+      <div class="validacoes" id="cadastro"></div>
+      <div class="login" id="login">Já possui uma conta? <a href="login.html" style="color: #E87722;">Faça Login</a>
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
-  <script>
-        function testarSenha(){
-            let senha = ipt_senha.value
-            let caracteresEspeciais = ["@", "#", "$", "%", "&", "*", "!", "?", "-", "_", "+", "=", ".", ",", ";", ":"]
-            if (senha.length >= 8){
-                caracteres.innerHTML = `✅Minimo de 8 Caracteres`
-            } else {
-                caracteres.innerHTML = `❌Minimo de 8 Caracteres`
-            }
-            if (senha.toUpperCase()!=senha){
-                maiuscula.innerHTML = `✅Pelo menos uma letra minúscula (A/Z)`
-            } else {
-                maiuscula.innerHTML = `❌Pelo menos uma letra minúscula (A/Z)`
-            }
-            if (senha.toLowerCase()!=senha){
-                minuscula.innerHTML = `✅Pelo menos uma letra maiúscula(a/z)`
-            } else {
-                minuscula.innerHTML = `❌Pelo menos uma letra maiúscula(a/z)`
-            }
-            let temEspecial = 0
-            for (let i = 0; i < caracteresEspeciais.length; i++) {
-                    if (senha.includes(caracteresEspeciais[i])) {
-                    temEspecial = 1
-                    break
-                }
-            }
-            if (temEspecial==1){
-                especial.innerHTML = `✅Pelo menos um caracterer especial (!@$%...)`
-            } else {
-              especial.innerHTML = `❌Pelo menos um caracterer especial (!@$%...)`  
-            }
-        }
+<script>
+  function testarSenha() {
+    let senha = ipt_senha.value;
+    let caracteresEspeciais = ["@", "#", "$", "%", "&", "*", "!", "?", "-", "_", "+", "=", ".", ",", ";", ":"];
 
-        function confirmsenha(){
-            let senha = ipt_senha.value
-            let verificar_senha = ipt_confirmsenha.value
-            if (senha != verificar_senha){
-                exibir_confirm_senha.innerHTML = `❌Senha diferente da senha digitada anteriormente! <br>Por favor verifique sua senha`
-            } else {
-                exibir_confirm_senha.innerHTML = `✅Senha valida!`
-            }
-        }
+    let iconeCerto = '<span class="material-symbols-outlined icone-certo">check_circle</span>';
+    let iconeErro = '<span class="material-symbols-outlined icone-erro">cancel</span>';
 
-        function cadastrar(){
-            let nome = ipt_NomeCompleto.value
-            let email = ipt_email.value
-            let cpf = ipt_cpf.value
-            let telefone = ipt_numerotel.value
-            
-            let senhaTamanhoOK = caracteres.innerHTML.includes('✅');
-            let senhaMaiusculaOK = maiuscula.innerHTML.includes('✅');
-            let senhaMinusculaOK = minuscula.innerHTML.includes('✅');
-            let senhaEspecialOK = especial.innerHTML.includes('✅');
-            let confirmaSenhaOK = exibir_confirm_senha.innerHTML.includes('✅');
+    if (senha.length >= 8) {
+      caracteres.innerHTML = `${iconeCerto} Mínimo de 8 Caracteres`;
+    } else {
+      caracteres.innerHTML = `${iconeErro} Mínimo de 8 Caracteres`;
+    }
 
-            if(nome != '' && 
-            cpf.length == 11 && 
-            telefone.length == 11 &&
-            email.includes('@') && (email.endsWith('.com') || email.endsWith('.br') || email.endsWith('school')) && 
-            senhaTamanhoOK && senhaMaiusculaOK && senhaMinusculaOK && senhaEspecialOK && confirmaSenhaOK){
-            cadastro.innerHTML = `✅Cadastro Concluido com sucesso!`
-            } else {
-                cadastro.innerHTML = `❌ Verifique os campos ou preencha tudo corretamente.`;
-            }
-        }
+    if (senha.toLowerCase() != senha) {
+      maiuscula.innerHTML = `${iconeCerto} Pelo menos uma letra maiúscula (A-Z)`;
+    } else {
+      maiuscula.innerHTML = `${iconeErro} Pelo menos uma letra maiúscula (A-Z)`;
+    }
 
-  </script>
+    // Verifica se tem letras Minúsculas
+    if (senha.toUpperCase() != senha) {
+      minuscula.innerHTML = `${iconeCerto} Pelo menos uma letra minúscula (a-z)`;
+    } else {
+      minuscula.innerHTML = `${iconeErro} Pelo menos uma letra minúscula (a-z)`;
+    }
+
+    let temEspecial = 0;
+    for (let i = 0; i < caracteresEspeciais.length; i++) {
+      if (senha.includes(caracteresEspeciais[i])) {
+        temEspecial = 1;
+        break;
+      }
+    }
+
+    if (temEspecial == 1) {
+      especial.innerHTML = `${iconeCerto} Pelo menos um caracter especial (!@$%...)`;
+    } else {
+      especial.innerHTML = `${iconeErro} Pelo menos um caracter especial (!@$%...)`;
+    }
+  }
+
+  function confirmsenha() {
+    let senha = ipt_senha.value;
+    let verificar_senha = ipt_confirmsenha.value;
+
+    let iconeCerto = '<span class="material-symbols-outlined icone-certo">check_circle</span>';
+    let iconeErro = '<span class="material-symbols-outlined icone-erro">cancel</span>';
+
+    if (senha != verificar_senha || verificar_senha == '') {
+      exibir_confirm_senha.innerHTML = `${iconeErro} As senhas não coincidem`;
+    } else {
+      exibir_confirm_senha.innerHTML = `${iconeCerto} As senhas coincidem`;
+    }
+  }
+
+  function cadastrar() {
+    let nome = ipt_NomeCompleto.value;
+    let email = ipt_email.value;
+    let cpf = ipt_cpf.value;
+    let telefone = ipt_numerotel.value;
+
+    let iconeCerto = '<span class="material-symbols-outlined icone-certo">check_circle</span>';
+    let iconeErro = '<span class="material-symbols-outlined icone-erro">cancel</span>';
+
+    let senhaTamanhoOK = caracteres.innerHTML.includes('check_circle');
+    let senhaMaiusculaOK = maiuscula.innerHTML.includes('check_circle');
+    let senhaMinusculaOK = minuscula.innerHTML.includes('check_circle');
+    let senhaEspecialOK = especial.innerHTML.includes('check_circle');
+    let confirmaSenhaOK = exibir_confirm_senha.innerHTML.includes('check_circle');
+
+    if (nome != '' &&
+      cpf.length == 11 &&
+      telefone.length == 11 &&
+      email.includes('@') && (email.endsWith('.com') || email.endsWith('.br') || email.endsWith('.school')) &&
+      senhaTamanhoOK && senhaMaiusculaOK && senhaMinusculaOK && senhaEspecialOK && confirmaSenhaOK) {
+      cadastro.innerHTML = `${iconeCerto} Cadastro concluído com sucesso!`;
+    } else {
+      cadastro.innerHTML = `${iconeErro} Verifique os campos ou preencha tudo corretamente.`;
+    }
+  }
+
+</script>
+
 </html>
-<!--❌✅ -->
+<!--  -->
