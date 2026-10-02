@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaqTemp - Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- LADO AZUL -->
+    <div class="lado-azul">
+        <div class="conteudo-azul">
+            <h1 class="logo">Maq<span>Temp</span></h1>
+
+            <div class="selo">TECNOLOGIA IoT PARA INDÚSTRIA</div>
+
+            <h1 class="titulo-azul">Crie sua conta e proteja seus ativos industriais hoje</h1>
+
+            <p class="descricao">
+                Evite paradas não planejadas, proteja seus operadores e tome decisões
+                baseadas em dados em tempo real antes que a falha aconteça.
+            </p>
+
+            <div class="estatistica">
+                <p class="numero">24/7</p>
+                <p class="legenda">Monitoramento Ativo</p>
+            </div>
+            <div class="estatistica">
+                <p class="numero">&lt; 2s</p>
+                <p class="legenda">Latência de Alerta</p>
+            </div>
+
+            <div class="rodape-azul">
+                <p class="destaque">SPTech — São Paulo Tech School</p>
+                <p>Grupo 11 — Projeto de PI 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LADO BRANCO -->
+    <div class="lado-branco">
+        <div class="formulario">
+            <h1 class="titulo-form">Comece agora mesmo</h1>
+            <p class="subtitulo">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35.</p>
+
+            <p class="rotulo">Nome completo</p>
+            <input class="campo" type="text" id="ipt_nome" placeholder="Digite seu nome completo">
+
+            <p class="rotulo">E-mail corporativo</p>
+            <input class="campo" type="text" id="ipt_email" placeholder="exemplo@suaempresa.com.br">
+
+            <p class="rotulo">Crie uma senha</p>
+            <input class="campo" type="password" id="ipt_senha" placeholder="No mínimo 8 caracteres">
+
+            <p class="rotulo">Confirme sua senha</p>
+            <input class="campo" type="password" id="ipt_confirmacao" placeholder="Repita a senha criada">
+
+            <p class="termos">
+                <input type="checkbox" id="chk_termos">
+                Li e aceito os <span class="link">Termos de Uso</span> e as <span class="link">Políticas de Privacidade</span>.
+            </p>
+
+            <div id="div_mensagem"></div>
+
+            <button class="botao" onclick="cadastrar()">Criar minha conta</button>
+
+            <p class="troca-pagina">
+                Já possui uma conta? <a class="link" href="login.html">Faça login</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    // variaveis globais 
+    // vetor com provedores de e-mail pessoal (nao sao e-mails corporativos)
+    let provedoresPessoais = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com'];
+
+    function cadastrar() {
+        //variaveis locais 
+        let nome = ipt_nome.value;
+        let email = ipt_email.value.toLowerCase();
+        let senha = ipt_senha.value;
+        let confirmacao = ipt_confirmacao.value;
+        let aceitou = chk_termos.checked;
+
+        // vetor que guarda todos os erros encontrados
+        let erros = [];
+
+        //  nome 
+        if (nome.length == 0) {
+            erros.push('Digite seu nome completo.');
+        } else if (!nome.includes(' ')) {
+            erros.push('Informe nome e sobrenome.');
+        }
+
+        //  e-mail
+        if (email.indexOf('@') < 1 || !email.includes('.')) {
+            erros.push('Digite um e-mail válido (ex.: nome@suaempresa.com.br).');
+        } else {
+            // WHILE percorrendo o vetor de provedores pessoais
+            let ehPessoal = false;
+            let posicao = 0;
+            while (posicao < provedoresPessoais.length) {
+                if (email.endsWith('@' + provedoresPessoais[posicao])) {
+                    ehPessoal = true;
+                }
+                posicao = posicao + 1;
+            }
+
+            if (ehPessoal) {
+                erros.push('Use seu e-mail corporativo, e-mails pessoais não são aceitos.');
+            }
+        }
+
+        //senha 
+        if (senha.length < 8) {
+            let faltam = 8 - senha.length;
+            erros.push('A senha precisa ter no mínimo 8 caracteres (faltam ' + faltam + ').');
+        }
+
+        if (senha != confirmacao) {
+            erros.push('As senhas não conferem.');
+        }
+
+        //  Termos 
+        if (aceitou == false) {
+            erros.push('Aceite os Termos de Uso e as Políticas de Privacidade.');
+        }
+
+        // monta a mensagem com WHILE 
+        if (erros.length > 0) {
+            let mensagem = '';
+            let i = 0;
+            while (i < erros.length) {
+                mensagem = mensagem + '• ' + erros[i] + '<br>';
+                i = i + 1;
+            }
+            div_mensagem.innerHTML = mensagem;
+        } else {
+            div_mensagem.innerHTML = '';
+            alert('Conta criada com sucesso! Agora é só fazer login.');
+        }
+    }
+</script>

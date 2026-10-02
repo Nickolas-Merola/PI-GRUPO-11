@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaqTemp - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- LADO AZUL -->
+    <div class="lado-azul">
+        <div class="conteudo-azul">
+            <h1 class="logo-grande">Maq<span>Temp</span></h1>
+
+            <div class="selo selo-login">TECNOLOGIA IoT PARA INDÚSTRIA</div>
+
+            <p class="descricao">
+                Evite paradas não planejadas, proteja seus operadores e tome decisões
+                baseadas em dados em tempo real antes que a falha aconteça.
+            </p>
+
+            <div class="rodape-azul">
+                <p class="destaque">SPTech — São Paulo Tech School</p>
+                <p>Grupo 11 — Projeto de PI 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LADO BRANCO -->
+    <div class="lado-branco">
+        <div class="formulario">
+            <h1 class="titulo-form">Bem-vindo de volta</h1>
+            <p class="subtitulo">Acesse seu painel MaqTemp para gerenciar a telemetria e o estado das suas máquinas.</p>
+
+            <p class="rotulo">E-mail corporativo</p>
+            <input class="campo" type="text" id="ipt_email" placeholder="exemplo@suaempresa.com.br">
+
+            <p class="rotulo">Senha</p>
+            <input class="campo" type="password" id="ipt_senha" placeholder="Digite sua senha">
+
+            <div id="div_mensagem"></div>
+
+            <button class="botao" onclick="entrar()">Entrar na plataforma</button>
+
+            <p class="separador">OU ACESSE COM</p>
+
+            <button class="botao-social" onclick="loginSocial('Google Workspace')">Google Workspace</button>
+            <button class="botao-social" onclick="loginSocial('Microsoft 365')">Microsoft 365</button>
+
+            <p class="dica">
+                Para testar: admin@maqtemp.com.br / maqtemp2026
+            </p>
+
+            <p class="troca-pagina">
+                Não tem uma conta? <a class="link" href="cadastro.html">Cadastre-se grátis</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    // variaveis globais 
+    let tentativas = 0;
+
+    // emails e senhas para demonstracao
+    let emails = ['ana@empresa.com.br', 'carlos@tintas.com.br', 'admin@maqtemp.com.br'];
+    let senhas = ['12345678', 'senha1234', 'maqtemp2026'];
+
+    function entrar() {
+        // variaveis locais 
+        let email = ipt_email.value.toLowerCase();
+        let senha = ipt_senha.value;
+        let mensagem = '';
+
+        if (tentativas >= 3) {
+            mensagem = 'Acesso bloqueado após 3 tentativas. Recarregue a página para tentar de novo.';
+        } else if (email.length == 0 || senha.length == 0) {
+            mensagem = 'Preencha o e-mail e a senha.';
+        } else if (email.indexOf('@') < 1 || !email.includes('.')) {
+            mensagem = 'Digite um e-mail válido.';
+        } else {
+            // WHILE procurando o e-mail no vetor
+            let posicao = 0;
+            let indice = -1;
+            while (posicao < emails.length) {
+                if (emails[posicao] == email) {
+                    indice = posicao;
+                }
+                posicao = posicao + 1;
+            }
+
+            if (indice != -1 && senhas[indice] == senha) {
+                tentativas = 0;
+                alert('Bem-vindo de volta ao MaqTemp!');
+            } else {
+                tentativas = tentativas + 1;
+                let restantes = 3 - tentativas;
+                mensagem = 'E-mail ou senha incorretos. Tentativas restantes: ' + restantes + '.';
+            }
+        }
+
+        div_mensagem.innerHTML = mensagem;
+    }
+
+    function loginSocial(provedor) {
+        alert('Login com ' + provedor + ' ainda não está disponível.');
+    }
+</script>
