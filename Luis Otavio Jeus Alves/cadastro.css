@@ -118,6 +118,21 @@ label {
     justify-content: center;
     max-width: 100%;
 }
+
+.texto-laranja {
+    display: inline-block;
+    background-color: #e8772226;
+    font-size: 16px;
+    font-weight: 600;
+    color: #E87722;
+    border: 1px solid #E87722;
+    border-radius: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 2px;
+}
+
 .titulo-esquerda {
     
     font-size: 48px;
