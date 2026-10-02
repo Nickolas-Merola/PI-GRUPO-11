@@ -49,7 +49,7 @@ body > div:first-child {
 }
 
 /* Lado do formulário */
-body > div:last-child {
+body > div:last-of-type {
   width: 58%;
   padding: 60px 90px;
   box-sizing: border-box;
@@ -89,7 +89,4 @@ span {
   padding: 12px;
   margin-top: 20px;
   cursor: pointer;
-}
-.h5 {
-  width: 50px;
 }

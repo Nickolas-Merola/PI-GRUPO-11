@@ -8,15 +8,12 @@
   </head>
   <body class="fonte">
     <div>
-      <img
-        class="img"
-        src="fotomaquina.jpg"
-        alt=""
-      />
-      
+      <img class="img" src="fotomaquina.jpg" alt="" />
+
       <div class="texto-sobre-imagem">
-        <img src="imagemlogo.png" alt="">
-        <strong style="color: white">Maq</strong><strong style="color: orange">Temp</strong>
+        <img src="imagemlogo.png" alt="" />
+        <strong style="color: white">Maq</strong
+        ><strong style="color: orange">Temp</strong>
       </div>
     </div>
     <div>
@@ -25,37 +22,68 @@
         Inscreva-se para configurar seus primeiros sensores de temperatura
         Arduino e LM35.
       </h5>
-      <span>Nome completo:</span><br>
+      <span>Nome completo:</span><br />
       <input
         class="input"
         placeholder="Informe seu nome completo"
         type="text"
         id="ipt_nomeCompleto"
-      /><br>
-      <span>E-mail corporativo:</span><br>
+      /><br />
+      <span>E-mail corporativo:</span><br />
       <input
         class="input"
         placeholder="Informe o E-mail"
-        type="text"
+        type="email"
         id="ipt_email"
-      /><br>
-      <span>Crie uma senha:</span><br>
+      /><br />
+      <span>Crie uma senha:</span><br />
       <input
         class="input"
         placeholder="No minimo 8 caracteres"
-        type="text"
+        type="password"
         id="ipt_senha"
-      /><br>
-      <span>Confirme sua senha:</span><br>
+      /><br />
+      <span>Confirme sua senha:</span><br />
       <input
         class="input"
         placeholder="Repita a senha"
-        type="text"
+        type="password"
         id="ipt_confirmarSenha"
-      /><br>
-      <input type="checkbox" />
-      <span>Li e aceito os Termos de Uso e as Políticas de Privacidade.</span><br>
-      <button class="botao">Criar minha conta</button>
+      /><br />
+      <input type="checkbox" id="aceite" />
+      <label for="aceite"
+        >Li e aceito os Termos de Uso e as Políticas de Privacidade.</label
+      ><br />
+      <button onclick="validar()" class="botao">Criar minha conta</button>
+      <div id="div_mensagem"></div>
     </div>
+
+    <script>
+      function validar() {
+        let senha = ipt_senha.value;
+        let confirmacao = ipt_confirmarSenha.value;
+        let email = ipt_email.value;
+        let arroba = email.indexOf("@");
+        let ponto = email.lastIndexOf(".");
+
+        let senhaInvalida = senha.length < 8 || senha != confirmacao;
+        let emailInvalido =
+          arroba < 1 ||
+          ponto < arroba + 2 ||
+          ponto == email.length - 1 ||
+          email.indexOf(" ") != -1 ||
+          email.indexOf("@") != email.lastIndexOf("@");
+
+        if (emailInvalido && senhaInvalida) {
+          div_mensagem.innerHTML = `<br>Email e senha incorretos`;
+        } else if (emailInvalido) {
+          div_mensagem.innerHTML = `<br>Email incorreto`;
+        } else if (senhaInvalida) {
+          div_mensagem.innerHTML = `<br>Senha incorreta, é necessario ter no minimo de 8 caracteres e igual a confirmação`;
+        } else {
+          div_mensagem.innerHTML = `<br>USUARIO CADASTRADO!`;
+        }
+      }
+    </script>
   </body>
 </html>
