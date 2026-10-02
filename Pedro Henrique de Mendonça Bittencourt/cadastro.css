@@ -1,0 +1,223 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+input, button {
+  font-family: inherit;
+}
+
+.tela {
+  display: flex;
+  height: 100vh;
+}
+
+.lado-azul {
+  width: 42%;
+  color: white;
+  padding: 60px;
+}
+
+.lado-branco {
+  width: 58%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formulario {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 80px 0 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario h2 {
+  font-size: 32px;
+  color: #0b1b4a;
+  margin: 0 0 8px;
+}
+
+.subtitulo {
+  font-size: 14px;
+  color: #7a869a;
+  margin: 0 0 40px;
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0b1b4a;
+  margin-bottom: 6px;
+}
+
+.campo input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  outline: none;
+}
+
+.campo input:focus {
+  border-color: #e87722;
+}
+
+.campo-icone {
+  position: relative;
+}
+
+.icone {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.campo-icone input {
+  display: block;
+  padding-left: 40px;
+}
+
+.termos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin: 16px 0;
+}
+
+.termos input {
+  accent-color: #e87722;
+}
+
+.termos a {
+  color: #e87722;
+  text-decoration: underline;
+}
+
+.botao {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  background-color: #e87722;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background-color: #d06a1c;
+}
+
+.login {
+  margin-top: auto;
+  text-align: center;
+  font-size: 12px;
+  color: #7a869a;
+}
+
+.login a {
+  color: #e87722;
+  text-decoration: none;
+}
+
+.lado-azul {
+  width: 42%;
+  box-sizing: border-box;
+  padding: 50px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+}
+
+.lado-azul {
+  background-color: #0b1b4a;
+  background-image:
+    linear-gradient(rgba(11, 27, 74, 0.70), rgba(11, 27, 74, 0.70)),
+    url('fundoMaquina.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-texto {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.laranja {
+  color: #e87722;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid rgba(232, 119, 34, 0.5);
+  color: #e87722;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.conteudo h1 {
+  font-size: 36px;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.conteudo p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #9aa7c7;
+  margin: 0;
+}
+
+.numeros {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.numero strong {
+  display: block;
+  font-size: 24px;
+  color: #e87722;
+}
+
+.numero span {
+  font-size: 11px;
+  color: #9aa7c7;
+}
+
+.rodape {
+  font-size: 10px;
+  color: #9aa7c7;
+}
+
+.faculdade {
+  display: block;
+  color: #e87722;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 4px;
+}

@@ -1,41 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de cadastro</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tela de cadastro</title>
+  <link rel="stylesheet" href="maqTemp.css">
 </head>
 <body>
-    <h2>Comece agora mesmo<h2>   
-    <label>Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35.</label>
 
-    Nome completo
-    <input placeholder="Digite seu nome completo" type="text" id="ipt_nome"><br>
+  <div class="tela">
 
-    E-mail corporativo 
-    <input placeholder="exemplo@suaempresa.com.br" type="text" id="ipt_email">
+    <!-- ===== LADO AZUL ===== -->
+    <div class="lado-azul">
+        
+      <div class="topo">
+        <img src="LogoGraphic.svg" width="62" alt="">
+        <span class="logo-texto">Maq<span class="laranja">Temp</span></span>
+      </div>
 
-    Crie uma senha 
-    <input placeholder="No minimo 8 caracteres" type="text" id="ipt_senha"> <br>
+      <div class="conteudo">
+        <span class="tag">TECNOLOGIA IoT PARA INDÚSTRIA</span>
+        <h1>Crie sua conta e proteja seus ativos industriais hoje</h1>
+        <p>Evite paradas não planejadas, proteja seus operadores e tome decisões baseadas em dados em tempo real antes que a falha aconteça.</p>
 
-    Confirme sua senha 
-    <input placeholder="Repita a senha criada" type="text" id="ipt_confirmacao"><br>
+        <div class="numeros">
+          <div class="numero">
+            <strong>24/7</strong>
+            <span>Monitoramento Ativo</span>
+          </div>
+          <div class="numero">
+            <strong>2s</strong>
+            <span>Latência de Alerta</span>
+          </div>
+        </div>
+      </div>
 
-    <!-- botao de concordancia dos termos -->
+      <div class="rodape">
+        <span class="faculdade">SPTech — São Paulo Tech School</span>
+        <span>Grupo 11 — Projeto de PI 2026</span>
+      </div>
 
-    <button onclick="Criar()">Criar minha conta</button>
+    </div>
+
+    <!-- ===== LADO BRANCO ===== -->
+    <div class="lado-branco">
+      <div class="formulario">
+        <h2>Comece agora mesmo</h2>
+        <p class="subtitulo">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35.</p>
+
+        <div class="campo">
+          <label>Nome completo</label>
+          <div class="campo-icone">
+            <i class="icone">✉</i>
+            <input placeholder="Digite seu nome completo" type="text" id="ipt_nome">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>E-mail corporativo</label>
+          <div class="campo-icone">
+            <i class="icone">✉</i>
+            <input placeholder="exemplo@suaempresa.com.br" type="text" id="ipt_email">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Crie uma senha</label>
+          <div class="campo-icone">
+            <svg class="icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a869a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+              <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+            </svg>
+            <input placeholder="No mínimo 8 caracteres" type="password" id="ipt_senha">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Confirme sua senha</label>
+          <div class="campo-icone">
+            <svg class="icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a869a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+              <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+            </svg>
+            <input placeholder="Repita a senha criada" type="password" id="ipt_confirmacao">
+          </div>
+        </div>
+
+        <div class="termos">
+          <input type="checkbox" id="termos">
+          <span>Li e aceito os <a href="#">Termos de Uso</a> e as <a href="#">Políticas de Privacidade</a>.</span>
+        </div>
+
+        <button onclick="Criar()" class="botao">Criar minha conta</button>
+
+        <p class="login">Já possui uma conta? <a href="#">Faça login</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function Criar() {
+      let nome = ipt_nome.value
+      let email = ipt_email.value
+      let senha = ipt_senha.value
+      let confirmacao = ipt_confirmacao.value
+      let tentativas = 0
+    }
+  </script>
+
 </body>
 </html>
-<script>
-    function criar(){
-        let nome = ipt_nome.value
-        let email = ipt_email.value
-        let senha = ipt_senha.value
-        let confirmacao = ipt_confirmacao.value
-        let tentativas = 0
-
-        if(email.includes(@)){
-            
-        }
-    }
-</script>

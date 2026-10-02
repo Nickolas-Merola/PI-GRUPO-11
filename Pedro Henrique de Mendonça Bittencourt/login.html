@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <div class="tela">
+
+    <div class="lado-azul">
+
+      <div class="logo-grande">
+        <img src="LogoGraphic.svg" width="80" alt="">
+        <span class="logo-texto-grande">Maq<span class="laranja">Temp</span></span>
+      </div>
+
+      <div class="conteudo">
+        <span class="tag">TECNOLOGIA IoT PARA INDÚSTRIA</span>
+        <p>Evite paradas não planejadas, proteja seus operadores e tome decisões baseadas em dados em tempo real antes que a falha aconteça.</p>
+      </div>
+
+      <div class="rodape">
+        <span class="faculdade">SPTech — São Paulo Tech School</span>
+        <span>Grupo 11 — Projeto de PI 2026</span>
+      </div>
+
+    </div>
+
+    <div class="lado-branco">
+      <div class="formulario">
+        <h2>Bem-vindo de volta</h2>
+        <p class="subtitulo">Acesse seu painel MaqTemp para gerenciar a telemetria e o estado das suas máquinas.</p>
+
+        <div class="campo">
+          <label>E-mail corporativo</label>
+          <div class="campo-icone">
+            <i class="icone">✉</i>
+            <input placeholder="exemplo@suaempresa.com.br" type="text" id="ipt_email">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Senha</label>
+          <div class="campo-icone">
+            <svg class="icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a869a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+              <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+            </svg>
+            <input placeholder="Digite sua senha" type="password" id="ipt_senha">
+          </div>
+        </div>
+
+        <a href="#" class="esqueceu">Esqueceu sua senha?</a>
+
+        <button onclick="Entrar()" class="botao">Entrar na plataforma</button>
+
+        <p class="login">Não tem uma conta? <a href="cadastro.html">Cadastre-se grátis</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function Entrar() {
+      let email = ipt_email.value
+      let senha = ipt_senha.value
+    }
+  </script>
+
+</body>
+</html>
