@@ -23,7 +23,6 @@
         Acesse seu painel MaqTemp para gerenciar a telemetria e o estado das suas máquinas.
       </h5>
     <div>
-      
       <span>Login:</span><br>
       <input
         class="input"
@@ -35,10 +34,29 @@
       <input
         class="input"
         placeholder="Insira sua senha"
-        type="text"
+        type="password"
         id="ipt_senha"
       /><br>
-      <button class="botao">Entrar na plataforma</button>
+      <button onclick="entrar()" class="botao">Entrar na plataforma</button>
+      <div id="div_mensagem"></div>
     </div>
+    <script>
+      function entrar() {
+        let email = ipt_email.value;
+        let senha = ipt_senha.value;
+
+        let emailCorreto = "admin@maqtemp.com";
+        let senhaCorreta = "12345678";
+
+        if (email == "" || senha == "") {
+          div_mensagem.innerHTML = `<br>Preencha o e-mail e a senha`;
+        } else if (email == emailCorreto && senha == senhaCorreta) {
+          div_mensagem.innerHTML = `<br>Login realizado com sucesso!`;
+        } else {
+          div_mensagem.innerHTML = `<br>E-mail ou senha incorretos`;
+        }
+      }
+    </script>
   </body>
 </html>
+

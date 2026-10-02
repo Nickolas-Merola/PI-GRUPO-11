@@ -27,9 +27,7 @@
 }
 
 .fonte {
-  font-family:
-    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: sans-serif
 }
 
 body {
@@ -37,6 +35,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
 }
 
 body > div {
@@ -48,12 +47,16 @@ body > div {
 /* Lado da imagem */
 body > div:first-child {
   width: 42%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 /* Lado do formulário */
-body > div:last-child {
+body > div:last-of-type {
   width: 58%;
-  padding: 60px 90px;
+  min-height: 100vh;
+  padding: 40px 90px;
   box-sizing: border-box;
 }
 
@@ -81,7 +84,6 @@ span {
   padding: 12px;
   margin-top: 6px;
   margin-bottom: 15px;
-  color: chocolate;
 }
 
 .botao {
@@ -91,4 +93,11 @@ span {
   padding: 12px;
   margin-top: 20px;
   cursor: pointer;
+}
+
+.validacao {
+  font-size: 13px;
+  color: gray;
+  margin-top: -8px;
+  margin-bottom: 15px;
 }
