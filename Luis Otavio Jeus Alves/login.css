@@ -17,7 +17,6 @@ body {
     background-image: url(./images/background-img.jpg);
     background-size: cover;
     background-position: center;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0 30px;
@@ -59,7 +58,7 @@ input {
 }
 
 .espaco {
-    margin-bottom: 170px;
+    margin-bottom: 150px;
 }
 
 .titulo {
@@ -85,8 +84,8 @@ label {
 
 .logo {
     position: absolute;
-    top: 20px;
-    left: 50px;
+    top: 238px;
+    left: 60px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -94,22 +93,20 @@ label {
     
 }
 .logo img {
-    width: 70px;
+    width: 250px;
     height: auto;
 }
 
 .nome-maq {
-    font-size: 28px;
+    font-size: 60px;
     font-weight: bolder;
     color: #E2E8F0;
-    letter-spacing: -1.0px;
 }
 
 .nome-temp {
-    font-size: 28px;
+    font-size: 60px;
     font-weight: bolder;
     color: #E87722;
-    letter-spacing: -1.0px;
 }
 
 .textos-esquerda {
@@ -117,6 +114,7 @@ label {
     position: relative;
     justify-content: center;
     max-width: 100%;
+    padding-top: 250px;
 }
 .titulo-esquerda {
     
@@ -130,7 +128,6 @@ label {
 
 .paragrafo-esquerda {
     position: relative;
-    
     font-size: 18px;
     color: #94A3B8;
     line-height: 1.6;
@@ -145,25 +142,17 @@ label {
     color: #64748B;
 }
 
-.metrica {
-    display: flex;
-    flex-direction: column;
-}
-
-.metricas {
-    display: flex;
-    gap: 40px;
-    margin-top: 40px;
-}
-
-.metrica-numero {
-    font-size: 32px;
-    font-weight: 700;
+.texto-laranja {
+    display: inline-block;
+    background-color: #e8772226;
+    font-size: 16px;
+    font-weight: 600;
     color: #E87722;
-    padding-bottom: 10px;
+    border: 1px solid #E87722;
+    border-radius: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 2px;
 }
 
-.metrica-legenda {
-    font-size: 13px;
-    color: #94A3B8;
-}
