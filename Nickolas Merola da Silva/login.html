@@ -4,12 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <link rel="stylesheet" href="login.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 <body>
-    
+    <div class="divisao_tela">
+    <div class="esquerda">
+      <div class="comeco">
+        <img width="250px" src="imgs/icone_cores_fortes.png" alt="icone">
+        <h1 style="font-size: 80px;"><b style="color: #FFFFFF;">Maq</span><span style="color: #E87722;">Temp</b></h1>
+      </div>
+      <span style="display: inline-block; color: #E87722; margin-top: 100px;">Tecnologia IoT para industria</span> <br>
+      <span style="display: inline-block;color: #94A3B8; font-size: 18px; margin-top: 35px;">Evite paradas não planejadas, proteja seus operadores e tome
+        decisões<br> baseadas em dados em tempo real antes que a falha aconteça.</span> <br>
+      <span style="display: inline-block; color: #E87722; margin-top: 200px;">SPTech — São Paulo Tech
+      School</span> <br>
+      <span style="display: inline-block; color: #94A3B8;font-size: 13;margin-right: 200px; margin-top:10px;">Grupo 11 — Projeto de PI 2026</span>
+    </div>
+    <div class="direita">
+  <div class="container-login">
+    <h1 style="font-size: 40px; margin-top: 0; margin-bottom: 10px; color: #0B132B;">Bem-vindo de volta</h1>
+    <p style="color: #64748B; font-size: 16px; margin-bottom: 40px; margin-top: 0;">Acesse seu painel MaqTemp para gerenciar a telemetria e o estado das suas máquinas.</p>
+
+    <div class="grupo-input">
+      <label for="ipt_email">E-mail corporativo</label>
+      <div class="input-com-icone">
+        <span class="material-symbols-outlined">mail</span>
+        <input type="text" id="ipt_email" placeholder="exemplo@suaempresa.com.br">
+      </div>
+    </div>
+
+    <div class="grupo-input">
+      <label for="ipt_senha">Senha</label>
+      <div class="input-com-icone">
+        <span class="material-symbols-outlined">lock</span>
+        <input type="password" id="ipt_senha" placeholder="Digite sua senha">
+      </div>
+      <div style="text-align: right; margin-top: 8px; margin-bottom: 20px;">
+        <a href="senha.html" style="color: #E87722; text-decoration: none; font-size: 14px; font-weight: bold;">Esqueceu sua senha?</a>
+      </div>
+    </div>
+
+    <button onclick="start()">Entrar na plataforma</button>
+    <div id="sessao"></div>
+
+    <div class="cadastro" style="margin-top: 40px; text-align: center; font-size: 14px; color: #64748B;">
+      Não tem uma conta? <a href="cadastro.html" style="color: #E87722; text-decoration: none; font-weight: bold;">Cadastre-se grátis</a>
+    </div>
+  </div>
+</div>
+    </div>
 </body>
   <script>
-    
+    function start(){
+      let email = ipt_email.value
+      let senha = ipt_senha.value
+      let iconeErro = '<span class="material-symbols-outlined icone-erro">cancel</span>';
+      if (email != '' && senha != '' && email.includes('@') && (email.endsWith('.com') || email.endsWith('.br') || email.endsWith('.school'))){
+      } else {
+        sessao.innerHTML = `${iconeErro} Verifique os campos ou preencha tudo corretamente.`
+      }
+    }
   </script>
 </html>
 <!--  -->
