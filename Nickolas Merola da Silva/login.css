@@ -18,65 +18,40 @@ body {
     padding: 40px;
     width: 40%;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    
 }
 .direita {
     background-color: white;
     padding: 40px;
     width: 60%;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;  
+    justify-content: center; 
 }
 
-.icone-topo-direito .material-symbols-outlined {
-    font-size: 50px;
-    position: absolute;
-    top: 40px; 
-    right: 30px;
-    cursor: pointer;
-}
-
-.login{
-    text-align: center;
-    margin-top: 20px;
-}
-
-.comeco{
+.comeco {
     display: flex;   
+    margin-top: 220px;
     align-items: center; 
     gap: 15px; 
-}
-
-input {
-  width: 90%; 
-  padding: 12px; 
-  border: 1px solid #cccccc; 
-  border-radius: 5px; 
-  font-size: 18px; 
-  margin-bottom: 20px; 
 }
 label {
     font-size: 20px;
 }
-button {
-    background-color: #E87722; 
-    color: white;
-    border: none; 
-    padding: 15px 32px; /* Espaço interno: 15px em cima/baixo, 32px nas laterais */
-    font-size: 16px;
-    font-weight: bold;
-    font-family: "Franklin Gothic Medium", Arial, sans-serif;
-    border-radius: 8px; /* Arredonda as pontas do botão 50px deixa pilula e 0px deixa quadrado*/
-    cursor: pointer; /* Muda o ponteiro do mouse para a "mãozinha" */
-    width: 100%; /* Faz o botão ocupar toda a largura disponível (opcional) */
+.cadastro{
+    text-align: center;
+    margin-top: 20px;
+}
+.container-login {
+    width: 100%;
+    max-width: 550px; /* Aumentado de 450px para 550px */
+    display: flex;
+    flex-direction: column;
+    text-align: left; 
 }
 
-.validacoes {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    margin-top: 5px;
-    color: #64748B;
-}
 .grupo-input label {
     font-size: 16px; /* Aumentado de 14px para 16px */
     font-weight: bold;
@@ -109,16 +84,23 @@ button {
     margin-bottom: 0;
     outline: none;
 }
-.validacoes .material-symbols-outlined {
-    font-size: 20px;
+
+.input-com-icone input:focus {
+    border-color: #E87722;
 }
 
-.icone-certo {
-    color: #10B981; 
-}
-
-.icone-erro {
-    color: #EF4444;
+button {
+    background-color: #E87722; 
+    color: white;
+    border: none; 
+    padding: 20px; 
+    font-size: 18px; 
+    font-weight: bold;
+    font-family: "Franklin Gothic Medium", Arial, sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
 }
 @media (max-width: 900px) {
     .divisao_tela {
