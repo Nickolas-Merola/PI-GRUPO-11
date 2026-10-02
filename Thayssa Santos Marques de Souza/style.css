@@ -1,0 +1,206 @@
+/*  geral  */
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	margin: 0;
+}
+
+/*  os dois lados da tela  */
+.lado-azul {
+	float: left;
+	width: 40%;
+	height: 780px;
+	background-color: #0b1a3a;
+}
+
+.lado-branco {
+	float: left;
+	width: 60%;
+	height: 780px;
+	background-color: white;
+}
+
+/* lado azul (esquerda)  */
+.conteudo-azul {
+	margin-left: 60px;
+	margin-right: 60px;
+}
+
+.logo {
+	font-size: 28px;
+	color: white;
+	margin: 0;
+	padding-top: 50px;
+}
+
+.logo-grande {
+	font-size: 56px;
+	color: white;
+	margin: 0;
+	padding-top: 230px;
+}
+
+.logo span,
+.logo-grande span {
+	color: #e87722;
+}
+
+.selo {
+	width: fit-content;
+	margin-top: 150px;
+	margin-bottom: 25px;
+	padding: 6px 14px;
+	border: solid 1px #e87722;
+	border-radius: 20px;
+	color: #e87722;
+	font-size: 11px;
+}
+
+.selo-login {
+	margin-top: 70px;
+}
+
+.titulo-azul {
+	color: white;
+	font-size: 38px;
+	margin: 0;
+}
+
+.descricao {
+	color: #a9b4cc;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.estatistica {
+	display: inline-block;
+	width: 140px;
+	margin-top: 20px;
+}
+
+.numero {
+	color: #e87722;
+	font-size: 26px;
+	font-weight: bold;
+	margin: 0;
+}
+
+.legenda {
+	color: #a9b4cc;
+	font-size: 12px;
+	margin: 0;
+}
+
+.rodape-azul {
+	margin-top: 70px;
+}
+
+.rodape-azul p {
+	color: #a9b4cc;
+	font-size: 11px;
+	margin: 3px 0;
+}
+
+.rodape-azul .destaque {
+	color: #e87722;
+	font-weight: bold;
+}
+
+/*  Lado branco (direita)  */
+.formulario {
+	width: 450px;
+	margin-left: 110px;
+	padding-top: 60px;
+}
+
+.titulo-form {
+	color: #0b1a3a;
+	font-size: 34px;
+	margin: 0;
+}
+
+.subtitulo {
+	color: #5b6785;
+	font-size: 14px;
+	margin-top: 10px;
+	margin-bottom: 60px;
+}
+
+.rotulo {
+	color: #0b1a3a;
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 6px;
+}
+
+.campo {
+	width: 436px;
+	height: 38px;
+	margin-bottom: 14px;
+	padding-left: 12px;
+	border: solid 1px #d9dde6;
+	border-radius: 6px;
+	background-color: #f9fafc;
+	font-size: 13px;
+}
+
+.termos {
+	color: #5b6785;
+	font-size: 12px;
+}
+
+.link {
+	color: #e87722;
+	font-size: 12px;
+}
+
+.botao {
+	width: 450px;
+	height: 42px;
+	margin-top: 10px;
+	border: none;
+	border-radius: 6px;
+	background-color: #e87722;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.botao-social {
+	width: 220px;
+	height: 38px;
+	margin-top: 10px;
+	border: solid 1px #d9dde6;
+	border-radius: 6px;
+	background-color: white;
+	color: #0b1a3a;
+	font-size: 13px;
+}
+
+.separador {
+	color: #8a94ab;
+	font-size: 11px;
+	margin-top: 22px;
+}
+
+/* mensagem de erro (div com id) */
+#div_mensagem {
+	color: #d92d20;
+	font-size: 13px;
+	line-height: 20px;
+	margin-top: 10px;
+}
+
+.dica {
+	color: #8a94ab;
+	font-size: 11px;
+	margin-top: 40px;
+}
+
+.troca-pagina {
+	color: #5b6785;
+	font-size: 13px;
+	margin-top: 40px;
+}
