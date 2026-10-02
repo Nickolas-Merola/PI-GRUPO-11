@@ -8,38 +8,58 @@
   </head>
   <body class="fonte">
     <div>
-      <img
-        class="img"
-        src="imgcad.jpg"
-        alt=""
-      />
-      <div class="texto-sobre-imagem">
-        <img src="icone_cores_fortes.png" alt="">
-        <strong style="color: white">Maq</strong><strong style="color: orange">Temp</strong>
+      <img class="img" src="fotomaquina.jpg" alt="" />
+
+      <div class="logo-grande">
+        <img src="imagemlogo.png" alt="" />
+        <strong style="color: white">Maq</strong
+        ><strong style="color: orange">Temp</strong>
+      </div>
+
+      <div class="conteudo-imagem">
+        <span class="tag">TECNOLOGIA IoT PARA INDÚSTRIA</span>
+        <p>
+          Evite paradas não planejadas, proteja seus operadores e tome decisões
+          baseadas em dados em tempo real antes que a falha aconteça.
+        </p>
+      </div>
+
+      <div class="rodape-imagem">
+        <strong style="color: orange">SPTech — São Paulo Tech School</strong
+        ><br />
+        Grupo 7 — Projeto de PI 2026
       </div>
     </div>
-    <h1>Bem vindo de volta!</h1>
-      <h5 class="h5">
-        Acesse seu painel MaqTemp para gerenciar a telemetria e o estado das suas máquinas.
-      </h5>
+
     <div>
-      <span>Login:</span><br>
+      <h1>Bem-vindo de volta!</h1>
+      <h5>
+        Acesse seu painel MaqTemp para gerenciar a telemetria e o estado das
+        suas máquinas.
+      </h5>
+      <span>E-mail corporativo:</span><br />
       <input
         class="input"
-        placeholder="Informe o E-mail"
+        placeholder="exemplo@suaempresa.com.br"
         type="text"
         id="ipt_email"
-      /><br>
-      <span>Informe sua senha:</span><br>
+      /><br />
+      <span>Senha:</span><br />
       <input
         class="input"
-        placeholder="Insira sua senha"
+        placeholder="Digite sua senha"
         type="password"
         id="ipt_senha"
-      /><br>
+      /><br />
+      <div class="esqueceu"><a href="#">Esqueceu sua senha?</a></div>
       <button onclick="entrar()" class="botao">Entrar na plataforma</button>
       <div id="div_mensagem"></div>
+
+      <div class="rodape-form">
+        Não tem uma conta? <a href="cadastro.html">Cadastre-se grátis</a>
+      </div>
     </div>
+
     <script>
       function entrar() {
         let email = ipt_email.value;
@@ -59,4 +79,3 @@
     </script>
   </body>
 </html>
-

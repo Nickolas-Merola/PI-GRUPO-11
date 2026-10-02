@@ -27,7 +27,7 @@
 }
 
 .fonte {
-  font-family: sans-serif
+  font-family: sans-serif;
 }
 
 body {
@@ -84,6 +84,7 @@ span {
   padding: 12px;
   margin-top: 6px;
   margin-bottom: 15px;
+  color: chocolate;
 }
 
 .botao {
@@ -95,9 +96,54 @@ span {
   cursor: pointer;
 }
 
-.validacao {
-  font-size: 13px;
-  color: gray;
-  margin-top: -8px;
+/* Conteúdo em cima da imagem (lado esquerdo) */
+.conteudo-imagem {
+  position: absolute;
+  top: 35%;
+  left: 5%;
+  width: 80%;
+  color: white;
+}
+
+.tag {
+  border: 1px solid orange;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: orange;
+}
+
+.conteudo-imagem h2 {
+  font-size: 36px;
+  margin-top: 20px;
   margin-bottom: 15px;
+}
+
+.conteudo-imagem p {
+  font-size: 16px;
+  color: lightgray;
+  margin-bottom: 30px;
+}
+
+.numeros {
+  display: flex;
+  gap: 30px;
+}
+
+.numero {
+  font-size: 28px;
+  color: orange;
+}
+
+.numeros span {
+  color: lightgray;
+  font-size: 13px;
+}
+
+.rodape-imagem {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  font-size: 12px;
+  color: lightgray;
 }

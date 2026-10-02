@@ -7,27 +7,8 @@
   object-fit: cover;
 }
 
-.texto-sobre-imagem {
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  font-size: 32px;
-  font-weight: bold;
-
-  /* Flexbox para alinhar a logo e o texto */
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Tamanho do ícone */
-.texto-sobre-imagem img {
-  height: 50px;
-  width: auto;
-}
-
 .fonte {
-  font-family: sans-serif
+  font-family: sans-serif;
 }
 
 body {
@@ -35,6 +16,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
 }
 
 body > div {
@@ -46,12 +28,16 @@ body > div {
 /* Lado da imagem */
 body > div:first-child {
   width: 42%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 /* Lado do formulário */
 body > div:last-of-type {
   width: 58%;
-  padding: 60px 90px;
+  min-height: 100vh;
+  padding: 40px 90px;
   box-sizing: border-box;
 }
 
@@ -87,6 +73,98 @@ span {
   border-radius: 8px;
   width: 100%;
   padding: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
+}
+
+/* Logo grande no meio da imagem */
+.logo-grande {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  font-size: 56px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-grande img {
+  height: 110px;
+  width: auto;
+}
+
+/* Tag e texto embaixo da logo */
+.conteudo-imagem {
+  position: absolute;
+  top: 62%;
+  left: 5%;
+  width: 80%;
+  color: white;
+}
+
+.tag {
+  border: 1px solid orange;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: orange;
+}
+
+.conteudo-imagem p {
+  font-size: 16px;
+  color: lightgray;
+  margin-top: 20px;
+}
+
+.rodape-imagem {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  font-size: 12px;
+  color: lightgray;
+}
+
+/* Lado do formulário */
+.esqueceu {
+  text-align: right;
+  font-size: 13px;
+}
+
+.esqueceu a,
+.rodape-form a {
+  color: orange;
+  text-decoration: none;
+}
+
+.ou {
+  text-align: center;
+  font-size: 12px;
+  color: gray;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.botoes-social {
+  display: flex;
+  gap: 15px;
+}
+
+.botao-social {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.rodape-form {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: gray;
 }

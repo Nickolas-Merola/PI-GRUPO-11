@@ -15,6 +15,31 @@
         <strong style="color: white">Maq</strong
         ><strong style="color: orange">Temp</strong>
       </div>
+
+      <div class="conteudo-imagem">
+        <span class="tag">TECNOLOGIA IoT PARA INDÚSTRIA</span>
+        <h2>Crie sua conta e proteja seus ativos industriais hoje</h2>
+        <p>
+          Evite paradas não planejadas, proteja seus operadores e tome decisões
+          baseadas em dados em tempo real antes que a falha aconteça.
+        </p>
+        <div class="numeros">
+          <div>
+            <strong class="numero">24/7</strong><br />
+            <span>Monitoramento Ativo</span>
+          </div>
+          <div>
+            <strong class="numero">&lt; 2s</strong><br />
+            <span>Latência de Alerta</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rodape-imagem">
+        <strong style="color: orange">SPTech — São Paulo Tech School</strong
+        ><br />
+        Grupo 7 — Projeto de PI 2026
+      </div>
     </div>
     <div>
       <h1>Comece agora mesmo</h1>
@@ -33,7 +58,7 @@
       <input
         class="input"
         placeholder="Informe o E-mail"
-        type="email"
+        type="text"
         id="ipt_email"
       /><br />
       <span>Crie uma senha:</span><br />
@@ -71,15 +96,14 @@
           arroba < 1 ||
           ponto < arroba + 2 ||
           ponto == email.length - 1 ||
-          email.indexOf(" ") != -1 ||
-          email.indexOf("@") != email.lastIndexOf("@");
+          email.indexOf(" ") != -1;
 
         if (emailInvalido && senhaInvalida) {
           div_mensagem.innerHTML = `<br>Email e senha incorretos`;
         } else if (emailInvalido) {
           div_mensagem.innerHTML = `<br>Email incorreto`;
         } else if (senhaInvalida) {
-          div_mensagem.innerHTML = `<br>Senha incorreta, é necessario ter no minimo de 8 caracteres e igual a confirmação`;
+          div_mensagem.innerHTML = `<br>Senha incorreta, é necessário ter no mínimo 8 caracteres e ser igual à confirmação`;
         } else {
           div_mensagem.innerHTML = `<br>USUARIO CADASTRADO!`;
         }
