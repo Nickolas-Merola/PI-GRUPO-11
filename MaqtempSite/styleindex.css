@@ -1,0 +1,426 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #0f1f3d;
+    background-color: #ffffff;
+    line-height: 1.6;
+}
+
+h1, h2, h3, .logo {
+    font-family: 'Outfit', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ---------- menu ---------- */
+
+.menu {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    background-color: #0a1a3a;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.logo span {
+    color: #e8761e;
+}
+
+.menu .links {
+    display: flex;
+    gap: 24px;
+}
+
+.menu .links a {
+    color: #b8c2d6;
+    font-size: 14px;
+}
+
+.menu .links a:hover {
+    color: #ffffff;
+}
+
+.botoes {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-login {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+/* ---------- botoes ---------- */
+
+.btn-laranja {
+    display: inline-block;
+    background-color: #e8761e;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-laranja:hover {
+    background-color: #cf6615;
+}
+
+.btn-laranja.grande {
+    padding: 14px 32px;
+    font-size: 15px;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    padding: 96px 48px;
+    background-color: #0a1a3a;
+    background-image: url('HeroSection.png');
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+}
+
+.hero-texto {
+    max-width: 640px;
+}
+
+.selo {
+    display: inline-block;
+    border: 1px solid #e8761e;
+    color: #e8761e;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    color: #b8c2d6;
+    font-size: 17px;
+    margin-bottom: 32px;
+}
+
+.hero-numeros {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.hero-numeros div {
+    border-left: 3px solid #e8761e;
+    padding-left: 20px;
+}
+
+.hero-numeros strong {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 44px;
+    line-height: 1;
+}
+
+.hero-numeros span {
+    color: #b8c2d6;
+    font-size: 14px;
+}
+
+/* ---------- secoes ---------- */
+
+.secao {
+    padding: 80px 48px;
+}
+
+.secao h2 {
+    font-size: 34px;
+    margin-bottom: 12px;
+    max-width: 700px;
+}
+
+.subtitulo {
+    color: #5b6b87;
+    max-width: 700px;
+    margin-bottom: 40px;
+}
+
+.cinza {
+    background-color: #f4f6fa;
+}
+
+.escura {
+    background-color: #0a1a3a;
+    color: #ffffff;
+}
+
+.escura .subtitulo {
+    color: #b8c2d6;
+}
+
+/* ---------- grades e cards ---------- */
+
+.grade {
+    display: grid;
+    gap: 24px;
+}
+
+.grade.tres {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grade.quatro {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.servicos {
+    margin-top: 24px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 28px;
+}
+
+.card.borda {
+    border: 1px solid #e3e8f0;
+}
+
+.card h3,
+.passo h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.card p,
+.passo p {
+    color: #5b6b87;
+    font-size: 15px;
+}
+
+.card p b {
+    color: #0f1f3d;
+}
+
+.card-escuro {
+    background-color: #12254d;
+    border-radius: 8px;
+    padding: 28px;
+    color: #ffffff;
+}
+
+.card-escuro h3 {
+    font-size: 19px;
+    margin-bottom: 8px;
+    color: #e8761e;
+}
+
+.card-escuro p {
+    color: #b8c2d6;
+    font-size: 15px;
+}
+
+.passo {
+    border-top: 3px solid #e8761e;
+    padding-top: 20px;
+}
+
+.numero {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #e8761e;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+/* ---------- simulador ---------- */
+
+.caixa-simulador {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin-top: 40px;
+    padding: 32px;
+    border: 1px solid #e8761e;
+    border-radius: 8px;
+}
+
+.caixa-simulador h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.caixa-simulador p {
+    color: #b8c2d6;
+    max-width: 560px;
+}
+
+/* ---------- contato ---------- */
+
+.contato {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 8px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+input,
+textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #dde3ec;
+    border-radius: 6px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #e8761e;
+}
+
+/* ---------- rodape ---------- */
+
+footer {
+    background-color: #0a1a3a;
+    color: #b8c2d6;
+    padding: 56px 48px 24px;
+    font-size: 14px;
+}
+
+.rodape {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.rodape p {
+    margin-top: 8px;
+}
+
+.rodape h4 {
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.rodape a:not(.logo) {
+    display: block;
+    color: #b8c2d6;
+    margin-bottom: 6px;
+}
+
+.rodape a:not(.logo):hover {
+    color: #e8761e;
+}
+
+.laranja {
+    color: #e8761e;
+}
+
+.direitos {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1d3466;
+    font-size: 13px;
+}
+
+.direitos a {
+    color: #b8c2d6;
+}
+
+/* ---------- celular e tablet ---------- */
+
+@media (max-width: 900px) {
+    .menu .links {
+        display: none;
+    }
+
+    .menu,
+    .hero,
+    .secao,
+    footer {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 56px;
+        padding-bottom: 56px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .grade.tres,
+    .grade.quatro,
+    .contato,
+    .rodape {
+        grid-template-columns: 1fr;
+    }
+
+    .caixa-simulador,
+    .direitos {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
