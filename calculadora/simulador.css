@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #0b1a3a;
+    background: #ffffff;
+}
+
+.tela {
+    display: flex;
+    min-height: 100vh;
+}
+
+.lado-azul {
+    flex: 0 0 41%;
+    color: #ffffff;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    background-image:
+        linear-gradient(rgba(8, 19, 43, 0.55), rgba(8, 19, 43, 0.85)),
+        url('fundoFabrica.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: #08132b;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: auto 0;
+}
+
+.logo-img {
+    width: 90px;
+    height: auto;
+    border-radius: 12px;
+}
+
+.logo-texto {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo-texto span {
+    color: #e87722;
+}
+
+.lado-azul-rodape {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.tag {
+    align-self: flex-start;
+    border: 1px solid #e87722;
+    color: #e87722;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: rgba(232, 119, 34, 0.08);
+}
+
+.lado-azul-rodape p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #c5cde0;
+    max-width: 380px;
+}
+
+.lado-azul-rodape .obs {
+    font-size: 12px;
+    color: #e87722;
+}
+
+.lado-branco {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 56px 32px;
+}
+
+.form-box {
+    width: 100%;
+    max-width: 440px;
+}
+
+.form-box h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0b1a3a;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #6b7385;
+    margin-bottom: 32px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0b1a3a;
+}
+
+.campo input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #0b1a3a;
+    background: #ffffff;
+    border: 1px solid #e3e6ec;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo input::placeholder {
+    color: #a9b0c0;
+}
+
+.campo input:focus {
+    border-color: #e87722;
+    box-shadow: 0 0 0 3px rgba(232, 119, 34, 0.15);
+}
+
+.divisor {
+    height: 0;
+    border-top: 1px solid #e3e6ec;
+    margin: 36px 0 28px;
+    text-align: center;
+}
+
+.divisor span {
+    position: relative;
+    top: -8px;
+    display: inline-block;
+    padding: 0 12px;
+    background: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #6b7385;
+}
+
+.nota {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #6b7385;
+    background: #f7f8fb;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 24px;
+}
+
+.btn-principal {
+    width: 100%;
+    padding: 13px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #e87722;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-principal:hover {
+    background: #d06a1c;
+}
+
+.btn-principal:active {
+    transform: scale(0.98);
+}
+
+#div_exibir {
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 2;
+}
+
+#div_exibir:empty {
+    display: none;
+}
+
+.resultado {
+    padding: 0;
+}
+
+.aviso {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #8a4a12;
+}
+
+@media (max-width: 800px) {
+    .tela {
+        flex-direction: column;
+    }
+
+    .lado-azul {
+        position: static;
+        height: auto;
+        flex: none;
+        padding: 32px 24px;
+        gap: 24px;
+    }
+
+    .logo {
+        margin: 0;
+        justify-content: flex-start;
+    }
+
+    .logo-img {
+        width: 64px;
+    }
+
+    .logo-texto {
+        font-size: 34px;
+    }
+
+    .lado-branco {
+        padding: 32px 20px;
+    }
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro - MaqTemp</title>
+    <link rel="stylesheet" href="simulador.css">
+</head>
+<body>
+    <div class="tela">
+
+        <!-- LADO AZUL -->
+        <div class="lado-azul">
+            <h1 class="logo">
+                <img src="LogoGraphic.svg"  class="logo-img">
+                <span class="logo-texto">Maq<span>Temp</span></span>
+            </h1>
+
+            <div class="lado-azul-rodape">
+                <span class="tag">Simulador financeiro</span>
+                <p>Esse simulador tem como objetivo ajudar você e sua empresa a tomar a decisão correta para o sucesso!</p>
+                <p class="obs">Obs.: contratando nossos serviços de Monitoramento.</p>
+            </div>
+        </div>
+
+        <!-- LADO BRANCO -->
+        <div class="lado-branco">
+            <div class="form-box">
+                <h2>Simule o seu impacto</h2>
+                <p class="subtitulo">Preencha os dados de manutenção da sua indústria.</p>
+
+                <div class="campo">
+                    <label for="ipt_custoReparo">Custo de um reparo (R$)</label>
+                    <input type="number" id="ipt_custoReparo" placeholder="Ex: 300">
+                </div>
+
+                <div class="campo">
+                    <label for="ipt_diaCusto">Custo de um dia de máquina parada (R$)</label>
+                    <input type="number" id="ipt_diaCusto" placeholder="Ex: 900">
+                </div>
+
+                <div class="campo">
+                    <label for="ipt_maquinaParada">Dias que a máquina ficou parada</label>
+                    <input type="number" id="ipt_maquinaParada" placeholder="Ex: 2">
+                </div>
+
+                <div class="campo">
+                    <label for="ipt_qtdOcorrencia">Ocorrências em um período de 30 dias</label>
+                    <input type="number" id="ipt_qtdOcorrencia" placeholder="Ex: 10">
+                </div>
+
+                <div class="divisor"><span>Dados do monitoramento</span></div>
+
+                <div class="campo">
+                    <label for="ipt_qtdMaquinas">Quantas máquinas irão receber o sensor?</label>
+                    <input type="number" id="ipt_qtdMaquinas" placeholder="Ex: 30">
+                </div>
+
+                <p class="nota">
+                    Valores fixos para a simulação (média de mercado):
+                    sensor R$250 · instalação R$400 · equipamentos R$350.
+                </p>
+
+                <button class="btn-principal" onclick="calcular()">Calcular impacto financeiro</button>
+
+                <div id="div_exibir"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function reais(valor){
+            return valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+        }
+
+        function calcular(){
+            let custoReparo = Number(ipt_custoReparo.value);
+            let diaCusto = Number(ipt_diaCusto.value);
+            let maquinaParada = Number(ipt_maquinaParada.value);
+            let qtdOcorrencia = Number(ipt_qtdOcorrencia.value);
+    
+            // calculo do prejuizo de UMA ocorrencia:
+            let prejuizo = custoReparo + (diaCusto * maquinaParada)
+
+            // prejuízo total:
+            let prejuizoTotal = prejuizo * qtdOcorrencia;
+            let qtdMaquinas = Number(ipt_qtdMaquinas.value);
+    
+            // cálculos para a implementação do projeto:
+            let custoSensor = qtdMaquinas * 250;
+            let custoInstalacao = qtdMaquinas * 400;
+            let custoEquipamentos = qtdMaquinas * 350;
+            let investimentoTotal = custoSensor + custoInstalacao + custoEquipamentos;
+
+            // Cálculo de quanto nosso cliente deixar de perder:
+            let potencialPrejuizoEvitado = prejuizoTotal - investimentoTotal;
+            if (potencialPrejuizoEvitado < 0){
+                potencialPrejuizoEvitado = potencialPrejuizoEvitado * -1;
+            }
+
+            //payback, em período de 30 dias:
+            let payback = 'Não é possível calcular (prejuízo total é zero)';
+            if (prejuizoTotal > 0){
+                payback = (investimentoTotal/ prejuizoTotal).toFixed(1) + ' período(s) de 30 dias';
+            }
+
+            // exibição do resultado:
+            let resultado =
+                `<div class="resultado">
+                    <b>Resultado da simulação</b> <br><br>
+                    Prejuízo por ocorrência: <b>${reais(prejuizo)}</b> <br>
+                    Prejuízo total estimado: <b>${reais(prejuizoTotal)}</b> <br>
+                    Investimento inicial: <b>${reais(investimentoTotal)}</b> <br>
+                    Potencial de prejuízo evitado: <b>${reais(potencialPrejuizoEvitado)}</b> <br>
+                    Tempo estimado de retorno: <b>${payback}</b>
+                </div>`;
+
+            if(prejuizoTotal < investimentoTotal){
+                resultado += '<div class="aviso">⚠ O investimento ainda não foi coberto neste período, mas o monitoramento se paga em poucos meses.</div>';
+            }
+
+            div_exibir.innerHTML =  resultado;
+        }
+    </script>
+</body>
+</html>
