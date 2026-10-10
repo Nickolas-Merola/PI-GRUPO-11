@@ -14,9 +14,10 @@ body {
     display: flex;
     position: relative;
     width: 45%;
-    background-image: url(./images/background-img.jpg);
+    background-image: url(../images/background-img.jpg);
     background-size: cover;
     background-position: center;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0 30px;
@@ -61,7 +62,7 @@ input {
 }
 
 .espaco {
-    margin-bottom: 150px;
+    margin-bottom: 170px;
 }
 
 .titulo {
@@ -87,8 +88,8 @@ label {
 
 .logo {
     position: absolute;
-    top: 238px;
-    left: 60px;
+    top: 20px;
+    left: 50px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -96,20 +97,22 @@ label {
     
 }
 .logo img {
-    width: 250px;
+    width: 70px;
     height: auto;
 }
 
 .nome-maq {
-    font-size: 60px;
+    font-size: 28px;
     font-weight: bolder;
     color: #E2E8F0;
+    letter-spacing: -1.0px;
 }
 
 .nome-temp {
-    font-size: 60px;
+    font-size: 28px;
     font-weight: bolder;
     color: #E87722;
+    letter-spacing: -1.0px;
 }
 
 .textos-esquerda {
@@ -117,31 +120,6 @@ label {
     position: relative;
     justify-content: center;
     max-width: 100%;
-    padding-top: 250px;
-}
-.titulo-esquerda {
-    
-    font-size: 48px;
-    font-weight: 800;
-    color: white;
-    letter-spacing: -1.5px;  
-    margin-bottom: 15px;
-    line-height: 1.1;
-}
-
-.paragrafo-esquerda {
-    position: relative;
-    font-size: 18px;
-    color: #94A3B8;
-    line-height: 1.6;
-}
-
-.login-direita {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-    font-size: 14px;
-    color: #64748B;
 }
 
 .texto-laranja {
@@ -158,7 +136,60 @@ label {
     margin-bottom: 2px;
 }
 
+.titulo-esquerda {
+    
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1.5px;  
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.paragrafo-esquerda {
+    position: relative;
+    
+    font-size: 18px;
+    color: #94A3B8;
+    line-height: 1.6;
+}
+
+.login-direita {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #64748B;
+}
+
+.metrica {
+    display: flex;
+    flex-direction: column;
+}
+
+.metricas {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.metrica-numero {
+    font-size: 32px;
+    font-weight: 700;
+    color: #E87722;
+    padding-bottom: 10px;
+}
+
+.metrica-legenda {
+    font-size: 13px;
+    color: #94A3B8;
+}
+
 a {
   text-decoration: none;
 }
 
+.checkbox {
+    width: 15px;
+    height: 15px
+}

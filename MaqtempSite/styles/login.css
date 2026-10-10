@@ -14,7 +14,7 @@ body {
     display: flex;
     position: relative;
     width: 45%;
-    background-image: url(./images/background-img.jpg);
+    background-image: url(../images/background-img.jpg);
     background-size: cover;
     background-position: center;
     flex-direction: column;
@@ -160,5 +160,6 @@ label {
 
 a {
   text-decoration: none;
+  z-index: 1;
 }
 
