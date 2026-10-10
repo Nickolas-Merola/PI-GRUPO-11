@@ -53,6 +53,7 @@ input {
     border: 1px;
     border-color: #E2E8F0;
     border-style: solid;
+    padding-left: 5px;
 }
 .campos {
     width: 100%;
@@ -182,4 +183,13 @@ label {
 .metrica-legenda {
     font-size: 13px;
     color: #94A3B8;
+}
+
+a {
+  text-decoration: none;
+}
+
+.checkbox {
+    width: 15px;
+    height: 15px
 }

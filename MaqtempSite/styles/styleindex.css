@@ -103,7 +103,7 @@ a {
     gap: 48px;
     padding: 96px 48px;
     background-color: #0a1a3a;
-    background-image: url('HeroSection.png');
+    background-image: url('../images/HeroSection.png');
     background-size: cover;
     background-position: center;
     color: #ffffff;
