@@ -164,10 +164,10 @@
     function validarTelefone() {
         let telefone = input_telefone.value.trim();
         let telefoneTipoNumerico = Number(telefone);
-        let telefoneValido = true;
+        telefoneValido = true;
 
 
-        if (isNaN(telefone)) {
+        if (isNaN(telefoneTipoNumerico)) {
             alert("O telefone precisa conter apenas números!");
             telefoneValido = false;
         };
@@ -183,7 +183,7 @@
         let cpfTipoNumerico = Number(cpf); 
         cpfValido = true;
 
-        if (isNaN(numero)) {
+        if (isNaN(cpfTipoNumerico)) {
             alert("O CPF precisa conter apenas números!");
             cpfValido = false;
         };
@@ -210,7 +210,7 @@
             validarSenha();
             validarEmail();
             validarCpf();
-            validarEmail();
+            validarTelefone();
 
             if(!checkbox) {
             alert("Você precisa aceitar os termos de uso!")
