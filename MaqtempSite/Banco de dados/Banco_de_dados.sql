@@ -58,10 +58,10 @@ INSERT INTO Locais (nomeLocal, cidade, rua, bairro, numero, cep, fkEmpresa) VALU
 CREATE TABLE usuario (
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     NomeCompleto VARCHAR(100) NOT NULL,
-    fkLocal INT NOT NULL,
+    fkLocal INT,
     email VARCHAR(100) UNIQUE,
     cpf CHAR(11) NOT NULL UNIQUE,
-    numero VARCHAR(15) NOT NULL UNIQUE,
+    telefone VARCHAR(15) NOT NULL UNIQUE,
     dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     senha VARCHAR(255) NOT NULL,
     statuss VARCHAR(10) DEFAULT 'Ativo',
@@ -72,7 +72,7 @@ CREATE TABLE usuario (
     FOREIGN KEY (fkResponsavel) REFERENCES usuario(idUsuario)
 );
 
-INSERT INTO usuario (NomeCompleto, fkLocal, email, cpf, numero, senha, statuss, fkResponsavel) VALUES
+INSERT INTO usuario (NomeCompleto, fkLocal, email, cpf, telefone, senha, statuss, fkResponsavel) VALUES
 ('Felipe Santos Silva', 1, 'felipe.santos@outlook.com', '12345678901', '11999998888', 'senha123', 'Ativo', NULL),
 ('Cecilia Fernandes', 1, 'cecilia.fernandes@outlook.com', '12345678902', '11999997777', 'senha123', 'Ativo', 1),
 ('Rafael Lima', 3, 'rafael.lima@outlook.com', '12345678903', '19999996666', 'senha123', 'Ativo', NULL);

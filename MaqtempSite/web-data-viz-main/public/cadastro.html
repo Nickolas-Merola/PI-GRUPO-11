@@ -42,12 +42,19 @@
             <div class="campos">
                 <h1 class="titulo">Comece agora mesmo</h1>
                 <p class="p1">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35</p>
+
                 <label for="input_nome">Nome Completo</label> <br>
-                <input type="text" id="input_nome" placeholder="Digite seu nome completo"> <br>
+                <input type="text" id="input_nome" placeholder="Digite seu nome completo"><br>
+
+                <label for="input_nome">CPF</label> <br>
+                <input type="text" id="input_cpf" placeholder="Informe seu CPF"><br>
+
+                <label for="input_nome">Telefone</label> <br>
+                <input type="text" id="input_telefone" placeholder="(DD)99999-9999"><br>
 
                 <label for="input_email">E-mail corporativo</label> <br>
                 <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
-    
+
                 <label for="input_senha">Crie uma senha</label> <br>
                 <input type="text" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
 
@@ -55,8 +62,9 @@
                 <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
              
                 <span>
-                <input type="checkbox" class="checkbox">Li e aceito os Termos de Uso e as Políticas de Privacidade.
+                <input type="checkbox" class="checkbox" id="input_checkbox">Li e aceito os Termos de Uso e as Políticas de Privacidade.
                 </span><br>
+
                 <button onclick="cadastrar()" class="botao">Criar minha conta</button>
                 <p class="login-direita">Já possui uma conta?<a href="login.html"> <b style="color: #f0822f;"> Faça login</b></a></p>
 
@@ -76,6 +84,9 @@
         let temLetraMaiuscula = false;
         let senhaTemSeguranca = false;
         let emailValido;
+        let cpfValido;
+        let telefoneValido;
+
     function validarSenha() {
         let senha = input_senha.value;
         let confirmacaoSenha = input_confirmarSenha.value;
@@ -87,20 +98,20 @@
             temCaracteres = true;
         } else {
             temCaracteres = false;
-            alert("A senha precisa conter 8 caracteres");
+            alert("A senha precisa conter 8 caracteres!");
         }
 
         if (senha != senha.toLowerCase()) {
             temLetraMaiuscula = true;
         } else {
             temLetraMaiuscula = false;
-            alert("A senha precisa conter letra maiúscula");
+            alert("A senha precisa conter letra maiúscula!");
         }
 
         if (senha != senha.toUpperCase()) {
             temLetraMinuscula = true;
         } else {
-            alert("A senha precisa conter letra minúscula");
+            alert("A senha precisa conter letra minúscula!");
             temLetraMinuscula = false;
         }
 
@@ -113,11 +124,11 @@
 
         if (!temCharEspecial) {
             temCharEspecial = false;
-            alert("A senha precisa conter caracter especial");
+            alert("A senha precisa conter caracter especial!");
         } 
 
         if (senha != confirmacaoSenha) {
-            alert("As senhas não coincidem");
+            alert("As senhas não coincidem!");
             senhaConfirmada = false;
         }
 
@@ -130,7 +141,7 @@
     }
 
     function validarEmail() {
-        let email = input_email.value;
+        let email = input_email.value.trim();
         emailValido = true;
 
         if(!email.includes('@'))  {
@@ -150,19 +161,62 @@
         }
     }
 
+    function validarTelefone() {
+        let telefone = input_telefone.value.trim();
+        let telefoneTipoNumerico = Number(telefone);
+        let telefoneValido = true;
+
+
+        if (isNaN(telefone)) {
+            alert("O telefone precisa conter apenas números!");
+            telefoneValido = false;
+        };
+
+        if (telefone.length != 11) {
+            alert("O telefone precisa ser composto por 11 números!");
+            telefoneValido = false;
+        };
+    };
+
+    function validarCpf() {
+        let cpf = input_cpf.value.trim(); 
+        let cpfTipoNumerico = Number(cpf); 
+        cpfValido = true;
+
+        if (isNaN(numero)) {
+            alert("O CPF precisa conter apenas números!");
+            cpfValido = false;
+        };
+
+        if (cpf.length != 11) {
+            alert("Digite apenas os 11 dÍgitos do CPF!");
+            cpfValido = false;
+        };
+    };
+
     function cadastrar() {
-        let nomeCompleto = input_nome.value;
+        let nomeCompleto = input_nome.value.trim();
         let senha = input_senha.value;
         let confirmacaoSenha = input_confirmarSenha.value;
-        let email = input_email.value;
+        let email = input_email.value.trim();
+        let cpf = input_cpf.value.trim();
+        let telefone = input_telefone.value.trim();
+        let checkbox = input_checkbox.checked;
 
-        if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "") {
+        if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "" || telefone == "" || cpf == "") {
             alert("Todos os campos precisam ser preenchidos!")
         } else {
+
             validarSenha();
             validarEmail();
+            validarCpf();
+            validarEmail();
 
-            if (senhaTemSeguranca && emailValido) {
+            if(!checkbox) {
+            alert("Você precisa aceitar os termos de uso!")
+        }
+
+            if (senhaTemSeguranca && emailValido && cpfValido && telefoneValido && checkbox) {
             fetch("/usuarios/cadastrar", {
             method: "POST",
             headers: {
@@ -172,6 +226,8 @@
             // crie um atributo que recebe o valor recuperado aqui
             // Agora vá para o arquivo routes/usuario.js
             nomeServer: nomeCompleto,
+            cpfServer: cpf,
+            telefoneServer: telefone,
             emailServer: email,
             senhaServer: senha,
             confirmacaoServer: confirmacaoSenha
