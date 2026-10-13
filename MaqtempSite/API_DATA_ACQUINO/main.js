@@ -9,7 +9,7 @@ const SERVIDOR_PORTA = 3300;
 
 const porta = process.env.PORT;
 const senha = process.env.SENHA;
-const user = process.env.USER;
+const user = process.env.USERAPI;
 
 // habilita ou desabilita a inserção de dados no banco de dados
 const HABILITAR_OPERACAO_INSERIR = true;
@@ -22,17 +22,16 @@ const HABILITAR_SENSORES_SIMULADOS = true;
 // função para comunicação serial
 const serial = async (
     valoresLm35,
-    valoresTcrt5000,
 ) => {
 
     // conexão com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
             host: '127.0.0.1',
-            user: 'data_aquino',
-            password: 'Senha_api1',
-            database: 'ArqComp',
-            port: 3306
+            user: user,
+            password: senha,
+            database: 'maqtemp',
+            port: porta
         }
     ).promise();
 
@@ -45,36 +44,34 @@ const serial = async (
 
         // armazena os valores dos sensores nos arrays correspondentes
         valoresLm35.push(lm35);
-        valoresTcrt5000.push(tcrt5000);
 
         const classificarTemperatura = (temperatura) => {
                 if (temperatura >= 18 && temperatura <= 27) {
-                    return 'ideal';
+                    return 'Normal';
                 }
                 if ((temperatura >= 15 && temperatura < 18) || (temperatura > 27 && temperatura <= 32)) {
-                    return 'atencao';
+                    return 'Atenção';
                 }
-                return 'risco';
+                return 'Alerta';
             };
 
         // insere os dados no banco de dados (se habilitado)
-        const ACRESCIMO_SALA_2 = 10
-        const ACRESCIMO_SALA_3 = 20
         if (HABILITAR_OPERACAO_INSERIR) {
-            const temp_salas = [
-                lm35,
-                lm35 + ACRESCIMO_SALA_2,
-                lm35 + ACRESCIMO_SALA_3
-            ]
+            const ACRESCIMO_POR_SENSOR = 10
+            const [linhas] = await poolBancoDados.execute(
+                `SELECT COUNT(idSensor) AS total FROM sensores`
+            );
+            // no contexto real vc usaria o select com where para pegar o sensor daquele usuario e vai atualizando com cada sensor
+            const total = linhas[0].total
             let contador = 1
-            while(contador<=3){
-                let temperatura = temp_salas[contador-1]
+            while(contador<=total){
+                let temperatura = lm35 + (contador - 1) * ACRESCIMO_POR_SENSOR
                 await poolBancoDados.execute(
-                'INSERT INTO medida (lm35_temperatura,chave,idSala) VALUES (?,?,?)',
-                [temp_salas[contador-1], tcrt5000,contador]
+                'INSERT INTO leituraTemperatura (fkSensor,fkMotor,temperatura,situacao) VALUES (?,?,?,?)',
+                [contador, contador ,temperatura,classificarTemperatura(temperatura)]
                 );
-                console.log(`valores da sala ${contador} inseridos no banco: , ${temperatura}, ${tcrt5000}`);
-                console.log(`Sala ${contador} | ${temperatura.toFixed(2)} ºC | ${classificarTemperatura(temperatura)}`)
+                console.log(`valores do sensor ${contador} inseridos no banco: , ${temperatura}`);
+                console.log(`Sensor ${contador} | ${temperatura.toFixed(2)} ºC | ${classificarTemperatura(temperatura)}`)
                 contador++
             }
                       }
@@ -122,8 +119,7 @@ const serial = async (
 
 // função para criar e configurar o servidor web
 const servidor = (
-    valoresLm35,
-    valoresTcrt5000
+    valoresLm35
 ) => {
     const app = express();
 
@@ -143,26 +139,20 @@ const servidor = (
     app.get('/sensores/lm35', (_, response) => {
         return response.json(valoresLm35);
     });
-    app.get('/sensores/tcrt5000', (_, response) => {
-        return response.json(valoresTcrt5000);
-    });
 }
 
 // função principal assíncrona para iniciar a comunicação serial e o servidor web
 (async () => {
     // arrays para armazenar os valores dos sensores
     const valoresLm35 = [];
-    const valoresTcrt5000 = [];
 
     // inicia a comunicação serial
     await serial(
-        valoresLm35,
-        valoresTcrt5000
+        valoresLm35
     );
 
     // inicia o servidor web
     servidor(
-        valoresLm35,
-        valoresTcrt5000
+        valoresLm35
     );
 })();
