@@ -84,9 +84,9 @@
     <div class="topo">
       <div><b>Graphics</b> | Atualizado às <span id="hora">--:--:--</span></div>
       <select id="fMotor">
-        <option value="0">Motor 1 (fictício)</option>
-        <option value="1">Motor 2 (fictício)</option>
-        <option value="2" selected>Motor 3 (sensor)</option>
+        <option value="0">Motor 1</option>
+        <option value="1">Motor 2</option>
+        <option value="2" selected>Motor 3</option>
       </select>
     </div>
 
@@ -134,10 +134,12 @@
       var API = "http://localhost:3300";
       var MAX_PONTOS = 10;
 
+      var ACRESCIMO_POR_SENSOR = 10; // precisa ser igual ao do main.js
+
       var motores = [
-        { nome: "Motor 1", origem: "ficticio", leitura: 72 },
-        { nome: "Motor 2", origem: "ficticio", leitura: 84 },
-        { nome: "Motor 3", origem: "sensor", leitura: 0 },
+        { nome: "Motor 1" },
+        { nome: "Motor 2" },
+        { nome: "Motor 3" },
       ];
 
       // histórico curto de cada motor (só para o gráfico)
@@ -270,8 +272,7 @@
       function trocarMotor() {
         motorAtual = parseInt(el("fMotor").value);
         var m = motores[motorAtual];
-        el("nomeMotor").innerText =
-          m.nome + (m.origem == "sensor" ? " (sensor)" : " (fictício)");
+        el("nomeMotor").innerText = m.nome;
         desenharGrafico();
         mostrarAtual();
         buscarKpis();
@@ -286,27 +287,20 @@
             var novos = valores.slice(paginacao);
             paginacao = valores.length;
 
-            novos.forEach((valor) => registrar(2, parseFloat(valor)));
+            // mesma regra do banco: motor N = lm35 + (N-1) * 10
+            novos.forEach((valor) => {
+              [0, 1, 2].forEach((i) =>
+                registrar(i, parseFloat(valor) + i * ACRESCIMO_POR_SENSOR),
+              );
+            });
 
-            if (novos.length > 0 && motorAtual == 2) {
+            if (novos.length > 0) {
               desenharGrafico();
               mostrarAtual();
             }
           })
           .catch((error) => console.error("Erro ao obter dados:", error));
       }
-
-      // motores fictícios: leitura nova a cada 3 segundos
-      setInterval(() => {
-        [0, 1].forEach((i) => {
-          var variacao = Math.random() * 8 - 4;
-          registrar(i, Math.round((motores[i].leitura + variacao) * 10) / 10);
-        });
-        if (motorAtual != 2) {
-          desenharGrafico();
-          mostrarAtual();
-        }
-      }, 3000);
 
       setInterval(obterDados, 2000);
       setInterval(buscarKpis, 2000);

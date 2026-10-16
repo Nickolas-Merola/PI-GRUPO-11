@@ -1,8 +1,8 @@
 // importa as bibliotecas necessárias
-const serialport = require("serialport");
-const express = require("express");
-const mysql = require("mysql2");
-require("dotenv").config();
+const serialport = require('serialport');
+const express = require('express');
+const mysql = require('mysql2');
+require('dotenv').config();
 
 // constantes para configurações
 const SERIAL_BAUD_RATE = 9600;
@@ -21,170 +21,157 @@ const HABILITAR_SENSORES_SIMULADOS = true;
 
 const ACRESCIMO_POR_SENSOR = 10;
 
+// faixas usadas nos KPIs (as mesmas do dashboard)
+const LIMITE_AVISO = 80;
+const LIMITE_EMERGENCIA = 90;
+
 // pool único, compartilhado pela leitura serial E pelo servidor (KPIs)
-const poolBancoDados = mysql
-  .createPool({
-    host: "127.0.0.1",
+const poolBancoDados = mysql.createPool({
+    host: '127.0.0.1',
     user: user,
     password: senha,
-    database: "maqtemp",
-    port: portaBanco,
-  })
-  .promise();
+    database: 'maqtemp',
+    port: portaBanco
+}).promise();
 
 const classificarTemperatura = (temperatura) => {
-  if (temperatura >= 18 && temperatura <= 27) {
-    return "Normal";
-  }
-  if (
-    (temperatura >= 15 && temperatura < 18) ||
-    (temperatura > 27 && temperatura <= 32)
-  ) {
-    return "Atenção";
-  }
-  return "Alerta";
+    if (temperatura >= 18 && temperatura <= 27) {
+        return 'Normal';
+    }
+    if ((temperatura >= 15 && temperatura < 18) || (temperatura > 27 && temperatura <= 32)) {
+        return 'Atenção';
+    }
+    return 'Alerta';
 };
 
 // função para comunicação serial
 const serial = async (valoresLm35) => {
-  // trata uma linha no formato "digital;analogico", vinda do Arduino ou do simulador
-  const tratarLinha = async (data) => {
-    try {
-      console.log(data);
-      const valores = data.split(";");
-      const lm35 = parseFloat(valores[1]);
 
-      if (isNaN(lm35)) return; // ignora linha quebrada
+    // trata uma linha no formato "digital;analogico", vinda do Arduino ou do simulador
+    const tratarLinha = async (data) => {
+        try {
+            console.log(data);
+            const valores = data.split(';');
+            const lm35 = parseFloat(valores[1]);
 
-      valoresLm35.push(lm35);
+            if (isNaN(lm35)) return; // ignora linha quebrada
 
-      if (HABILITAR_OPERACAO_INSERIR) {
-        const [linhas] = await poolBancoDados.execute(
-          `SELECT COUNT(idSensor) AS total FROM sensores`,
-        );
-        // no contexto real você usaria o select com where para pegar o sensor daquele usuário
-        const total = linhas[0].total;
+            valoresLm35.push(lm35);
 
-        for (let contador = 1; contador <= total; contador++) {
-          const temperatura = lm35 + (contador - 1) * ACRESCIMO_POR_SENSOR;
-          const situacao = classificarTemperatura(temperatura);
+            if (HABILITAR_OPERACAO_INSERIR) {
+                const [linhas] = await poolBancoDados.execute(
+                    `SELECT COUNT(idSensor) AS total FROM sensores`
+                );
+                // no contexto real você usaria o select com where para pegar o sensor daquele usuário
+                const total = linhas[0].total;
 
-          await poolBancoDados.execute(
-            "INSERT INTO leituraTemperatura (fkSensor,fkMotor,temperatura,situacao) VALUES (?,?,?,?)",
-            [contador, contador, temperatura, situacao],
-          );
-          console.log(
-            `Sensor ${contador} | ${temperatura.toFixed(2)} ºC | ${situacao}`,
-          );
+                for (let contador = 1; contador <= total; contador++) {
+                    const temperatura = lm35 + (contador - 1) * ACRESCIMO_POR_SENSOR;
+                    const situacao = classificarTemperatura(temperatura);
+
+                    await poolBancoDados.execute(
+                        'INSERT INTO leituraTemperatura (fkSensor,fkMotor,temperatura,situacao) VALUES (?,?,?,?)',
+                        [contador, contador, temperatura, situacao]
+                    );
+                    console.log(`Sensor ${contador} | ${temperatura.toFixed(2)} ºC | ${situacao}`);
+                }
+            }
+        } catch (erro) {
+            // sem isso, um erro de banco derruba o Node inteiro
+            console.error('Erro ao tratar linha:', erro.message);
         }
-      }
-    } catch (erro) {
-      // sem isso, um erro de banco derruba o Node inteiro
-      console.error("Erro ao tratar linha:", erro.message);
+    };
+
+    // modo simulado: gera uma linha por segundo, no mesmo formato que o Arduino envia
+    if (HABILITAR_SENSORES_SIMULADOS) {
+        console.log('*** MODO SIMULADO: os dados são falsos, o Arduino NÃO está sendo lido ***');
+        setInterval(() => {
+            const tcrt5000 = Math.round(Math.random());
+            const lm35 = (18 + Math.random() * 4).toFixed(2);
+            tratarLinha(`${tcrt5000};${lm35}`);
+        }, 1000);
+        return;
     }
-  };
 
-  // modo simulado: gera uma linha por segundo, no mesmo formato que o Arduino envia
-  if (HABILITAR_SENSORES_SIMULADOS) {
-    console.log(
-      "*** MODO SIMULADO: os dados são falsos, o Arduino NÃO está sendo lido ***",
-    );
-    setInterval(() => {
-      const tcrt5000 = Math.round(Math.random());
-      const lm35 = (18 + Math.random() * 4).toFixed(2);
-      tratarLinha(`${tcrt5000};${lm35}`);
-    }, 1000);
-    return;
-  }
+    // lista as portas seriais disponíveis e procura pelo Arduino
+    const portas = await serialport.SerialPort.list();
+    const portaArduino = portas.find((p) => p.vendorId == 2341 && p.productId == 43);
+    if (!portaArduino) {
+        throw new Error('O arduino não foi encontrado em nenhuma porta serial');
+    }
 
-  // lista as portas seriais disponíveis e procura pelo Arduino
-  const portas = await serialport.SerialPort.list();
-  const portaArduino = portas.find(
-    (p) => p.vendorId == 2341 && p.productId == 43,
-  );
-  if (!portaArduino) {
-    throw new Error("O arduino não foi encontrado em nenhuma porta serial");
-  }
+    const arduino = new serialport.SerialPort({
+        path: portaArduino.path,
+        baudRate: SERIAL_BAUD_RATE
+    });
 
-  const arduino = new serialport.SerialPort({
-    path: portaArduino.path,
-    baudRate: SERIAL_BAUD_RATE,
-  });
+    arduino.on('open', () => {
+        console.log(`A leitura do arduino foi iniciada na porta ${portaArduino.path} utilizando Baud Rate de ${SERIAL_BAUD_RATE}`);
+    });
 
-  arduino.on("open", () => {
-    console.log(
-      `A leitura do arduino foi iniciada na porta ${portaArduino.path} utilizando Baud Rate de ${SERIAL_BAUD_RATE}`,
-    );
-  });
+    arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', tratarLinha);
 
-  arduino
-    .pipe(new serialport.ReadlineParser({ delimiter: "\r\n" }))
-    .on("data", tratarLinha);
-
-  arduino.on("error", (mensagem) => {
-    console.error(`Erro no arduino (Mensagem: ${mensagem})`);
-  });
+    arduino.on('error', (mensagem) => {
+        console.error(`Erro no arduino (Mensagem: ${mensagem})`);
+    });
 };
 
 // função para criar e configurar o servidor web
 const servidor = (valoresLm35) => {
-  const app = express();
+    const app = express();
 
-  app.use((request, response, next) => {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header(
-      "Access-Control-Allow-Headers",
-      "Origin, Content-Type, Accept",
-    );
-    next();
-  });
+    app.use((request, response, next) => {
+        response.header('Access-Control-Allow-Origin', '*');
+        response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+        next();
+    });
 
-  app.listen(SERVIDOR_PORTA, () => {
-    console.log(`API executada com sucesso na porta ${SERVIDOR_PORTA}`);
-  });
+    app.listen(SERVIDOR_PORTA, () => {
+        console.log(`API executada com sucesso na porta ${SERVIDOR_PORTA}`);
+    });
 
-  // leituras em tempo real (vem da memória, alimenta o gráfico)
-  app.get("/sensores/lm35", (_, response) => {
-    return response.json(valoresLm35);
-  });
+    // leituras em tempo real (vem da memória, alimenta o gráfico)
+    app.get('/sensores/lm35', (_, response) => {
+        return response.json(valoresLm35);
+    });
 
-  // KPIs de um motor (vêm do banco, alimentam os cards)
-  app.get("/kpis/:motor", async (request, response) => {
-    const motor = parseInt(request.params.motor);
-    if (isNaN(motor)) {
-      return response.status(400).json({ erro: "motor inválido" });
-    }
+    // KPIs de um motor (vêm do banco, alimentam os cards)
+    app.get('/kpis/:motor', async (request, response) => {
+        const motor = parseInt(request.params.motor);
+        if (isNaN(motor)) {
+            return response.status(400).json({ erro: 'motor inválido' });
+        }
 
-    try {
-      const [linhas] = await poolBancoDados.execute(
-        `SELECT
+        try {
+            const [linhas] = await poolBancoDados.execute(
+                `SELECT
                     MAX(temperatura)                         AS maxima,
                     AVG(temperatura)                         AS media,
-                    COALESCE(SUM(situacao = 'Alerta'), 0)    AS alertas,
-                    COALESCE(ROUND(100 * SUM(situacao <> 'Normal') / COUNT(*)), 0) AS risco,
+                    COALESCE(SUM(temperatura > ?), 0)        AS alertas,
+                    COALESCE(ROUND(100 * SUM(temperatura >= ?) / COUNT(*)), 0) AS risco,
                     COUNT(*)                                 AS total
                  FROM leituraTemperatura
                  WHERE fkMotor = ?`,
-        [motor],
-      );
+                [LIMITE_EMERGENCIA, LIMITE_AVISO, motor]
+            );
 
-      const k = linhas[0];
-      return response.json({
-        maxima: k.maxima === null ? null : Number(k.maxima),
-        media: k.media === null ? null : Number(k.media),
-        alertas: Number(k.alertas),
-        risco: Number(k.risco),
-        total: Number(k.total),
-      });
-    } catch (erro) {
-      console.error("Erro ao buscar KPIs:", erro.message);
-      return response.status(500).json({ erro: "falha ao consultar o banco" });
-    }
-  });
+            const k = linhas[0];
+            return response.json({
+                maxima: k.maxima === null ? null : Number(k.maxima),
+                media: k.media === null ? null : Number(k.media),
+                alertas: Number(k.alertas),
+                risco: Number(k.risco),
+                total: Number(k.total)
+            });
+        } catch (erro) {
+            console.error('Erro ao buscar KPIs:', erro.message);
+            return response.status(500).json({ erro: 'falha ao consultar o banco' });
+        }
+    });
 };
 
 (async () => {
-  const valoresLm35 = [];
-  await serial(valoresLm35);
-  servidor(valoresLm35);
+    const valoresLm35 = [];
+    await serial(valoresLm35);
+    servidor(valoresLm35);
 })();
