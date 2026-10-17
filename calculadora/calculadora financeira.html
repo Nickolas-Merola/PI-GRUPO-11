@@ -26,40 +26,23 @@
         <!-- LADO BRANCO -->
         <div class="lado-branco">
             <div class="form-box">
-                <h2>Simule o seu impacto</h2>
+                <h2>Quanto sua indústria deixa de perder com o MaqTemp</h2>
                 <p class="subtitulo">Preencha os dados de manutenção da sua indústria.</p>
 
                 <div class="campo">
+                    <label for="ipt_paradasAno">Quantas vezes por ano os motores param por superaquecimento</label>
+                    <input type="number" id="ipt_paradasAno" placeholder="Ex: 4" min="0">
+                </div>
+
+                <div class="campo">
                     <label for="ipt_custoReparo">Custo de um reparo (R$)</label>
-                    <input type="number" id="ipt_custoReparo" placeholder="Ex: 300">
+                    <input type="number" id="ipt_custoReparo" placeholder="Ex: 1500" min="0">
                 </div>
 
                 <div class="campo">
                     <label for="ipt_diaCusto">Custo de um dia de máquina parada (R$)</label>
-                    <input type="number" id="ipt_diaCusto" placeholder="Ex: 900">
+                    <input type="number" id="ipt_diaCusto" placeholder="Ex: 5000" min="0">
                 </div>
-
-                <div class="campo">
-                    <label for="ipt_maquinaParada">Dias que a máquina ficou parada</label>
-                    <input type="number" id="ipt_maquinaParada" placeholder="Ex: 2">
-                </div>
-
-                <div class="campo">
-                    <label for="ipt_qtdOcorrencia">Ocorrências em um período de 30 dias</label>
-                    <input type="number" id="ipt_qtdOcorrencia" placeholder="Ex: 10">
-                </div>
-
-                <div class="divisor"><span>Dados do monitoramento</span></div>
-
-                <div class="campo">
-                    <label for="ipt_qtdMaquinas">Quantas máquinas irão receber o sensor?</label>
-                    <input type="number" id="ipt_qtdMaquinas" placeholder="Ex: 30">
-                </div>
-
-                <p class="nota">
-                    Valores fixos para a simulação (média de mercado):
-                    sensor R$250 · instalação R$400 · equipamentos R$350.
-                </p>
 
                 <button class="btn-principal" onclick="calcular()">Calcular impacto financeiro</button>
 
@@ -70,57 +53,54 @@
     </div>
 
     <script>
-        function reais(valor){
-            return valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-        }
-
         function calcular(){
+            let paradasAno = Number(ipt_paradasAno.value);
             let custoReparo = Number(ipt_custoReparo.value);
             let diaCusto = Number(ipt_diaCusto.value);
-            let maquinaParada = Number(ipt_maquinaParada.value);
-            let qtdOcorrencia = Number(ipt_qtdOcorrencia.value);
-    
-            // calculo do prejuizo de UMA ocorrencia:
-            let prejuizo = custoReparo + (diaCusto * maquinaParada)
 
-            // prejuízo total:
-            let prejuizoTotal = prejuizo * qtdOcorrencia;
-            let qtdMaquinas = Number(ipt_qtdMaquinas.value);
-    
-            // cálculos para a implementação do projeto:
-            let custoSensor = qtdMaquinas * 250;
-            let custoInstalacao = qtdMaquinas * 400;
-            let custoEquipamentos = qtdMaquinas * 350;
-            let investimentoTotal = custoSensor + custoInstalacao + custoEquipamentos;
+            if (ipt_paradasAno.value == '' || ipt_custoReparo.value == '' || ipt_diaCusto.value == ''){
+                // campos vazios
+                div_exibir.innerHTML = '<div class="aviso">⚠ Preencha todos os campos para calcular.</div>';
+            } else if (paradasAno < 0 || custoReparo < 0 || diaCusto < 0){
+                // valores negativos
+                div_exibir.innerHTML = '<div class="aviso">⚠ Não use valores negativos.</div>';
+            } else {
+                // cada falha deixa a máquina parada por 1 dia
+                let diasParada = 1;
 
-            // Cálculo de quanto nosso cliente deixar de perder:
-            let potencialPrejuizoEvitado = prejuizoTotal - investimentoTotal;
-            if (potencialPrejuizoEvitado < 0){
-                potencialPrejuizoEvitado = potencialPrejuizoEvitado * -1;
+                // redução de custo com estratégias preditivas: 25% a 30%
+                // aplicada à manutenção e também à produção parada
+                let reducaoMinima = 25;
+                let reducaoMaxima = 30;
+
+                // prejuízo que o cliente teve com as paradas no ano
+                let prejuizoParada = custoReparo + (diasParada * diaCusto);
+                let prejuizoAno = prejuizoParada * paradasAno;
+
+                // parte do prejuízo que vem da manutenção (reparos) e da produção parada
+                let manutencaoAno = custoReparo * paradasAno;
+                let producaoAno = diasParada * diaCusto * paradasAno;
+
+                // economia com o monitoramento em cada parte
+                let economiaManutMin = manutencaoAno * (reducaoMinima / 100);
+                let economiaManutMax = manutencaoAno * (reducaoMaxima / 100);
+                let economiaProdMin = producaoAno * (reducaoMinima / 100);
+                let economiaProdMax = producaoAno * (reducaoMaxima / 100);
+
+                // economia total
+                let economiaTotalMin = economiaManutMin + economiaProdMin;
+                let economiaTotalMax = economiaManutMax + economiaProdMax;
+
+                // exibição do resultado
+                div_exibir.innerHTML =
+                    `<div class="resultado">
+                        <b>Resultado da simulação</b> <br><br>
+                        Sem o monitoramento, você perde por ano: <b style="color: #d32f2f;">R$ ${prejuizoAno.toFixed(2)}</b> <br><br>
+                        Economia em manutenção por ano: <b style="color: #2e7d32;">R$ ${economiaManutMin.toFixed(2)} a R$ ${economiaManutMax.toFixed(2)}</b> <br>
+                        Economia em produção por ano: <b style="color: #2e7d32;">R$ ${economiaProdMin.toFixed(2)} a R$ ${economiaProdMax.toFixed(2)}</b> <br><br>
+                        Com o MaqTemp, você economiza por ano: <b style="color: #2e7d32;">R$ ${economiaTotalMin.toFixed(2)} a R$ ${economiaTotalMax.toFixed(2)}</b>
+                    </div>`;
             }
-
-            //payback, em período de 30 dias:
-            let payback = 'Não é possível calcular (prejuízo total é zero)';
-            if (prejuizoTotal > 0){
-                payback = (investimentoTotal/ prejuizoTotal).toFixed(1) + ' período(s) de 30 dias';
-            }
-
-            // exibição do resultado:
-            let resultado =
-                `<div class="resultado">
-                    <b>Resultado da simulação</b> <br><br>
-                    Prejuízo por ocorrência: <b>${reais(prejuizo)}</b> <br>
-                    Prejuízo total estimado: <b>${reais(prejuizoTotal)}</b> <br>
-                    Investimento inicial: <b>${reais(investimentoTotal)}</b> <br>
-                    Potencial de prejuízo evitado: <b>${reais(potencialPrejuizoEvitado)}</b> <br>
-                    Tempo estimado de retorno: <b>${payback}</b>
-                </div>`;
-
-            if(prejuizoTotal < investimentoTotal){
-                resultado += '<div class="aviso">⚠ O investimento ainda não foi coberto neste período, mas o monitoramento se paga em poucos meses.</div>';
-            }
-
-            div_exibir.innerHTML =  resultado;
         }
     </script>
 </body>
