@@ -31,7 +31,7 @@ const poolBancoDados = mysql.createPool({
     user: user,
     password: senha,
     database: 'maqtemp',
-    port: portaBanco
+    port: 3307
 }).promise();
 
 const classificarTemperatura = (temperatura) => {
@@ -52,7 +52,8 @@ const serial = async (valoresLm35) => {
         try {
             console.log(data);
             const valores = data.split(';');
-            const lm35 = parseFloat(valores[1]);
+            // pega o último valor da linha: funciona com "24.53" (Arduino) e "0;24.53" (simulador)
+            const lm35 = parseFloat(valores[valores.length - 1]);
 
             if (isNaN(lm35)) return; // ignora linha quebrada
 

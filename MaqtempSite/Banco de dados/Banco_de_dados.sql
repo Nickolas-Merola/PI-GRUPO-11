@@ -61,7 +61,7 @@ CREATE TABLE usuario (
     fkLocal INT,
     email VARCHAR(100) UNIQUE,
     cpf CHAR(11) NOT NULL UNIQUE,
-    telefone VARCHAR(15) NOT NULL UNIQUE,
+    telefone VARCHAR(11) NOT NULL UNIQUE,
     dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     senha VARCHAR(255) NOT NULL,
     statuss VARCHAR(10) DEFAULT 'Ativo',
