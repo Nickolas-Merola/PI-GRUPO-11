@@ -44,13 +44,12 @@ CREATE TABLE Locais (
     bairro VARCHAR(50),
     numero INT,
     cep CHAR(8),
-    fkEmpresa INT NOT NULL,
+    fkEmpresa INT NOT NULL UNIQUE,
     FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa)
 );
 
 INSERT INTO Locais (nomeLocal, cidade, rua, bairro, numero, cep, fkEmpresa) VALUES
 ('Fábrica Matriz', 'São Paulo', 'Rua Haddock Lobo', 'Consolação', 595, '01414001', 1),
-('Filial Campinas', 'Campinas', 'Av. Norte-Sul', 'Centro', 1200, '13010000', 1),
 ('Unidade Osasco', 'Osasco', 'Av. dos Autonomistas', 'Centro', 800, '06020010', 2);
 
 -- ---------------------------------------------------------------------------------------------------------------------
