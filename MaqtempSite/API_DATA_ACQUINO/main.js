@@ -13,11 +13,11 @@ const senha = process.env.SENHA;
 const user = process.env.USERAPI;
 
 // habilita ou desabilita a inserção de dados no banco de dados
-const HABILITAR_OPERACAO_INSERIR = true;
+const HABILITAR_OPERACAO_INSERIR = false;
 
 // true: gera dados falsos, sem precisar do Arduino (modo treino)
 // false: lê os dados reais do Arduino pela porta serial
-const HABILITAR_SENSORES_SIMULADOS = true;
+const HABILITAR_SENSORES_SIMULADOS = false;
 
 const ACRESCIMO_POR_SENSOR = 10;
 
@@ -45,7 +45,7 @@ const classificarTemperatura = (temperatura) => {
 };
 
 // função para comunicação serial
-const serial = async (valoresLm35) => {
+const serial = async (valoresLm35, ValoresLm35Espelhados) => {
 
     // trata uma linha no formato "digital;analogico", vinda do Arduino ou do simulador
     const tratarLinha = async (data) => {
@@ -54,10 +54,12 @@ const serial = async (valoresLm35) => {
             const valores = data.split(';');
             // pega o último valor da linha: funciona com "24.53" (Arduino) e "0;24.53" (simulador)
             const lm35 = parseFloat(valores[valores.length - 1]);
+            const lm35Espelhado = lm35 + 20;
 
             if (isNaN(lm35)) return; // ignora linha quebrada
 
             valoresLm35.push(lm35);
+            ValoresLm35Espelhados.push(lm35Espelhado);
 
             if (HABILITAR_OPERACAO_INSERIR) {
                 const [linhas] = await poolBancoDados.execute(
@@ -118,7 +120,7 @@ const serial = async (valoresLm35) => {
 };
 
 // função para criar e configurar o servidor web
-const servidor = (valoresLm35) => {
+const servidor = (valoresLm35, ValoresLm35Espelhados) => {
     const app = express();
 
     app.use((request, response, next) => {
@@ -136,43 +138,15 @@ const servidor = (valoresLm35) => {
         return response.json(valoresLm35);
     });
 
-    // KPIs de um motor (vêm do banco, alimentam os cards)
-    app.get('/kpis/:motor', async (request, response) => {
-        const motor = parseInt(request.params.motor);
-        if (isNaN(motor)) {
-            return response.status(400).json({ erro: 'motor inválido' });
-        }
-
-        try {
-            const [linhas] = await poolBancoDados.execute(
-                `SELECT
-                    MAX(temperatura)                         AS maxima,
-                    AVG(temperatura)                         AS media,
-                    COALESCE(SUM(temperatura > ?), 0)        AS alertas,
-                    COALESCE(ROUND(100 * SUM(temperatura >= ?) / COUNT(*)), 0) AS risco,
-                    COUNT(*)                                 AS total
-                 FROM leituraTemperatura
-                 WHERE fkMotor = ?`,
-                [LIMITE_EMERGENCIA, LIMITE_AVISO, motor]
-            );
-
-            const k = linhas[0];
-            return response.json({
-                maxima: k.maxima === null ? null : Number(k.maxima),
-                media: k.media === null ? null : Number(k.media),
-                alertas: Number(k.alertas),
-                risco: Number(k.risco),
-                total: Number(k.total)
-            });
-        } catch (erro) {
-            console.error('Erro ao buscar KPIs:', erro.message);
-            return response.status(500).json({ erro: 'falha ao consultar o banco' });
-        }
+    app.get('/sensores/lm35Espelhados', (_, response) => {
+        return response.json(ValoresLm35Espelhados);
     });
+
 };
 
 (async () => {
     const valoresLm35 = [];
-    await serial(valoresLm35);
-    servidor(valoresLm35);
+    const valoresLm35Espelhados = [];
+    await serial(valoresLm35, valoresLm35Espelhados);
+    servidor(valoresLm35, valoresLm35Espelhados);
 })();
