@@ -8,7 +8,6 @@ require('dotenv').config();
 const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
-const portaBanco = process.env.PORT;
 const senha = process.env.SENHA;
 const user = process.env.USERAPI;
 
@@ -17,7 +16,7 @@ const HABILITAR_OPERACAO_INSERIR = true;
 
 // true: gera dados falsos, sem precisar do Arduino (modo treino)
 // false: lê os dados reais do Arduino pela porta serial
-const HABILITAR_SENSORES_SIMULADOS = true;
+const HABILITAR_SENSORES_SIMULADOS = false;
 
 const ACRESCIMO_POR_SENSOR = 10;
 
@@ -54,8 +53,6 @@ const serial = async (valoresLm35) => {
             const valores = data.split(';');
             // pega o último valor da linha: funciona com "24.53" (Arduino) e "0;24.53" (simulador)
             const lm35 = parseFloat(valores[valores.length - 1]);
-
-            if (isNaN(lm35)) return; // ignora linha quebrada
 
             valoresLm35.push(lm35);
 
@@ -139,10 +136,6 @@ const servidor = (valoresLm35) => {
     // KPIs de um motor (vêm do banco, alimentam os cards)
     app.get('/kpis/:motor', async (request, response) => {
         const motor = parseInt(request.params.motor);
-        if (isNaN(motor)) {
-            return response.status(400).json({ erro: 'motor inválido' });
-        }
-
         try {
             const [linhas] = await poolBancoDados.execute(
                 `SELECT
