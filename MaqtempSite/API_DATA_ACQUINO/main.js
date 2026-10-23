@@ -163,10 +163,11 @@ const servidor = (valoresLm35, ValoresLm35Espelhados) => {
             console.error('Erro ao buscar KPIs:', erro.message);
             return response.status(500).json({ erro: 'falha ao consultar o banco' });
         }
+    });
+
     app.get('/sensores/lm35Espelhados', (_, response) => {
         return response.json(ValoresLm35Espelhados);
     });
-
 };
 
 (async () => {
