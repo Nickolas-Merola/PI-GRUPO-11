@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Graphics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0b132b;
+        color: #0b132b;
+        margin: 0;
+        padding: 20px;
+      }
+      .topo {
+        background: #1c2541;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        border-bottom: 4px solid #e87722;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .topo b {
+        color: #e87722;
+      }
+      select {
+        background: #0b132b;
+        color: white;
+        border: 2px solid #e87722;
+        border-radius: 10px;
+        padding: 8px 14px;
+        font-size: 15px;
+      }
+      .status {
+        background: #1c2541;
+        color: white;
+        padding: 20px 25px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        border-left: 8px solid #e87722;
+      }
+      .status h2 {
+        color: #e87722;
+        margin-top: 0;
+      }
+      .linha {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+      .card {
+        flex: 1;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        border-top: 4px solid #e87722;
+      }
+      .numero {
+        font-size: 40px;
+        font-weight: bold;
+        color: #0b132b;
+      }
+      .verde {
+        color: #2f8a17;
+      }
+      .amarelo {
+        color: #c99600;
+      }
+      .vermelho {
+        color: #d64545;
+      }
+      .cinza {
+        color: #999999;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="topo">
+      <div><b>Graphics</b> | Atualizado às <span id="hora">--:--:--</span></div>
+      <select id="fMotor">
+        <option value="0">Motor 1</option>
+        <option value="1">Motor 2</option>
+        <option value="2" selected>Motor 3</option>
+      </select>
+    </div>
+
+    <div class="status">
+      <h2 id="statusTitulo">Aguardando leitura do sensor...</h2>
+      <span
+        >✔ Normal: abaixo de 80 °C &nbsp;&nbsp; ⚠ Aviso: a partir de 80 °C
+        &nbsp;&nbsp; ⛔ Emergência: acima de 90 °C</span
+      >
+    </div>
+
+    <div class="linha">
+      <div class="card">
+        <span id="nomeMotor">Motor 3</span>
+        <div class="numero cinza" id="tempAtual">-- °C</div>
+        <span id="faixaAtual">Sem leitura</span>
+      </div>
+    </div>
+
+    <!-- KPIs: agora vêm do banco, via API (/kpis/:motor) -->
+    <div class="linha">
+      <div class="card">
+        Temperatura máxima
+        <div class="numero" id="kpiMaxima">90 °C</div>
+      </div>
+      <div class="card">
+        Temperatura média
+        <div class="numero" id="kpiMedia">81 °C</div>
+      </div>
+      <div class="card">
+        Número de alertas
+        <div class="numero" id="kpiAlertas">1</div>
+      </div>
+      <div class="card">
+        Tempo em zona de risco
+        <div class="numero" id="kpiRisco">12%</div>
+      </div>
+    </div>
+
+    <div class="card" style="height: 400px">
+      <canvas id="sensorTemperatura"></canvas>
+    </div>
+
+    <script>
+      var API = "http://localhost:3300";
+      var MAX_PONTOS = 10;
+
+      var ACRESCIMO_POR_SENSOR = 10; // precisa ser igual ao do main.js
+
+      var motores = [
+        { nome: "Motor 1" },
+        { nome: "Motor 2" },
+        { nome: "Motor 3" },
+      ];
+
+      // histórico curto de cada motor (só para o gráfico)
+      var historico = [[], [], []];
+      var ultima = [null, null, null];
+      var motorAtual = 2; // igual ao <option selected>
+      var paginacao = 0; // quantas leituras do sensor já foram lidas
+
+      var el = function (id) {
+        return document.getElementById(id);
+      };
+
+      var grafico = new Chart(el("sensorTemperatura").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Temperatura",
+              data: [],
+              borderColor: "#0B132B",
+              backgroundColor: "rgba(232, 119, 34, 0.15)",
+              pointBackgroundColor: "#E87722",
+              fill: true,
+              tension: 0.3,
+            },
+            {
+              label: "Aviso (80 °C)",
+              data: [],
+              borderColor: "#f0b400",
+              borderDash: [6, 6],
+              pointRadius: 0,
+            },
+            {
+              label: "Emergência (90 °C)",
+              data: [],
+              borderColor: "#d64545",
+              borderDash: [6, 6],
+              pointRadius: 0,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          animation: false,
+          scales: {
+            x: { beginAtZero: true },
+            y: {
+              title: { display: true, text: "Temperatura (°C)" },
+              beginAtZero: true,
+              min: 0,
+              max: 100,
+            },
+          },
+        },
+      });
+
+      function faixaDe(temp) {
+        if (temp > 90) return "emergencia";
+        if (temp >= 80) return "aviso";
+        return "normal";
+      }
+
+      // só guarda a leitura (não mexe na tela)
+      function registrar(i, temp) {
+        ultima[i] = temp;
+        historico[i].push({
+          hora: new Date().toLocaleTimeString("pt-BR"),
+          temp: temp,
+        });
+        if (historico[i].length > MAX_PONTOS) historico[i].shift();
+      }
+
+      // redesenha o gráfico com o histórico do motor selecionado
+      function desenharGrafico() {
+        //var h = historico[motorAtual];
+        var labelsMock = ["10:00", "10:05", "10:10", "10:15", "10:20", "10:25", "10:30"];
+        var temperaturasMock = [68, 70, 73, 76, 83, 85, 91];
+        grafico.data.labels = labelsMock;
+        grafico.data.datasets[0].data = temperaturasMock;
+        grafico.data.datasets[1].data = temperaturasMock.map(() => 80);
+        grafico.data.datasets[2].data = temperaturasMock.map(() => 90);
+        grafico.update();
+      }
+
+      // só mostra a temperatura atual (card + faixa de status)
+      function mostrarAtual() {
+        var temp = 91//ultima[motorAtual];
+        if (temp === null) {
+          el("tempAtual").innerText = "-- °C";
+          el("tempAtual").className = "numero cinza";
+          el("faixaAtual").innerText = "Sem leitura";
+          el("statusTitulo").innerText = "Aguardando leitura do sensor...";
+          return;
+        }
+        var faixa = faixaDe(temp);
+        el("tempAtual").innerText = temp.toFixed(1) + " °C";
+        if (faixa == "normal") {
+          el("tempAtual").className = "numero verde";
+          el("faixaAtual").innerText = "✔ Normal";
+          el("statusTitulo").innerText =
+            motores[motorAtual].nome + " em operação normal";
+        } else if (faixa == "aviso") {
+          el("tempAtual").className = "numero amarelo";
+          el("faixaAtual").innerText = "⚠ Aviso";
+          el("statusTitulo").innerText =
+            "Atenção: " + motores[motorAtual].nome + " aquecendo";
+        } else {
+          el("tempAtual").className = "numero vermelho";
+          el("faixaAtual").innerText = "⛔ Emergência";
+          el("statusTitulo").innerText =
+            "Emergência: ação imediata em " + motores[motorAtual].nome + "!";
+        }
+        el("hora").innerText = "Atualizado às 10:32:29";
+      }
+
+      // KPIs vindos do banco. No banco o fkMotor começa em 1, por isso motorAtual + 1
+    /*function buscarKpis() {
+        fetch(API + "/kpis/" + (motorAtual + 1))
+          .then((r) => r.json())
+          .then((k) => {
+            el("kpiMaxima").innerText =
+              k.maxima === null ? "-- °C" : k.maxima.toFixed(1) + " °C";
+            el("kpiMedia").innerText =
+              k.media === null ? "-- °C" : k.media.toFixed(1) + " °C";
+            el("kpiAlertas").innerText = k.alertas;
+            el("kpiRisco").innerText = k.risco + "%";
+          })
+          .catch((error) => console.error("Erro ao obter KPIs:", error));
+      }*/
+
+      function trocarMotor() {
+        motorAtual = parseInt(el("fMotor").value);
+        var m = motores[motorAtual];
+        el("nomeMotor").innerText = m.nome;
+        desenharGrafico();
+        mostrarAtual();
+        //buscarKpis();
+      }
+      el("fMotor").onchange = trocarMotor;
+
+      // lê o sensor (Motor 3). O endpoint correto é 'lm35'
+    
+       /* function obterDados() {
+        fetch(API + "/sensores/lm35")
+          .then((response) => response.json())
+          .then((valores) => {
+            var novos = valores.slice(paginacao);
+            paginacao = valores.length;
+
+            // mesma regra do banco: motor N = lm35 + (N-1) * 10
+            novos.forEach((valor) => {
+              [0, 1, 2].forEach((i) =>
+                registrar(i, parseFloat(valor) + i * ACRESCIMO_POR_SENSOR),
+              );
+            });
+
+            if (novos.length > 0) {
+              desenharGrafico();
+              mostrarAtual();
+            }
+          })
+          .catch((error) => console.error("Erro ao obter dados:", error));
+      } */
+
+      //setInterval(obterDados, 2000);
+      //setInterval(buscarKpis, 2000);
+
+      trocarMotor();
+    </script>
+  </body>
+</html>
