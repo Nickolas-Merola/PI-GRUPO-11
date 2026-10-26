@@ -138,10 +138,37 @@ const servidor = (valoresLm35, ValoresLm35Espelhados) => {
         return response.json(valoresLm35);
     });
 
+    // KPIs de um motor (vêm do banco, alimentam os cards)
+    app.get('/kpis/:motor', async (request, response) => {
+        const motor = parseInt(request.params.motor);
+        try {
+            const [linhas] = await poolBancoDados.execute(
+                `SELECT
+                    MAX(temperatura)                         AS maxima,
+                    AVG(temperatura)                         AS media,
+                    COALESCE(SUM(temperatura > ?), 0)        AS alertas,
+                    COALESCE(ROUND(100 * SUM(temperatura >= ?) / COUNT(*)), 0) AS risco,
+                    COUNT(*)                                 AS total
+                 FROM leituraTemperatura
+                 WHERE fkMotor = ?`,
+                [LIMITE_EMERGENCIA, LIMITE_AVISO, motor]
+            );
+
+            const k = linhas[0];
+            return response.json({
+                maxima: k.maxima === null ? null : Number(k.maxima),
+                media: k.media === null ? null : Number(k.media),
+                alertas: Number(k.alertas),
+                risco: Number(k.risco),
+                total: Number(k.total)
+            });
+        } catch (erro) {
+            console.error('Erro ao buscar KPIs:', erro.message);
+            return response.status(500).json({ erro: 'falha ao consultar o banco' });
+        }
     app.get('/sensores/lm35Espelhados', (_, response) => {
         return response.json(ValoresLm35Espelhados);
     });
-
 };
 
 (async () => {
