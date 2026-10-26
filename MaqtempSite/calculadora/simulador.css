@@ -253,3 +253,65 @@ body {
         padding: 32px 20px;
     }
 }
+
+/* ===== Resultado do simulador (cartões por cenário) ===== */
+.nota + .nota {
+    margin-top: -12px;
+}
+
+.resultado-titulo {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0b1a3a;
+    line-height: 1.4;
+    margin: 24px 0 8px;
+}
+
+.resultado-titulo:first-child {
+    margin-top: 0;
+}
+
+.cartao {
+    border: 1px solid #e3e6ec;
+    border-radius: 8px;
+    padding: 4px 14px;
+    background: #ffffff;
+}
+
+.cartao + .cartao {
+    margin-top: 12px;
+}
+
+.cartao h3 {
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #e87722;
+    padding: 12px 0 4px;
+}
+
+.linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f2f6;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #6b7385;
+}
+
+.linha:last-child {
+    border-bottom: none;
+}
+
+.linha span {
+    flex: 1;
+}
+
+.linha strong {
+    color: #0b1a3a;
+    font-weight: 700;
+    text-align: right;
+}

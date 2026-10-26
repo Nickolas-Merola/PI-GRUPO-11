@@ -8,6 +8,7 @@ require('dotenv').config();
 const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
+const portaBanco = process.env.PORT;
 const senha = process.env.SENHA;
 const user = process.env.USERAPI;
 
@@ -54,6 +55,8 @@ const serial = async (valoresLm35, ValoresLm35Espelhados) => {
             // pega o último valor da linha: funciona com "24.53" (Arduino) e "0;24.53" (simulador)
             const lm35 = parseFloat(valores[valores.length - 1]);
             const lm35Espelhado = lm35 + 20;
+
+            if (isNaN(lm35)) return; // ignora linha quebrada
 
             valoresLm35.push(lm35);
             ValoresLm35Espelhados.push(lm35Espelhado);
@@ -163,8 +166,6 @@ const servidor = (valoresLm35, ValoresLm35Espelhados) => {
             console.error('Erro ao buscar KPIs:', erro.message);
             return response.status(500).json({ erro: 'falha ao consultar o banco' });
         }
-    });
-
     app.get('/sensores/lm35Espelhados', (_, response) => {
         return response.json(ValoresLm35Espelhados);
     });

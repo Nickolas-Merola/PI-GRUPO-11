@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Dashboard</title>
+    <title>Graphics</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       body {
@@ -110,19 +110,19 @@
     <div class="linha">
       <div class="card">
         Temperatura máxima
-        <div class="numero" id="kpiMaxima">-- °C</div>
+        <div class="numero" id="kpiMaxima">90 °C</div>
       </div>
       <div class="card">
         Temperatura média
-        <div class="numero" id="kpiMedia">-- °C</div>
+        <div class="numero" id="kpiMedia">81 °C</div>
       </div>
       <div class="card">
         Número de alertas
-        <div class="numero" id="kpiAlertas">0</div>
+        <div class="numero" id="kpiAlertas">1</div>
       </div>
       <div class="card">
         Tempo em zona de risco
-        <div class="numero" id="kpiRisco">0%</div>
+        <div class="numero" id="kpiRisco">12%</div>
       </div>
     </div>
 
@@ -215,17 +215,19 @@
 
       // redesenha o gráfico com o histórico do motor selecionado
       function desenharGrafico() {
-        var h = historico[motorAtual];
-        grafico.data.labels = h.map((p) => p.hora);
-        grafico.data.datasets[0].data = h.map((p) => p.temp);
-        grafico.data.datasets[1].data = h.map(() => 80);
-        grafico.data.datasets[2].data = h.map(() => 90);
+        //var h = historico[motorAtual];
+        var labelsMock = ["10:00", "10:05", "10:10", "10:15", "10:20", "10:25", "10:30"];
+        var temperaturasMock = [68, 70, 73, 76, 83, 85, 91];
+        grafico.data.labels = labelsMock;
+        grafico.data.datasets[0].data = temperaturasMock;
+        grafico.data.datasets[1].data = temperaturasMock.map(() => 80);
+        grafico.data.datasets[2].data = temperaturasMock.map(() => 90);
         grafico.update();
       }
 
       // só mostra a temperatura atual (card + faixa de status)
       function mostrarAtual() {
-        var temp = ultima[motorAtual];
+        var temp = 91//ultima[motorAtual];
         if (temp === null) {
           el("tempAtual").innerText = "-- °C";
           el("tempAtual").className = "numero cinza";
@@ -251,11 +253,11 @@
           el("statusTitulo").innerText =
             "Emergência: ação imediata em " + motores[motorAtual].nome + "!";
         }
-        el("hora").innerText = new Date().toLocaleTimeString("pt-BR");
+        el("hora").innerText = "Atualizado às 10:32:29";
       }
 
       // KPIs vindos do banco. No banco o fkMotor começa em 1, por isso motorAtual + 1
-      function buscarKpis() {
+    /*function buscarKpis() {
         fetch(API + "/kpis/" + (motorAtual + 1))
           .then((r) => r.json())
           .then((k) => {
@@ -267,7 +269,7 @@
             el("kpiRisco").innerText = k.risco + "%";
           })
           .catch((error) => console.error("Erro ao obter KPIs:", error));
-      }
+      }*/
 
       function trocarMotor() {
         motorAtual = parseInt(el("fMotor").value);
@@ -275,12 +277,13 @@
         el("nomeMotor").innerText = m.nome;
         desenharGrafico();
         mostrarAtual();
-        buscarKpis();
+        //buscarKpis();
       }
       el("fMotor").onchange = trocarMotor;
 
       // lê o sensor (Motor 3). O endpoint correto é 'lm35'
-      function obterDados() {
+    
+       /* function obterDados() {
         fetch(API + "/sensores/lm35")
           .then((response) => response.json())
           .then((valores) => {
@@ -300,10 +303,10 @@
             }
           })
           .catch((error) => console.error("Erro ao obter dados:", error));
-      }
+      } */
 
-      setInterval(obterDados, 2000);
-      setInterval(buscarKpis, 2000);
+      //setInterval(obterDados, 2000);
+      //setInterval(buscarKpis, 2000);
 
       trocarMotor();
     </script>
