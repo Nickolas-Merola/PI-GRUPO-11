@@ -54,9 +54,10 @@ const serial = async (valoresLm35, ValoresLm35Espelhados) => {
             const valores = data.split(';');
             // pega o último valor da linha: funciona com "24.53" (Arduino) e "0;24.53" (simulador)
             const lm35 = parseFloat(valores[valores.length - 1]);
-            const lm35Espelhado = lm35 + 20;
 
             if (isNaN(lm35)) return; // ignora linha quebrada
+
+            const lm35Espelhado = lm35 + 20;
 
             valoresLm35.push(lm35);
             ValoresLm35Espelhados.push(lm35Espelhado);
@@ -138,6 +139,10 @@ const servidor = (valoresLm35, ValoresLm35Espelhados) => {
         return response.json(valoresLm35);
     });
 
+    app.get('/sensores/lm35Espelhados', (_, response) => {
+        return response.json(ValoresLm35Espelhados);
+    });
+
     // KPIs de um motor (vêm do banco, alimentam os cards)
     app.get('/kpis/:motor', async (request, response) => {
         const motor = parseInt(request.params.motor);
@@ -166,8 +171,6 @@ const servidor = (valoresLm35, ValoresLm35Espelhados) => {
             console.error('Erro ao buscar KPIs:', erro.message);
             return response.status(500).json({ erro: 'falha ao consultar o banco' });
         }
-    app.get('/sensores/lm35Espelhados', (_, response) => {
-        return response.json(ValoresLm35Espelhados);
     });
 };
 
