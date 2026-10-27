@@ -1,4 +1,4 @@
-DROP DATABASE maqtemp;
+DROP DATABASE IF EXISTS maqtemp;
 CREATE DATABASE maqtemp;
 USE maqtemp;
 
@@ -8,7 +8,9 @@ CREATE TABLE empresas (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     cnpj CHAR(14) UNIQUE NOT NULL,
-    data_cadastro DATE DEFAULT (CURDATE())
+    data_cadastro DATE DEFAULT (CURDATE()),
+    ativo TINYINT DEFAULT 1,
+    CONSTRAINT chkAtivo CHECK (ativo IN (0, 1))
 );
 
 INSERT INTO empresas (nome, cnpj) VALUES
@@ -20,37 +22,37 @@ INSERT INTO empresas (nome, cnpj) VALUES
 CREATE TABLE contrato (
     idContrato INT PRIMARY KEY AUTO_INCREMENT,
     fkEmpresa INT NOT NULL UNIQUE,
-    status_contrato VARCHAR(10) NOT NULL,
+    status_contrato TINYINT NOT NULL,
     tipo_contrato VARCHAR(20),
     data_pagamento DATE,
     status_pagamento TINYINT NOT NULL,
-    CONSTRAINT chkStatusContrato CHECK (status_contrato IN ('Ativo', 'Cancelado')),
+    CONSTRAINT chkStatusContrato CHECK (status_contrato IN (0, 1)),
     CONSTRAINT chkTipoContrato CHECK (tipo_contrato IN ('Semestral', 'Anual')),
     CONSTRAINT chkStatusPagamento CHECK (status_pagamento IN (0, 1)),
     FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa)
 );
 
 INSERT INTO contrato (fkEmpresa, status_contrato, tipo_contrato, data_pagamento, status_pagamento) VALUES
-(1, 'Ativo', 'Anual', CURDATE(), 1),
-(2, 'Ativo', 'Semestral', NULL, 0);
+(1, 1, 'Anual', CURDATE(), 1),
+(2, 1, 'Semestral', NULL, 0);
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
-CREATE TABLE Locais (
-    idLocal INT PRIMARY KEY AUTO_INCREMENT,
-    nomeLocal VARCHAR(100) NOT NULL,
+CREATE TABLE enderecos (
+    idEndereco INT AUTO_INCREMENT,
+    nomeEndereco VARCHAR(100) NOT NULL,
     cidade VARCHAR(50),
     rua VARCHAR(50),
     bairro VARCHAR(50),
     numero INT,
     cep CHAR(8),
     fkEmpresa INT NOT NULL,
+    PRIMARY KEY (idEndereco, fkEmpresa),
     FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa)
 );
 
-INSERT INTO Locais (nomeLocal, cidade, rua, bairro, numero, cep, fkEmpresa) VALUES
+INSERT INTO enderecos (nomeEndereco, cidade, rua, bairro, numero, cep, fkEmpresa) VALUES
 ('Fábrica Matriz', 'São Paulo', 'Rua Haddock Lobo', 'Consolação', 595, '01414001', 1),
-('Filial Campinas', 'Campinas', 'Av. Norte-Sul', 'Centro', 1200, '13010000', 1),
 ('Unidade Osasco', 'Osasco', 'Av. dos Autonomistas', 'Centro', 800, '06020010', 2);
 
 -- ---------------------------------------------------------------------------------------------------------------------
@@ -58,7 +60,6 @@ INSERT INTO Locais (nomeLocal, cidade, rua, bairro, numero, cep, fkEmpresa) VALU
 CREATE TABLE usuario (
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     NomeCompleto VARCHAR(100) NOT NULL,
-    fkLocal INT,
     email VARCHAR(100) UNIQUE,
     cpf CHAR(11) NOT NULL UNIQUE,
     telefone VARCHAR(11) NOT NULL UNIQUE,
@@ -66,77 +67,77 @@ CREATE TABLE usuario (
     senha VARCHAR(255) NOT NULL,
     statuss VARCHAR(10) DEFAULT 'Ativo',
     fkResponsavel INT,
+    fkEmpresa INT NOT NULL,
     CONSTRAINT chkEmail CHECK (email LIKE '%@%'),
     CONSTRAINT chkStatusUsuario CHECK (statuss IN ('Ativo', 'Inativo')),
-    FOREIGN KEY (fkLocal) REFERENCES Locais(idLocal),
+    FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa),
     FOREIGN KEY (fkResponsavel) REFERENCES usuario(idUsuario)
 );
 
-INSERT INTO usuario (NomeCompleto, fkLocal, email, cpf, telefone, senha, statuss, fkResponsavel) VALUES
-('Felipe Santos Silva', 1, 'felipe.santos@outlook.com', '12345678901', '11999998888', 'senha123', 'Ativo', NULL),
-('Cecilia Fernandes', 1, 'cecilia.fernandes@outlook.com', '12345678902', '11999997777', 'senha123', 'Ativo', 1),
-('Rafael Lima', 3, 'rafael.lima@outlook.com', '12345678903', '19999996666', 'senha123', 'Ativo', NULL);
-
--- ---------------------------------------------------------------------------------------------------------------------
-
-CREATE TABLE motores (
-    idMotor INT PRIMARY KEY AUTO_INCREMENT,
-    fkLocal INT NOT NULL,
-    modeloMotor VARCHAR(100),
-    potencia DECIMAL(10,2),
-    statuss VARCHAR(10),
-    CONSTRAINT chkStatusMotor CHECK (statuss IN ('Ativo', 'Inativo')),
-    FOREIGN KEY (fkLocal) REFERENCES Locais(idLocal)
-);
-
-INSERT INTO motores (fkLocal, modeloMotor, potencia, statuss) VALUES
-(1, 'WEG W22', 15.00, 'Ativo'),
-(1, 'WEG W22 Plus', 30.00, 'Inativo'),
-(1, 'WEG W22', 15.00, 'Ativo'),
-(2, 'WEG W22', 22.00, 'Ativo');
+INSERT INTO usuario (NomeCompleto, email, cpf, telefone, senha, statuss, fkResponsavel, fkEmpresa) VALUES
+('Felipe Santos Silva', 'felipe.santos@outlook.com', '12345678901', '11999998888', 'senha123', 'Ativo', NULL, 1),
+('Cecilia Fernandes', 'cecilia.fernandes@outlook.com', '12345678902', '11999997777', 'senha123', 'Ativo', 1, 1),
+('Rafael Lima', 'rafael.lima@outlook.com', '12345678903', '19999996666', 'senha123', 'Ativo', NULL, 2);
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE sensores (
-    idSensor INT AUTO_INCREMENT,
-    fkMotor INT NOT NULL,
+    idSensor INT PRIMARY KEY AUTO_INCREMENT,
     modeloSensor VARCHAR(50),
     posicao VARCHAR(50),
     dtInstalacao DATE DEFAULT (CURDATE()),
     statuss VARCHAR(10) DEFAULT 'Ativo',
-    PRIMARY KEY (idSensor, fkMotor),
-    CONSTRAINT chkStatusSensor CHECK (statuss IN ('Ativo', 'Inativo')),
-    FOREIGN KEY (fkMotor) REFERENCES motores(idMotor)
+    CONSTRAINT chkStatusSensor CHECK (statuss IN ('Ativo', 'Inativo'))
 );
 
-INSERT INTO sensores (fkMotor, modeloSensor, posicao, statuss) VALUES
-(1, 'LM35', 'Carcaça', 'Ativo'),
-(2, 'LM35', 'Carcaça', 'Ativo'),
-(3, 'LM35', 'Carcaça', 'Ativo'),
-(4, 'LM35', 'Carcaça', 'Ativo');
+INSERT INTO sensores (modeloSensor, posicao, statuss) VALUES
+('LM35', 'Carcaça', 'Ativo'),
+('LM35', 'Carcaça', 'Ativo'),
+('LM35', 'Carcaça', 'Ativo'),
+('LM35', 'Carcaça', 'Ativo');
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
-CREATE TABLE leituraTemperatura (
+CREATE TABLE motores (
+    idMotor INT AUTO_INCREMENT,
+    fkEndereco INT NOT NULL,
+    modeloMotor VARCHAR(100),
+    potencia DECIMAL(10,2),
+    statuss VARCHAR(10),
+    fkSensor INT UNIQUE,
+    PRIMARY KEY (idMotor, fkEndereco),
+    CONSTRAINT chkStatusMotor CHECK (statuss IN ('Ativo', 'Inativo')),
+    FOREIGN KEY (fkEndereco) REFERENCES enderecos(idEndereco),
+    FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
+);
+
+INSERT INTO motores (fkEndereco, fkSensor, modeloMotor, potencia, statuss) VALUES
+(1, 1, 'WEG W22', 15.00, 'Ativo'),
+(1, 2, 'WEG W22 Plus', 30.00, 'Inativo'),
+(1, 3, 'WEG W22', 15.00, 'Ativo'),
+(2, 4, 'WEG W22', 22.00, 'Ativo');
+
+-- ---------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE metricas (
     idLeitura INT AUTO_INCREMENT,
     fkSensor INT NOT NULL,
-    fkMotor INT NOT NULL,
     temperatura DECIMAL(5,2),
     dtLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
     situacao VARCHAR(10),
-    PRIMARY KEY (idLeitura, fkSensor, fkMotor),
+    PRIMARY KEY (idLeitura, fkSensor),
     CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta')),
-    FOREIGN KEY (fkSensor, fkMotor) REFERENCES sensores(idSensor, fkMotor)
+    FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
 );
 
-INSERT INTO leituraTemperatura (fkSensor, fkMotor, temperatura, situacao) VALUES
-(1, 1, 62.50, 'Normal'),
-(1, 1, 64.10, 'Normal'),
-(1, 1, 81.30, 'Atenção'),
-(2, 2, 85.50, 'Atenção'),
-(3, 3, 92.90, 'Alerta'),
-(3, 3, 70.00, 'Normal'),
-(4, 4, 58.00, 'Normal');
+INSERT INTO metricas (fkSensor, temperatura, situacao) VALUES
+(1, 62.50, 'Normal'),
+(1, 64.10, 'Normal'),
+(1, 81.30, 'Atenção'),
+(2, 85.50, 'Atenção'),
+(3, 92.90, 'Alerta'),
+(3, 70.00, 'Normal'),
+(4, 58.00, 'Normal');
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
@@ -144,7 +145,7 @@ SELECT * FROM empresas;
 
 SELECT * FROM contrato;
 
-SELECT * FROM Locais;
+SELECT * FROM enderecos;
 
 SELECT * FROM usuario;
 
@@ -152,83 +153,33 @@ SELECT * FROM motores;
 
 SELECT * FROM sensores;
 
-SELECT * FROM leituraTemperatura;
+SELECT * FROM metricas;
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
-SELECT empresas.nome, empresas.cnpj, contrato.tipo_contrato, contrato.status_contrato, contrato.status_pagamento
-FROM empresas
-JOIN contrato ON contrato.fkEmpresa = empresas.idEmpresa;
-
-SELECT empresas.nome, empresas.cnpj, contrato.tipo_contrato
-FROM empresas
-JOIN contrato ON contrato.fkEmpresa = empresas.idEmpresa
-WHERE contrato.status_pagamento = 0;
-
-SELECT empresas.nome AS empresa, Locais.nomeLocal, Locais.cidade
-FROM empresas
-JOIN Locais ON Locais.fkEmpresa = empresas.idEmpresa;
-
-SELECT usuario.NomeCompleto, usuario.email, empresas.nome AS empresa, Locais.nomeLocal
-FROM usuario
-JOIN empresas ON usuario.fkEmpresa = empresas.idEmpresa
-JOIN Locais ON usuario.fkLocal = Locais.idLocal;
-
-SELECT funcionario.NomeCompleto AS funcionario, responsavel.NomeCompleto AS responsavel
-FROM usuario AS funcionario
-JOIN usuario AS responsavel ON funcionario.fkResponsavel = responsavel.idUsuario;
-
-SELECT Locais.nomeLocal, motores.modeloMotor, motores.potencia, motores.statuss
-FROM motores
-JOIN Locais ON motores.fkLocal = Locais.idLocal;
-
-SELECT motores.modeloMotor, sensores.modeloSensor, sensores.posicao
-FROM sensores
-JOIN motores ON sensores.fkMotor = motores.idMotor;
-
-SELECT motores.modeloMotor, leituraTemperatura.temperatura, leituraTemperatura.situacao, leituraTemperatura.dtLeitura
-FROM leituraTemperatura
-JOIN motores ON leituraTemperatura.fkMotor = motores.idMotor
-ORDER BY leituraTemperatura.dtLeitura DESC;
-
-SELECT empresas.nome AS empresa, Locais.nomeLocal, motores.modeloMotor, sensores.modeloSensor,
-       leituraTemperatura.temperatura, leituraTemperatura.situacao
-FROM empresas
-JOIN Locais ON Locais.fkEmpresa = empresas.idEmpresa
-JOIN motores ON motores.fkLocal = Locais.idLocal
-JOIN sensores ON sensores.fkMotor = motores.idMotor
-JOIN leituraTemperatura ON leituraTemperatura.fkSensor = sensores.idSensor
-                       AND leituraTemperatura.fkMotor = sensores.fkMotor;
-
-SELECT * FROM leituraTemperatura
-WHERE situacao = 'Alerta';
-
-SELECT * FROM leituraTemperatura
-WHERE situacao <> 'Normal';
-
-SELECT fkMotor, AVG(temperatura) AS media, MIN(temperatura) AS minima, MAX(temperatura) AS maxima
-FROM leituraTemperatura
-GROUP BY fkMotor;
-
-SELECT situacao, COUNT(*) AS quantidade
-FROM leituraTemperatura
-GROUP BY situacao;
-
-SELECT Locais.nomeLocal, COUNT(motores.idMotor) AS qtdMotores
-FROM Locais
-LEFT JOIN motores ON Locais.idLocal = motores.fkLocal
-GROUP BY Locais.nomeLocal;
-
--- ---------------------------------------------------------------------------------------------------------------------
-
-UPDATE usuario SET statuss = 'Inativo' WHERE idUsuario = 3;
-
-UPDATE contrato SET status_pagamento = 1, data_pagamento = CURDATE() WHERE fkEmpresa = 2;
-
-UPDATE contrato SET status_contrato = 'Cancelado' WHERE fkEmpresa = 2;
-
-UPDATE motores SET statuss = 'Inativo' WHERE idMotor = 1;
-
-DELETE FROM leituraTemperatura WHERE idLeitura = 7;
-
--- ---------------------------------------------------------------------------------------------------------------------
+-- 1) Motores por empresa e endereço
+SELECT e.nome AS empresa, en.nomeEndereco, m.modeloMotor, m.potencia, m.statuss
+FROM empresas e
+JOIN enderecos en ON en.fkEmpresa = e.idEmpresa
+JOIN motores m ON m.fkEndereco = en.idEndereco
+ORDER BY e.nome, m.idMotor;
+ 
+-- 2) Leituras de temperatura com o motor correspondente
+SELECT e.nome AS empresa, m.modeloMotor, me.temperatura, me.situacao, me.dtLeitura
+FROM metricas me
+JOIN sensores s ON s.idSensor = me.fkSensor
+JOIN motores m ON m.fkSensor = s.idSensor
+JOIN enderecos en ON en.idEndereco = m.fkEndereco
+JOIN empresas e ON e.idEmpresa = en.fkEmpresa
+ORDER BY me.dtLeitura DESC;
+ 
+-- 3) Usuários e seus responsáveis (autorrelacionamento)
+SELECT u.NomeCompleto AS usuario, r.NomeCompleto AS responsavel
+FROM usuario u
+LEFT JOIN usuario r ON u.fkResponsavel = r.idUsuario;
+ 
+-- 4) Empresas com contrato ativo e pagamento pendente
+SELECT e.nome, c.tipo_contrato
+FROM empresas e
+JOIN contrato c ON c.fkEmpresa = e.idEmpresa
+WHERE c.status_contrato = 1 AND c.status_pagamento = 0;
