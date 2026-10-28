@@ -32,6 +32,10 @@ que contém todos os outros. Variáveis declaradas ali valem para a página toda
     --texto-suave: #4b5f7e;
     --borda: #dde4ee;
     --cor-clara: #a9b9d2;
+    --normal: #17734d;
+    --aviso:#8a6500;
+    --emergencia:#b82a2a;
+    --sem-leitura:#5d6c82;
 }
 body{
     font-family: Inter, sans-serif;/*Fonte e fonte reserva*/
@@ -110,4 +114,81 @@ Eixo Cruzado: Perpendicular a ele, vertical
     display: flex;
     align-items: center;
     gap: 6px;
+}
+/*
+O flexbox direciona em uma diração, ja o grid organiza em linhas e colunas.
+Para a estrutura da tela (lateral + centro), o Grid é a ferramenta certa. 
+O Flexbox é melhor para alinhar itens dentro de uma faixa, como no cabeçalho.
+*/
+.corpo{
+    display: grid;
+    grid-template-columns: 340px 1fr;/*grid-template-columns do CSS define os nomes das linhas e funções de dimensionamento do grid columns*/
+    gap: 12px;
+    padding: 12px;/*Para os paineis n encostarem nas bordas*/
+}
+/*Utilizei o fr pq ele ocupa o resto daquela tela, é mais simples de ler do que os pixels
+Além de ele se adaptar ao resto da tela*/
+.lateral{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.centro{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.contadores{
+    display: grid;
+    grid-template-columns:
+    repeat(4, 1fr);
+    gap: 8px; 
+}
+h2{
+    font-family: Outfit, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 10px 0;/*[Cima][Direita][Baixo][Esquerda]
+    Margin é o espaço que esta fora da caixa e empurra os blocos para longe
+    já o padding é o espaço vazio dentro do bloco*/
+}
+.contador{
+    display: flex;
+    flex-direction: column;
+}
+.contador span{
+    font-size: 12px;
+}
+.contador strong{
+    font-family: Outfit, sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+}
+.contador.normal{
+    color: var(--normal);
+}
+.contador.aviso{
+    color: var(--aviso);
+}
+.contador.emergencia{
+    color: var(--emergencia);
+}
+.contador.sem-leitura{
+    color: var(--sem-leitura);
+}
+/*OBS
+Quando usamos .contador.normal quer dizer que aquela div tem 2 classes como por exemplo .aluno.veterano 
+ele é aluno que também é veterano
+Já quando usamos .contadores .normal quer dizer que aquela procura o elemento .normal que esta 
+dentro do .contadores
+*/
+.motor{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 8px;
+    border: 1px solid transparent;
+    border-radius: 6px;/*Arredonda os cantos*/
+    cursor: pointer;/*Muda a mao do bottão*/
+    text-align: left;
 }
