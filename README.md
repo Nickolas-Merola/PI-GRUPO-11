@@ -1,3 +1,12 @@
+## 🔗 Links do projeto
+
+| | |
+|---|---|
+📄 Documentação do projeto | [Documento](https://bandteccom-my.sharepoint.com/:w:/g/personal/thayssa_souza_sptech_school/cQruWjXV7ZyCR4S1-XbqS2hdEgUBLANHJ4C747pBFUSNK5ELsw)
+🖼️ Slide de apresentação | [Canva](https://www.canva.com/design/DAHZG2msOVU/gZToukNtVWhHLvhoW_FDkA/edit) 
+🗂️ Organização do projeto | [Trello](https://trello.com/b/N3scdzCw/projeto-de-pesquisa-e-inovacao-sptech) 
+🖥️ Prototipagem do site institucional | [Figma](https://www.figma.com/design/n1EVWY1g1Wg38WiW71ELkF/Sistema-de-Monitoramento-de-Temperatura?node-id=0-1&p=f&t=Epxpq4fvEQsNANjP-0)
+
 # MaqTemp: Sistema de Monitoramento de Temperatura para Bombas Centrífugas
 
 ## Sobre o Projeto
