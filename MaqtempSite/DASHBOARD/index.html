@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel MaqTemp</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="topo">
+      <div class="logo"><span>Maq</span><span>Temp</span></div>
+      <div class="empresa"><strong>Tintas Ltda</strong><span>Fábrica Matriz · São Paulo</span></div>
+      <div class="filtros">
+        <label for="slct-motor">Motor</label>
+        <select id="slct-motor">
+          <option value="1">Motor 1</option>
+          <option value="2">Motor 2</option>
+          <option value="3">Motor 3</option>
+        </select>
+        <div class="periodos">
+          <button type="button">1h</button>
+          <button type="button">6h</button>
+          <button type="button">24h</button>
+          <button type="button">7d</button>
+        </div>
+      </div>
+    </header>
+    <main class="corpo">
+      <!-- main é a principal parte da tela e cada pagina HTML so pode ter um -->
+      <aside class="lateral">
+        <section class="painel" id="status-geral">
+          <h2>Status geral</h2>
+        </section>
+        <section class="painel" id="lista-motores"><h2>Agora</h2></section>
+        <section class="painel" id="alertas">
+          <h2>Alertas do período</h2>
+        </section>
+      </aside>
+      <!-- O aside é utilizado para fazer a aba lateral do side, normalmente a esquerda -->
+      <section class="centro">
+        <div class="kpis">
+          <article class="kpi"><span>Temperatura Máxima</span> <strong>91°C</strong></article>
+          <article class="kpi"><span>Temperatura Média</span> <strong>67°C</strong></article>
+          <article class="kpi"><span>Número de alertas </span><strong>5</strong></article>
+          <article class="kpi"><span>Tempo em zona de risco</span><strong>12%</strong></article>
+        </div>
+        <!-- o section faz a separação em blocos -->
+        <div class="painel">
+          <h2>Temperatura</h2>
+          <canvas id="grafico-temperatura"></canvas>
+          <!-- Tela em branco utilizada para guardar aquele espaço dentro do HTML -->
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
+<!-- 
+OBSERVAÇÕES PARA ESTUDOS:
+Se o bloco tem um título e fala de um assunto, use section.
+Se é uma coluna ou caixa complementar ao conteúdo principal, use aside.
+Se é só uma caixa para organizar ou estilizar e não tem significado próprio, use div.
+-->

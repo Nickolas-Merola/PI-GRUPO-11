@@ -1,0 +1,113 @@
+/* 
+Como funciona o CSS ->
+seletor { 
+propriedade:valor; 
+}
+
+seletor -> Diz quem vai receber a estilização
+Propriedade -> Diz oq vai mudar
+valor -> Diz como
+MDN -> Utlizar para pesquisar oq cada propriedade faz 
+"propriedade x mdn" para pesquisar oq ela faz
+
+variavel no css: --nome: valor;
+
+O :root é o elemento mais alto da página, o próprio html, 
+que contém todos os outros. Variáveis declaradas ali valem para a página toda.
+
+
+*/
+* {
+    box-sizing: border-box; /*Define como a altura e largura de um elemento é definida*/
+    /* O border-box define que aquele valor vai ter sempre width 100px
+     independentemente do padding etc, diferente do content-box que o width vai sendo somado
+     e assim faz com que tudo fique dentro da "caixa" disponibilizada*/
+}
+:root{
+    --azul-escuro: #0b1f3a;
+    --laranja: #ee8128;
+    --fundo: #f2f5f9;
+    --branco: #ffffff;
+    --texto: #0b1f3a;
+    --texto-suave: #4b5f7e;
+    --borda: #dde4ee;
+    --cor-clara: #a9b9d2;
+}
+body{
+    font-family: Inter, sans-serif;/*Fonte e fonte reserva*/
+    background-color: var(--fundo); /*Cor de fundo*/
+    color: var(--texto); /*Cor dos textos*/
+}
+.painel{
+    background-color: var(--branco);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--borda);
+    /*As 3 propriedades basicas do border é: style, color e width*/
+    border-radius: 8px; /*Define o arredondamento da borda*/
+    padding: 14px; /*Define a área de preenchimento isso é o espaço entre o conteudo e a borda*/
+}
+/*
+Como o Flexbox funciona. Normalmente os elementos de bloco (div, header) ficam empilhados, 
+um embaixo do outro. Quando você coloca display: flex num elemento, ele vira um container 
+flex, e os filhos diretos dele passam a ficar lado a lado, em linha.
+Eixo Principal: Direção do enfileiramento dos itens, normalmente horizontal
+-> justify-content
+Eixo Cruzado: Perpendicular a ele, vertical
+-> align-items
+*/
+.topo{
+    display: flex;/*Virou um container, as classes filhas ficam lado a lado, o flex organiza os elementos*/
+    align-items: center; 
+    /*Faz com que os itens dentro do topo fiquem no centro daquele container de maneira vertical*/
+    gap: 24px;/*Faz o espaçamento entre os blocos*/
+    /* justify-content: space-between; */
+    /*O justify-content define como o navegador distribui o espaço entre os itens
+    e o space-between faz com que os itens sejam distribuidas de maneira uniforme e o espaço
+    entre cada par de itens que estão um ao lado do outro seja o mesmo*/
+    color: var(--branco);
+    background-color: var(--azul-escuro);
+    padding: 10px 16px;
+    /*padding: [vertical] [horizontal]
+    O padding determina o espaço vazio dentro da caixa, então quando colocamos que o padding horizontal
+    tem 10px estamos falando que temos 10px de espaços vazios lá tanto para a esquerda quanto para a direita
+    Já o vertical define o quão proximo as laterais de cima e embaixo do bloco vão ficar
+    do seu texto 
+    Para teste: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/padding*/
+}
+.filtros{
+    margin-left: auto;
+    /*A margem esquerda recebe uma parte do espaço horizontal não utilizado
+    auto normalmente é 0
+    Isso fez com que a classe filtros ussase todo o espaço disponivel 
+    na esquerda para jogar o elemento para o fim (direita)
+    */
+    display: flex;
+    align-items: center;/*Faz com que os itens fiquem no centro do bloco/div assim como o start faz eles ficarem la no topo do bloco*/
+    gap: 12px;
+}
+.logo{
+    font-family: Outfit, sans-serif;
+    font-size: 22px; 
+    font-weight: 700;
+    /*Aqui eu defini ql a fonte, o seu tamanho e a espessura dela*/
+}
+.logo span:last-child{
+    color: var(--laranja);
+}
+.empresa{
+    display: flex; /*Transforma em um container e o flex-direction define a direção dos blocos*/
+    flex-direction: column; 
+    /*Empilha os itens como uma coluna e define o eixo principal como vertical, uma interação legal é
+    column-reverse que faz a mesma coisa porem inverte a ordem da coluna tipo o DESC no BD.
+    Tem o row tambem que especifica que o eixo principal do contêiner flexível seja o mesmo que a direção do texto*/
+}
+.empresa span:last-child{
+    font-size: 14px;
+    color: var(--cor-clara);
+}
+.periodos{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
