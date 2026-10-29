@@ -6,6 +6,9 @@
 🖼️ Slide de apresentação | [Canva](https://www.canva.com/design/DAHZG2msOVU/gZToukNtVWhHLvhoW_FDkA/edit) 
 🗂️ Organização do projeto | [Trello](https://trello.com/b/N3scdzCw/projeto-de-pesquisa-e-inovacao-sptech) 
 🖥️ Prototipagem do site institucional | [Figma](https://www.figma.com/design/n1EVWY1g1Wg38WiW71ELkF/Sistema-de-Monitoramento-de-Temperatura?node-id=0-1&p=f&t=Epxpq4fvEQsNANjP-0)
+📉 Planilha de riscos | [Docs](https://docs.google.com/spreadsheets/d/1ae-qezxM2cy3wIMmuIEeilzPC8Jj9lDdbkFVsQjx3fM/edit?usp=sharing)
+
+
 
 # MaqTemp: Sistema de Monitoramento de Temperatura para Bombas Centrífugas
 
