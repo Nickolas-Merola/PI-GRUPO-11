@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro - Monitoramento de Temperatura</title>
+    <link rel="stylesheet" href="simulador.css">
+</head>
+<body>
+    <div class="tela">
+
+        <!-- Lado azul -->
+        <div class="lado-azul">
+            <div class="logo">
+                <img class="logo-img" src="LogoGraphic.svg" alt="Logo MaqTemp">
+                <div class="logo-texto"><span>Maq</span>Temp</div>
+            </div>
+
+            <div class="lado-azul-rodape">
+                <div class="tag">Monitoramento de temperatura</div>
+                <p>Esse simulador tem como objetivo ajudar você e sua empresa a tomar a decisão correta para o sucesso!</p>
+                <p class="obs">Obs.: contratando nossos serviços de Monitoramento.</p>
+            </div>
+        </div>
+
+        <!-- Lado branco -->
+        <div class="lado-branco">
+            <div class="form-box">
+                <h2>Simulador Financeiro</h2>
+                <p class="subtitulo">Informe os dados abaixo para calcular o impacto financeiro.</p>
+
+                <div class="campo">
+                    <label for="ipt_faturamento">Informe o faturamento bruto anual da empresa (R$):</label>
+                    <input type="text" id="ipt_faturamento" placeholder="Ex.: 100000000">
+                </div>
+
+                <div class="campo">
+                    <label for="ipt_qtdFalhas">Quantas falhas por superaquecimento a empresa tem por ano?</label>
+                    <input type="text" id="ipt_qtdFalhas" placeholder="Ex.: 3">
+                </div>
+
+                <div class="divisor"><span>Dados do Monitoramento</span></div>
+
+                <div class="campo">
+                    <label for="ipt_qtdMaquinas">Informe quantas máquinas serão monitoradas:</label>
+                    <input type="text" id="ipt_qtdMaquinas" placeholder="Ex.: 5">
+                </div>
+
+                <p class="nota">
+                    Para fins de simulação iremos usar números fixos para os seguintes campos: <br>
+                    Custo do sensor: R$30 <br>
+                    Custo da Instalação: R$400 <br>
+                    Custo dos equipamentos: R$120 <br>
+                    Todos os valores citados acima são uma média dos valores destes no mercado.
+                </p>
+
+                <p class="nota">
+                    Como calculamos: cada falha por superaquecimento custa cerca de 4% do faturamento bruto da empresa, conforme o Documento Nacional da Abraman.
+                </p>
+
+                <!-- NOVO: explicação dos cenários -->
+                <p class="nota">
+                    Cenários: o resultado é mostrado em três cenários. A detecção é a parte das falhas que o monitoramento consegue antecipar (50%, 70% e 90%) e o fator é quantas vezes a manutenção corretiva custa mais que a planejada (2x, 2x e 3x). O fator 2x vem de um trabalho que cita a Abraman, que aponta que a corretiva custa pelo menos o dobro da preditiva. Os demais valores são hipóteses da equipe.
+                </p>
+
+                <button class="btn-principal" onclick="calcular()">Calcular impacto financeiro</button>
+                <div id="div_exibir"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function lerNumero(texto){
+            let limpo = texto.replaceAll(".", "").replaceAll(",", ".");
+            return Number(limpo);
+        }
+
+        function linha(rotulo, valor){
+            let html = `<div class="linha"><span>${rotulo}</span><strong>${valor}</strong></div>`;
+            return html;
+        }
+
+        // NOVO: formata um número em reais (antes essa formatação era repetida várias vezes dentro do calcular)
+        function formatarReais(valor){
+            let texto = valor.toFixed(2);
+            return "R$ " + texto.replaceAll(".", ",");
+        }
+
+        // NOVO: monta o cartão de UM cenário. É chamada 3 vezes dentro do calcular, uma para cada cenário.
+        // deteccao = parte das falhas que o monitoramento antecipa (0.5 = 50%)
+        // fator = quantas vezes a corretiva custa mais que a manutenção planejada
+        function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, investimentoTotal){
+            // quando a falha é antecipada, ela custa 1/fator do valor. Ex.: fator 2 -> custa metade -> reduz 0,5
+            let reducao = 1 - (1 / fator);
+
+            // prejuízo evitado por ano:
+            let evitado = prejuizoAnual * deteccao * reducao;
+
+            // ganho no primeiro ano, depois de pagar o investimento:
+            let ganho = evitado - investimentoTotal;
+
+            // ROI(retorno sobre o investimento):
+            let roi = ganho / investimentoTotal;
+            let roiTexto = (roi * 100).toFixed(0) + "%";
+
+            // payback em dias (considerando um período de um ano):
+            let dias = (investimentoTotal / evitado) * 365;
+            let payback;
+            if (dias < 1){
+                payback = 'menos de 1 dia';
+            } else {
+                let diasArredondado = Math.round(dias);
+                payback = 'aproximadamente ' + diasArredondado + (diasArredondado == 1 ? ' dia' : ' dias');
+            }
+
+            // quantas falhas precisam ser evitadas para o investimento se pagar:
+            let falhasParaPagar = investimentoTotal / (custoPorFalha * reducao);
+            let textoFalhas;
+            if (falhasParaPagar >= 1){
+                textoFalhas = falhasParaPagar.toFixed(1).replaceAll(".", ",") + " falhas";
+            } else {
+                let pct = falhasParaPagar * 100;
+                if (pct < 0.01){
+                    textoFalhas = "menos de 0,01% de uma falha";
+                } else {
+                    textoFalhas = pct.toFixed(2).replaceAll(".", ",") + "% de uma falha";
+                }
+            }
+
+            let premissas = "detecção " + (deteccao * 100).toFixed(0) + "% | fator " + fator + "x";
+
+            let cartao =
+                `<div class="cartao">
+                    <h3>${nome}</h3>
+                    ${linha('Premissas', premissas)}
+                    ${linha('Prejuízo evitado por ano', formatarReais(evitado))}
+                    ${linha('Ganho no 1º ano (após o investimento)', formatarReais(ganho))}
+                    ${linha('ROI potencial', roiTexto)}
+                    ${linha('Tempo de retorno', payback)}
+                    ${linha('Para se pagar, basta evitar', textoFalhas)}
+                </div>`;
+
+            return cartao;
+        }
+
+        function calcular(){
+            let faturamento = lerNumero(ipt_faturamento.value);
+            let qtdFalhas = lerNumero(ipt_qtdFalhas.value);
+            let qtdMaquinas = lerNumero(ipt_qtdMaquinas.value);
+
+            if (!(faturamento > 0) || !(qtdFalhas > 0) || !(qtdMaquinas > 0)){
+                div_exibir.innerHTML = '<p class="aviso">Preencha o faturamento, a quantidade de falhas por ano e a quantidade de máquinas com valores maiores que zero.</p>';
+                return;
+            }
+
+            // cada falha custa cerca de 4% do faturamento :
+            let percFalha = 0.04;
+            let custoPorFalha = faturamento * percFalha;
+
+            // prejuízo anual:
+            let prejuizoAnual = custoPorFalha * qtdFalhas;
+
+            // cálculos para a implementação da MaqTemp:
+            let custoSensor = qtdMaquinas * 30;
+            let custoInstalacao = qtdMaquinas * 400;
+            let custoEquipamentos = qtdMaquinas * 120;
+            let investimentoTotal = custoSensor + custoInstalacao + custoEquipamentos;
+
+            // formatando os valores em reais:
+            let custoPorFalhaFormatado = formatarReais(custoPorFalha);
+            let prejuizoAnualFormatado = formatarReais(prejuizoAnual);
+            let investimentoFormatado = formatarReais(investimentoTotal);
+
+            // NOVO: monta um cartão para cada cenário
+            let cartaoConservador = cartaoCenario('Conservador', 0.5, 2, prejuizoAnual, custoPorFalha, investimentoTotal);
+            let cartaoRealista = cartaoCenario('Realista', 0.7, 2, prejuizoAnual, custoPorFalha, investimentoTotal);
+            let cartaoOtimista = cartaoCenario('Otimista', 0.9, 3, prejuizoAnual, custoPorFalha, investimentoTotal);
+
+            let resultado =
+                `<div class="resultado">
+                    <p class="resultado-titulo">Prejuízo atual</p>
+                    <div class="cartao">
+                        ${linha('Custo estimado de cada falha', custoPorFalhaFormatado)}
+                        ${linha('Prejuízo anual estimado', prejuizoAnualFormatado)}
+                    </div>
+
+                    <p class="resultado-titulo">Investimento</p>
+                    <div class="cartao">
+                        ${linha('Seu investimento inicial', investimentoFormatado)}
+                    </div>
+
+                    <p class="resultado-titulo">Com o monitoramento, por cenário</p>
+                    ${cartaoConservador}
+                    ${cartaoRealista}
+                    ${cartaoOtimista}
+
+                    <p class="aviso">Os cenários são estimativas e não garantem resultado. Eles variam quantas falhas o monitoramento consegue antecipar e quanto a manutenção corretiva custa a mais que a planejada. O resultado real depende de quantas falhas o monitoramento conseguir antecipar.</p>
+                </div>`;
+
+            div_exibir.innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
