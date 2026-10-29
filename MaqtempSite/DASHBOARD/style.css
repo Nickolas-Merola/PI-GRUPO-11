@@ -331,3 +331,15 @@ quando o usuario posicionar o cursor do mouse sobre ele*/
     e essa função ajuda a mudança de horario se manter estatica no sentido da ocupação de espaço
     É como se definisse o tamanho do container de cada numero*/
 }
+.barra{
+    height: 6px;
+    background-color: var(--azul-escuro);
+    border-radius: 3px;
+    overflow: hidden;/*Corta oq ficar para fora*/
+    margin-top: 6px;
+}
+.barra-cheia{
+    height: 100%;
+    background-color: var(--laranja);
+    border-radius: 3px;
+}
