@@ -36,11 +36,16 @@ que contém todos os outros. Variáveis declaradas ali valem para a página toda
     --aviso:#8a6500;
     --emergencia:#b82a2a;
     --sem-leitura:#5d6c82;
+    --claro-normal: #e0f2e9;
+    --claro-aviso:#fbefc4;
+    --claro-emergencia:#fbe1e1;
+    --claro-sem-leitura:#e6eaf1;
 }
 body{
     font-family: Inter, sans-serif;/*Fonte e fonte reserva*/
     background-color: var(--fundo); /*Cor de fundo*/
     color: var(--texto); /*Cor dos textos*/
+    margin: 0;
 }
 .painel{
     background-color: var(--branco);
@@ -76,7 +81,9 @@ Eixo Cruzado: Perpendicular a ele, vertical
     O padding determina o espaço vazio dentro da caixa, então quando colocamos que o padding horizontal
     tem 10px estamos falando que temos 10px de espaços vazios lá tanto para a esquerda quanto para a direita
     Já o vertical define o quão proximo as laterais de cima e embaixo do bloco vão ficar
-    do seu texto 
+    do seu texto, porem tudo isso é dentro do bloco para ajustar a parte externa usamos o margin
+    Margin é o espaço de fora que afasta os "vizinhos"
+    O padding define qual a margem dentro da caixa com o seu conteudo até as laterais
     Para teste: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/padding*/
 }
 .filtros{
@@ -89,6 +96,11 @@ Eixo Cruzado: Perpendicular a ele, vertical
     display: flex;
     align-items: center;/*Faz com que os itens fiquem no centro do bloco/div assim como o start faz eles ficarem la no topo do bloco*/
     gap: 12px;
+}
+.filtros select{
+    border-radius: 5px;
+    background-color: var(--cor-clara);
+    padding: 5px;
 }
 .logo{
     font-family: Outfit, sans-serif;
@@ -114,6 +126,10 @@ Eixo Cruzado: Perpendicular a ele, vertical
     display: flex;
     align-items: center;
     gap: 6px;
+}
+.periodos option{
+    font-family: Outfit, sans-serif;
+    font-weight: 600;
 }
 /*
 O flexbox direciona em uma diração, ja o grid organiza em linhas e colunas.
@@ -190,5 +206,128 @@ dentro do .contadores
     border: 1px solid transparent;
     border-radius: 6px;/*Arredonda os cantos*/
     cursor: pointer;/*Muda a mao do bottão*/
-    text-align: left;
+    text-align: left;/*Alinhamento do texto*/
+    background-color: transparent;
+}
+button{
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+.periodos button{
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+.etiqueta{
+    display: inline-block;/*O inline-block é uma mistura entre o inline e o block o inline serve
+    para deixar lado a lado e o block para dar a configuração do width e height 
+    Inline ex: <span> <a> <img>
+    Block ex: <div> <p> <h1> - O block quebra a linha*/
+    padding: 1px 8px;/*vertical e horizontal*/
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.etiqueta.normal{
+    color: var(--claro-normal);
+    background-color: var(--normal);
+}
+.etiqueta.emergencia{
+    color: var(--claro-emergencia);
+    background-color: var(--emergencia);
+}
+.etiqueta.aviso{
+    color: var(--claro-aviso);
+    background-color: var(--aviso);
+}
+.etiqueta.sem-leitura{
+    color: var(--claro-sem-leitura);
+    background-color: var(--sem-leitura);
+}
+.motor-temp{
+    font-family: Outfit, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+}
+.motor.selecionado{
+    border-color: var(--laranja);
+}
+.motor:hover{
+    background-color: var(--fundo);
+}
+/*O hover serve como uma pseudo-classe que tem a função de aplicar um estilo diferente
+quando o usuario posicionar o cursor do mouse sobre ele*/
+.motores{
+    display: flex;
+    flex-direction: column;/*Faz com que os motores fiquem empilhados e não um ao lado do outro*/
+    gap: 4px;
+}
+.motor-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.modelo{
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+.kpis{
+    display: grid;
+    grid-template-columns:
+    repeat(4, 1fr);
+    gap: 12px;
+}
+.kpi{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.kpis strong{
+    font-family: Outfit, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+}
+.kpis span{
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--texto-suave);
+    text-transform: uppercase;/*Deixa em maiuscula*/
+    letter-spacing: 0.06em;/*Espaço entre as letras*/
+}
+.grafico-caixa{
+    height: 300px;
+    position: relative;
+    /*Posicionamento do objeto, quando é static ele segue o fluxo
+    porém quando é relative vc determina onde ele vai ficar utilizando left top bottom right*/
+}
+.lista-alertas{
+    margin: 0px;
+    padding: 0px 0px;
+}
+.lista-alertas li{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid var(--borda);
+    padding: 7px 0px;
+}
+.lista-alertas li:first-child{
+    border-top: none;
+}
+.hora{
+    margin-left: auto;
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+.atualizacao{
+    font-size: 12px;
+    color: var(--cor-clara);
+    white-space: nowrap;/*Define como os espaços em branco são tratados 
+    e o nowrap recolhe esses espaços em branco e retira as possiveis quebras de linha*/
+    font-variant-numeric: tabular-nums; /*Define uma largura para todos os numeros
+    e essa função ajuda a mudança de horario se manter estatica no sentido da ocupação de espaço
+    É como se definisse o tamanho do container de cada numero*/
 }

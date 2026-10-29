@@ -15,18 +15,23 @@
       <div class="empresa"><strong>Tintas Ltda</strong><span>Fábrica Matriz · São Paulo</span></div>
       <div class="filtros">
         <label for="slct-motor">Motor</label>
-        <select id="slct-motor">
-          <option value="1">Motor 1</option>
-          <option value="2">Motor 2</option>
-          <option value="3">Motor 3</option>
+        <select id="slct-motor" class="periodos">
+          <option value="1">Motor 1 WEG W22</option>
+          <option value="2">Motor 2 WEG W22 P</option>
+          <option value="3">Motor 3 WEG W22</option>
         </select>
-        <div class="periodos">
-          <button type="button">1h</button>
-          <button type="button">6h</button>
-          <button type="button">24h</button>
-          <button type="button">7d</button>
+        <div id="botoes" class="periodos">
+          <label for="slcttempo" class="periodos">Grafico</label>
+          <select id="slcttempo">
+            <option value="2seg">2s</option>
+            <option value="1h">1h</option>
+            <option value="6h">6h</option>
+            <option value="24h">24h</option>
+            <option value="7d">7d</option>
+          </select>
         </div>
       </div>
+      <div class="atualizacao">Atualizado ás <span id="relogio">--:--:--</span></div>
     </header>
     <main class="corpo">
       <!-- main é a principal parte da tela e cada pagina HTML so pode ter um -->
@@ -43,31 +48,39 @@
         <section class="painel" id="lista-motores">
           <h2>Agora</h2>
           <div class="motores">
-            <button type="button" class="button motor"><strong>Nome</strong><strong>Modelo:</strong><span>Etiqueta</span></button><strong>60.4°C</strong>
-            <button type="button" class="button motor"><strong>Nome</strong><strong>Modelo:</strong><span>Etiqueta</span></button><strong>70.4°C</strong>
-            <button type="button" class="button motor"><strong>Nome</strong><strong>Modelo:</strong><span>Etiqueta</span></button><strong>80.4°C</strong>
+            <button type="button" class="motor"><span class="motor-info"><strong>Motor 1</strong><span class="modelo">WEG W22</span><span class="etiqueta normal">Normal</span></span><span class="motor-temp"><strong>60,4 °C</strong></span></button>
+            <button type="button" class="motor"><span class="motor-info"><strong>Motor 2</strong><span class="modelo">WEG W22 S</span><span class="etiqueta aviso">Aviso</span></span><span class="motor-temp"><strong>80,4 °C</strong></span></button>
+            <button type="button" class="motor selecionado"><span class="motor-info"><strong>Motor 3</strong><span class="modelo">WEG W22</span><span class="etiqueta emergencia">Emergência</span></span><span class="motor-temp"><strong>90,4 °C</strong></span></button>
           </div>
         </section>
         <section class="painel" id="alertas">
           <h2>Alertas do período</h2>
+          <ul class="lista-alertas">
+            <li><span class="etiqueta aviso">Aviso</span><strong>80,1 °C</strong><span>Motor 3 </span><span class="hora">12:20</span></li>
+            <li><span class="etiqueta emergencia">Emergência</span><strong>90,4 °C</strong><span>Motor 3 </span><span class="hora">12:10</span></li>
+            <li><span class="etiqueta aviso">Aviso</span><strong>89,0 °C</strong><span>Motor 2 </span><span class="hora">12:10</span></li>
+            <li><span class="etiqueta aviso">Aviso</span><strong>80,4 °C</strong><span>Motor 2 </span><span class="hora">12:24</span></li>
+          </ul>
+          <!-- <ul> Criação de uma lista -->
         </section>
       </aside>
       <!-- O aside é utilizado para fazer a aba lateral do side, normalmente a esquerda -->
       <section class="centro">
         <div class="kpis">
-          <article class="kpi"><span>Temperatura Máxima</span> <strong>91°C</strong></article>
-          <article class="kpi"><span>Temperatura Média</span> <strong>67°C</strong></article>
-          <article class="kpi"><span>Número de alertas </span><strong>5</strong></article>
-          <article class="kpi"><span>Tempo em zona de risco</span><strong>12%</strong></article>
+          <article class="kpi painel"><span>Temperatura Máxima</span> <strong>91 °C</strong></article>
+          <article class="kpi painel"><span>Temperatura Média</span> <strong>76,1 °C</strong></article>
+          <article class="kpi painel"><span>Número de alertas </span><strong>4</strong></article>
+          <article class="kpi painel"><span>Tempo em zona de risco</span><strong>50%</strong></article>
         </div>
         <!-- o section faz a separação em blocos -->
         <div class="painel">
           <h2>Temperatura</h2>
-          <canvas id="grafico-temperatura"></canvas>
+          <div class="grafico-caixa"><canvas id="grafico-temperatura"></canvas></div>
           <!-- Tela em branco utilizada para guardar aquele espaço dentro do HTML -->
         </div>
       </section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
     <script src="script.js"></script>
   </body>
 </html>
