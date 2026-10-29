@@ -47,18 +47,10 @@
                 </div>
 
                 <p class="nota">
-                    Para fins de simulação iremos usar números fixos para os seguintes campos: <br>
-                    Custo do sensor: R$30 <br>
-                    Custo da Instalação: R$400 <br>
-                    Custo dos equipamentos: R$120 <br>
-                    Todos os valores citados acima são uma média dos valores destes no mercado.
-                </p>
-
-                <p class="nota">
                     Como calculamos: cada falha por superaquecimento custa cerca de 4% do faturamento bruto da empresa, conforme o Documento Nacional da Abraman.
                 </p>
 
-                <!-- NOVO: explicação dos cenários -->
+                <!-- explicação dos cenários -->
                 <p class="nota">
                     Cenários: o resultado é mostrado em três cenários. A detecção é a parte das falhas que o monitoramento consegue antecipar (50%, 70% e 90%) e o fator é quantas vezes a manutenção corretiva custa mais que a planejada (2x, 2x e 3x). O fator 2x vem de um trabalho que cita a Abraman, que aponta que a corretiva custa pelo menos o dobro da preditiva. Os demais valores são hipóteses da equipe.
                 </p>
@@ -81,7 +73,7 @@
             return html;
         }
 
-        // NOVO: formata um número em reais (antes essa formatação era repetida várias vezes dentro do calcular)
+        // formatação dos valores
         function formatarReais(valor){
             let texto = valor.toFixed(2);
             return "R$ " + texto.replaceAll(".", ",");
