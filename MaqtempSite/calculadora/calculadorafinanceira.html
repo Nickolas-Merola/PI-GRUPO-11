@@ -87,62 +87,84 @@
             return "R$ " + texto.replaceAll(".", ",");
         }
 
-        // NOVO: monta o cartão de UM cenário. É chamada 3 vezes dentro do calcular, uma para cada cenário.
+        // cartão de UM cenário. É chamada 3 vezes dentro do calcular, uma para cada cenário.
         // deteccao = parte das falhas que o monitoramento antecipa (0.5 = 50%)
         // fator = quantas vezes a corretiva custa mais que a manutenção planejada
-        function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, investimentoTotal){
-            // quando a falha é antecipada, ela custa 1/fator do valor. Ex.: fator 2 -> custa metade -> reduz 0,5
-            let reducao = 1 - (1 / fator);
+        
+function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, investimentoTotal){
 
-            // prejuízo evitado por ano:
-            let evitado = prejuizoAnual * deteccao * reducao;
+    let reducao = 1 - (1 / fator);
 
-            // ganho no primeiro ano, depois de pagar o investimento:
-            let ganho = evitado - investimentoTotal;
+    // Economia estimada no ano
+    let evitado = prejuizoAnual * deteccao * reducao;
 
-            // ROI(retorno sobre o investimento):
-            let roi = ganho / investimentoTotal;
-            let roiTexto = (roi * 100).toFixed(0) + "%";
+    // Remuneração anual da MaqTemp (20%)
+    let precoMaqTemp = evitado * 0.20;
 
-            // payback em dias (considerando um período de um ano):
-            let dias = (investimentoTotal / evitado) * 365;
-            let payback;
-            if (dias < 1){
-                payback = 'menos de 1 dia';
-            } else {
-                let diasArredondado = Math.round(dias);
-                payback = 'aproximadamente ' + diasArredondado + (diasArredondado == 1 ? ' dia' : ' dias');
-            }
+    // Economia que fica com o cliente
+    let economiaCliente = evitado - precoMaqTemp;
 
-            // quantas falhas precisam ser evitadas para o investimento se pagar:
-            let falhasParaPagar = investimentoTotal / (custoPorFalha * reducao);
-            let textoFalhas;
-            if (falhasParaPagar >= 1){
-                textoFalhas = falhasParaPagar.toFixed(1).replaceAll(".", ",") + " falhas";
-            } else {
-                let pct = falhasParaPagar * 100;
-                if (pct < 0.01){
-                    textoFalhas = "menos de 0,01% de uma falha";
-                } else {
-                    textoFalhas = pct.toFixed(2).replaceAll(".", ",") + "% de uma falha";
-                }
-            }
+    // Gasto total do cliente no primeiro ano
+    let gastoTotal = investimentoTotal + precoMaqTemp;
 
-            let premissas = "detecção " + (deteccao * 100).toFixed(0) + "% | fator " + fator + "x";
+    // Ganho líquido do cliente no primeiro ano
+    let ganho = economiaCliente - investimentoTotal;
 
-            let cartao =
-                `<div class="cartao">
-                    <h3>${nome}</h3>
-                    ${linha('Premissas', premissas)}
-                    ${linha('Prejuízo evitado por ano', formatarReais(evitado))}
-                    ${linha('Ganho no 1º ano (após o investimento)', formatarReais(ganho))}
-                    ${linha('ROI potencial', roiTexto)}
-                    ${linha('Tempo de retorno', payback)}
-                    ${linha('Para se pagar, basta evitar', textoFalhas)}
-                </div>`;
+    // ROI sobre o gasto total do primeiro ano
+    let roi = gastoTotal > 0 ? ganho / gastoTotal : 0;
+    let roiTexto = (roi * 100).toFixed(0) + "%";
 
-            return cartao;
+    // Payback considerando a economia restante do cliente
+    let dias;
+    let payback;
+
+    if (economiaCliente <= 0){
+        payback = "Não há retorno positivo estimado";
+    } else {
+        dias = (investimentoTotal / economiaCliente) * 365;
+
+        if (dias < 1){
+            payback = "menos de 1 dia";
+        } else {
+            let diasArredondado = Math.round(dias);
+            payback = "aproximadamente " + diasArredondado +
+            (diasArredondado == 1 ? " dia" : " dias");
         }
+    }
+
+    // Falhas que precisam ser evitadas para pagar o investimento
+    let falhasParaPagar = custoPorFalha * reducao * 0.85;
+
+    let textoFalhas;
+
+    if (falhasParaPagar > 0){
+        let quantidade = investimentoTotal / falhasParaPagar;
+        textoFalhas = quantidade.toFixed(1).replaceAll(".", ",") + " falhas";
+    } else {
+        textoFalhas = "Não calculado";
+    }
+
+    let premissas = "detecção " + (deteccao * 100).toFixed(0) +
+    "% | fator " + fator + "x";
+
+    let cartao =
+        `<div class="cartao">
+            <h3>${nome}</h3>
+            ${linha('Premissas', premissas)}
+            ${linha('Economia bruta estimada no ano', formatarReais(evitado))}
+            ${linha('Remuneração anual MaqTemp (20%)', formatarReais(precoMaqTemp))}
+            ${linha('Investimento inicial', formatarReais(investimentoTotal))}
+            ${linha('Gasto total no 1º ano', formatarReais(gastoTotal))}
+            ${linha('Economia restante do cliente', formatarReais(economiaCliente))}
+            ${linha('Ganho líquido no 1º ano', formatarReais(ganho))}
+            ${linha('ROI do cliente', roiTexto)}
+            ${linha('Tempo de retorno', payback)}
+            ${linha('Para se pagar, basta evitar', textoFalhas)}
+        </div>`;
+
+    return cartao;
+}
+
 
         function calcular(){
             let faturamento = lerNumero(ipt_faturamento.value);
