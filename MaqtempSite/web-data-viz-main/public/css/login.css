@@ -27,6 +27,8 @@ body {
     flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding: 40px;
 }
 
 .botao {
@@ -57,11 +59,11 @@ input {
 .campos {
     width: 100%;
     max-width: 760px;
-    padding-top: 50px;
+    padding-top: 0px;
 }
 
 .espaco {
-    margin-bottom: 150px;
+    margin-bottom: 40px;
 }
 
 .titulo {
@@ -82,13 +84,10 @@ label {
     color: #64748B;
     font-size: 16px;
     margin-top: 10px;
-    padding-bottom: 60px;
+    padding-bottom: 20px;
 }
 
 .logo {
-    position: absolute;
-    top: 238px;
-    left: 60px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -97,6 +96,7 @@ label {
 }
 .logo img {
     width: 250px;
+    max-width: 100%;
     height: auto;
 }
 
@@ -113,11 +113,8 @@ label {
 }
 
 .textos-esquerda {
-    left: 35px;
-    position: relative;
-    justify-content: center;
+    padding-top: 40px;
     max-width: 100%;
-    padding-top: 250px;
 }
 .titulo-esquerda {
     
@@ -163,3 +160,15 @@ a {
   z-index: 1;
 }
 
+@media (max-width: 1200px) {
+    .logo img {
+        width: 150px;
+    }
+    .nome-maq,
+    .nome-temp {
+        font-size: 40px;
+    }
+    .paragrafo-esquerda {
+        font-size: 15px;
+    }
+}
