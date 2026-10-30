@@ -47,7 +47,7 @@
                 </div>
 
                 <p class="nota">
-                    Como calculamos: cada falha por superaquecimento custa cerca de 4% do faturamento bruto da empresa, conforme o Documento Nacional da Abraman.
+                   Como calculamos: o custo de manutenção da indústria brasileira gira em torno de 4% do faturamento bruto, conforme o Documento Nacional da Abraman. Consideramos que 30% desse custo é de manutenção corretiva não planejada (hipótese da equipe), ou seja, cerca de 1,2% do faturamento por ano.
                 </p>
 
                 <!-- explicação dos cenários -->
@@ -124,17 +124,7 @@ function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, inve
         }
     }
 
-    // Falhas que precisam ser evitadas para pagar o investimento
-    let falhasParaPagar = custoPorFalha * reducao * 0.80;
-
-    let textoFalhas;
-
-    if (falhasParaPagar > 0){
-        let quantidade = investimentoTotal / falhasParaPagar;
-        textoFalhas = quantidade.toFixed(1).replaceAll(".", ",") + " falhas";
-    } else {
-        textoFalhas = "Não calculado";
-    }
+ 
 
     let premissas = "detecção " + (deteccao * 100).toFixed(0) +
     "% | fator " + fator + "x";
@@ -151,7 +141,7 @@ function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, inve
             ${linha('Ganho líquido no 1º ano', formatarReais(ganho))}
             ${linha('ROI do cliente', roiTexto)}
             ${linha('Tempo de retorno', payback)}
-            ${linha('Para se pagar, basta evitar', textoFalhas)}
+           
         </div>`;
 
     return cartao;
@@ -168,12 +158,13 @@ function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, inve
                 return;
             }
 
-            // cada falha custa cerca de 4% do faturamento :
-            let percFalha = 0.04;
-            let custoPorFalha = faturamento * percFalha;
+           // custo anual das manutenções corretivas não planejadas:
+        // 1,2% do faturamento = 4% (custo total de manutenção, Abraman) x 30% (parte corretiva, hipótese da equipe)
+        let custoCorretiva = faturamento * 0.012;
 
-            // prejuízo anual:
-            let prejuizoAnual = custoPorFalha * qtdFalhas;
+        // prejuízo anual e custo de cada falha:
+         let prejuizoAnual = custoCorretiva;
+         let custoPorFalha = custoCorretiva / qtdFalhas;
 
             // cálculos para a implementação da MaqTemp:
             let custoSensor = qtdMaquinas * 30;
@@ -186,7 +177,7 @@ function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, inve
             let prejuizoAnualFormatado = formatarReais(prejuizoAnual);
             let investimentoFormatado = formatarReais(investimentoTotal);
 
-            // NOVO: monta um cartão para cada cenário
+            // cartão para cada cenário
             let cartaoConservador = cartaoCenario('Conservador', 0.5, 2, prejuizoAnual, custoPorFalha, investimentoTotal);
             let cartaoRealista = cartaoCenario('Realista', 0.7, 2, prejuizoAnual, custoPorFalha, investimentoTotal);
             let cartaoOtimista = cartaoCenario('Otimista', 0.9, 3, prejuizoAnual, custoPorFalha, investimentoTotal);
