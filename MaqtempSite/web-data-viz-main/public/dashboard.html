@@ -216,7 +216,15 @@
       // redesenha o gráfico com o histórico do motor selecionado
       function desenharGrafico() {
         //var h = historico[motorAtual];
-        var labelsMock = ["10:00", "10:05", "10:10", "10:15", "10:20", "10:25", "10:30"];
+        var labelsMock = [
+          "10:00",
+          "10:05",
+          "10:10",
+          "10:15",
+          "10:20",
+          "10:25",
+          "10:30",
+        ];
         var temperaturasMock = [68, 70, 73, 76, 83, 85, 91];
         grafico.data.labels = labelsMock;
         grafico.data.datasets[0].data = temperaturasMock;
@@ -227,7 +235,7 @@
 
       // só mostra a temperatura atual (card + faixa de status)
       function mostrarAtual() {
-        var temp = 91//ultima[motorAtual];
+        var temp = 91; //ultima[motorAtual];
         if (temp === null) {
           el("tempAtual").innerText = "-- °C";
           el("tempAtual").className = "numero cinza";
@@ -257,7 +265,7 @@
       }
 
       // KPIs vindos do banco. No banco o fkMotor começa em 1, por isso motorAtual + 1
-    /*function buscarKpis() {
+      /*function buscarKpis() {
         fetch(API + "/kpis/" + (motorAtual + 1))
           .then((r) => r.json())
           .then((k) => {
@@ -282,8 +290,8 @@
       el("fMotor").onchange = trocarMotor;
 
       // lê o sensor (Motor 3). O endpoint correto é 'lm35'
-    
-       /* function obterDados() {
+
+      /* function obterDados() {
         fetch(API + "/sensores/lm35")
           .then((response) => response.json())
           .then((valores) => {

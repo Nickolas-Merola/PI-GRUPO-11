@@ -11,20 +11,23 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styleindex.css" />
+    <link rel="stylesheet" href="css/inicio.css" />
+    <script src="js/inicio.js" defer></script>
   </head>
   <body>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
     <header class="menu">
-<a href="index.html" class="logo">Maq<span>Temp</span></a>
+<a href="#inicio" class="logo">Maq<span>Temp</span></a>
 
 <div class="links">
-    <a href="index.html">Início</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="contato.html">Contato</a>
-    <a href="quem-somos.html">Quem somos</a>
-    <a href="../../calculadora/calculadorafinanceira.html">
-        Simulador financeiro
-    </a>
-</div>
+        <a href="#inicio">Início</a>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#solucao">Solução</a>
+        <a href="#tecnologia">Tecnologia</a>
+        <a href="#simulador">Simulador financeiro</a>
+        <a href="#impacto">Impacto</a>
+        <a href="#contato">Contato</a>
+      </div>
 
 <div class="botoes">
     <a href="login.html" class="btn-login">Login</a>
@@ -33,29 +36,136 @@
 
     </header>
 
+    <main id="conteudo">
     <section class="hero" id="inicio">
       <div class="hero-texto">
-        <span class="selo">TECNOLOGIA IoT PARA A INDÚSTRIA DE TINTAS</span>
-        <h1>
-          Monitoramento inteligente de temperatura para motores industriais
-        </h1>
-        <p>
-          Previna falhas catastróficas, reduza tempos de inatividade de bombas
-          centrífugas e otimize a manutenção preditiva com dados de temperatura
-          coletados em tempo real de forma 100% autônoma.
-        </p>
-        <a href="sobre.html#solucao" class="btn-laranja grande"
-          >Conheça a solução</a
-        >
-      </div>
-      <div class="hero-numeros">
-        <div>
-          <strong>24/7</strong>
-          <span>Monitoramento ativo</span>
+        <span class="selo">MAQTEMP · MONITORAMENTO INDUSTRIAL</span>
+        <h1>A temperatura muda.<br><span>Sua operação precisa saber.</span></h1>
+        <p>Acompanhe a temperatura dos motores de bombas centrífugas e identifique sinais de superaquecimento para planejar a manutenção.</p>
+        <div class="hero-acoes">
+          <a href="#solucao" class="btn-laranja grande">Conheça a solução <span aria-hidden="true">↗</span></a>
+          <a href="#simulador" class="btn-secundario">Simule o impacto financeiro</a>
         </div>
-        <div>
-          <strong>2s</strong>
-          <span>Latência de alerta</span>
+        <div class="hero-detalhes"><span>Sensor LM35</span><span>Arduino</span><span>Alertas visuais</span></div>
+      </div>
+      <div class="hero-resumo">
+        <span class="etiqueta">DO SENSOR À DECISÃO</span>
+        <h2>Mais visibilidade.<br>Mais tempo para agir.</h2>
+        <div class="hero-numeros">
+          <div><strong>2 s</strong><span>Intervalo de leitura do protótipo</span></div>
+          <div><strong>3 faixas</strong><span>Normal, aviso e emergência</span></div>
+        </div>
+        <a href="#demonstracao">Explore uma leitura de exemplo <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+        <section class="secao demonstracao" id="demonstracao" aria-labelledby="demo-titulo">
+      <div>
+        <span class="etiqueta">VEJA COMO FUNCIONA</span>
+        <h2 id="demo-titulo">Uma leitura clara para cada situação.</h2>
+        <p class="subtitulo">Escolha um cenário e veja como o status acompanha a temperatura. Estes são dados simulados, sem conexão com sensores.</p>
+        <div class="cenarios" role="group" aria-label="Cenários de temperatura simulada">
+          <button type="button" data-temperatura="65" aria-pressed="true">Normal · 65 °C</button>
+          <button type="button" data-temperatura="85" aria-pressed="false">Aviso · 85 °C</button>
+          <button type="button" data-temperatura="95" aria-pressed="false">Emergência · 95 °C</button>
+        </div>
+        <p class="nota">Faixas definidas para o protótipo acadêmico: normal abaixo de 80 °C, aviso de 80 a 90 °C e emergência acima de 90 °C.</p>
+      </div>
+      <div class="painel-demo" data-estado="normal">
+        <div class="painel-topo"><span>Motor 01 · Bomba centrífuga</span><span class="badge-demo">SIMULAÇÃO</span></div>
+        <div aria-live="polite" aria-atomic="true">
+          <p class="leitura-label">Temperatura de exemplo</p>
+          <p class="temperatura-demo"><span id="demo-temperatura">65</span><span> °C</span></p>
+          <p class="status-demo" id="demo-status">● Normal</p>
+          <p class="descricao-demo" id="demo-descricao">Temperatura abaixo da faixa de aviso do protótipo.</p>
+        </div>
+        <div class="escala-demo" aria-hidden="true"><span></span></div>
+        <div class="legenda-demo"><span>Normal &lt; 80 °C</span><span>Aviso 80–90 °C</span><span>Emergência &gt; 90 °C</span></div>
+      </div>
+    </section>
+<section class="secao" id="sobre">
+      <h2>Tecnologia com um propósito claro.</h2>
+      <p class="subtitulo">O MaqTemp é um projeto acadêmico da SPTech voltado ao monitoramento térmico de motores na indústria de tintas. Nossa proposta é tornar os dados mais acessíveis para apoiar decisões de manutenção.</p>
+
+      <div class="grade tres">
+        <div class="card">
+          <h3>Nossa missão</h3>
+          <p>
+            Tornar o monitoramento de temperatura industrial mais acessível,
+            inteligente e preventivo.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Nossa visão</h3>
+          <p>
+            Ser referência em soluções de monitoramento e manutenção preditiva
+            para equipamentos industriais.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Nossos valores</h3>
+          <p>
+            Prevenção, eficiência, sustentabilidade e relacionamento com o
+            cliente.
+          </p>
+        </div>
+      </div>
+
+            <div class="sobre-destaque"><span class="etiqueta">NOSSO FOCO</span><p>Conectar medição, histórico e alertas em uma experiência simples para quem acompanha a operação.</p><a href="#tecnologia">Entenda o funcionamento →</a></div>
+    </section>
+
+    <section class="secao cinza" id="solucao">
+      <h2>Transforme temperatura em informação.</h2>
+      <p class="subtitulo">Sensores LM35 conectados ao Arduino medem a temperatura. A visualização dos dados ajuda o operador a reconhecer alterações e avaliar quando agir.</p>
+
+      <div class="grade tres">
+        <div class="card">
+          <h3>Maior eficiência</h3>
+          <p>
+            O superaquecimento reduz a performance dos motores. Monitore a
+            temperatura para manter as máquinas operando em seu máximo
+            potencial.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Mais segurança</h3>
+          <p>
+            O superaquecimento pode gerar riscos aos operadores. O monitoramento
+            identifica situações anormais e permite agir antes.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Redução de custos</h3>
+          <p>
+            Antecipe problemas, evite paradas não planejadas, reduza manutenções
+            emergenciais e aumente a vida útil dos equipamentos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" id="tecnologia">
+      <h2>Da medição ao acompanhamento, em três etapas.</h2>
+      <p class="subtitulo">Cada etapa tem um papel: medir, organizar e apresentar as informações para o responsável pela operação.</p>
+
+      <div class="grade tres">
+        <div class="passo">
+          <span class="numero">1</span>
+          <h3>Sensor de temperatura</h3>
+          <p>
+            Sensor térmico instalado diretamente no motor elétrico da
+            centrífuga, para leitura contínua em tempo real.
+          </p>
+        </div>
+        <div class="passo">
+          <span class="numero">2</span>
+          <h3>Captação de dados</h3>
+          <p>O Arduino converte a leitura do sensor em temperatura e transmite os dados ao computador.</p>
+        </div>
+        <div class="passo">
+          <span class="numero">3</span>
+          <h3>Alertas visuais</h3>
+          <p>O painel apresenta o histórico e destaca as faixas de temperatura para apoiar a análise do operador.</p>
         </div>
       </div>
     </section>
@@ -106,32 +216,78 @@
             pode economizar com o monitoramento contínuo.
           </p>
         </div>
-        <a href="calculadora.html" class="btn-laranja grande"
+        <a href="../../calculadora/calculadorafinanceira.html" class="btn-laranja grande"
           >Calcular economia</a
         >
       </div>
     </section>
 
+    <section class="secao" id="impacto">
+      <h2>Cuidar dos equipamentos tem um impacto maior.</h2>
+      <p class="subtitulo">O acompanhamento da temperatura pode apoiar a continuidade da produção, o trabalho da manutenção e o uso responsável de recursos.</p>
+
+      <div class="grade tres">
+        <div class="card borda">
+          <h3>Econômico</h3>
+          <p><b>Continuidade da operação:</b> identificar alterações pode ajudar a planejar a manutenção e reduzir os impactos de paradas inesperadas.</p>
+        </div>
+        <div class="card borda">
+          <h3>Social</h3>
+          <p><b>Operadores e manutenção:</b> informações claras ajudam a identificar alterações e planejar intervenções. O protótipo não substitui os dispositivos de segurança industrial.</p>
+        </div>
+        <div class="card borda">
+          <h3>Ambiental</h3>
+          <p><b>Uso responsável dos recursos:</b> acompanhar o funcionamento dos motores contribui para avaliar oportunidades de reduzir desperdícios e prolongar a vida útil dos equipamentos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao cinza" id="contato">
+      <div class="contato">
+        <div>
+          <span class="etiqueta">VAMOS CONVERSAR</span>
+          <h2>Conte o que sua operação precisa.</h2>
+          <p class="subtitulo">Descreva seu cenário e as dúvidas sobre o MaqTemp. Você pode preparar e copiar sua mensagem aqui.</p>
+          <p class="nota">O envio de mensagens ainda não está conectado. Nenhum dado deste formulário é enviado ou armazenado pelo site.</p>
+        </div>
+        <form id="form-contato" aria-describedby="contato-ajuda">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" maxlength="100" placeholder="Como podemos chamar você?" required />
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" maxlength="254" placeholder="nome@empresa.com.br" required />
+          <label for="mensagem">Sua mensagem</label>
+          <textarea id="mensagem" name="mensagem" rows="4" minlength="10" maxlength="2000" placeholder="Conte como podemos ajudar (mínimo de 10 caracteres)..." required></textarea>
+          <p id="contato-ajuda" class="nota">Todos os campos são obrigatórios. O botão copia o texto para você compartilhar pelo canal que preferir.</p>
+          <button type="submit" class="btn-laranja grande">Copiar mensagem</button>
+          <p id="contato-feedback" class="contato-feedback" role="status" aria-live="polite"></p>
+          <div id="copia-manual" hidden><label for="mensagem-pronta">Selecione e copie o texto abaixo</label><textarea id="mensagem-pronta" readonly rows="6"></textarea></div>
+        </form>
+      </div>
+    </section>
+    </main>
+
     <footer>
       <div class="rodape">
         <div>
-          <a href="index.html" class="logo">Maq<span>Temp</span></a>
+          <a href="#inicio" class="logo">Maq<span>Temp</span></a>
           <p>
-            Monitoramento preditivo inteligente e seguro de temperatura de
-            bombas industriais, com telemetria autônoma de baixo custo.
+            Monitoramento de temperatura para apoiar decisões de manutenção em motores de bombas centrífugas.
           </p>
         </div>
         <div>
           <h4>Navegação</h4>
-          <a href="index.html">Início</a>
-          <a href="sobre.html">Sobre</a>
-          <a href="contato.html">Contato</a>
-          <a href="quem-somos.html">Quem somos</a>
+          <a href="#inicio">Início</a>
+          <a href="#sobre">Sobre nós</a>
+          <a href="#solucao">Solução</a>
+          <a href="#tecnologia">Tecnologia</a>
+          <a href="#simulador">Simulador financeiro</a>
+          <a href="#impacto">Impacto</a>
+          <a href="#contato">Contato</a>
         </div>
         <div>
           <h4>Contato e suporte</h4>
-          <p>contato@maqtemp.io</p>
-          <p>0800 700 3200</p>
+          <a href="#contato">Prepare sua mensagem</a>
+          <p>Projeto acadêmico · Grupo 11</p>
           <p>São Paulo, SP — Brasil</p>
         </div>
         <div>
@@ -142,9 +298,7 @@
       </div>
       <div class="direitos">
         <span>© 2026 MaqTemp. Todos os direitos reservados.</span>
-        <span
-          ><a href="#">Termos de uso</a> &nbsp;
-          <a href="#">Políticas de privacidade</a></span
+        <span>Desenvolvido na SPTech</span
         >
       </div>
     </footer>

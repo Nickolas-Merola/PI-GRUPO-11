@@ -1,228 +1,304 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/cadastro.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/cadastro.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="pagina-inteira">
-        
-        <div class="lado-esquerdo">
-            <a href="index.html">
-                <div class="logo">
-                    <img src="assets/imgs/logo.png" alt="logo">
-                    <span><b class="nome-maq">Maq</b><b class="nome-temp">Temp</b></span>  
-                </div>
-            </a>
-            <div class="textos-esquerda">
-                <span class="texto-laranja">TECNOLOGIA IoT PARA INDÚSTRIA</span>
-                <h1 class="titulo-esquerda">Crie sua conta e proteja <br>seus ativos industriais hoje</h1>
-                <p class="paragrafo-esquerda">Evite paradas não planejadas, proteja seus operadores e tome decisões <br>
-                baseadas em dados em tempo real antes que a falha aconteça.</p>
+      <div class="lado-esquerdo">
+        <a href="index.html">
+          <div class="logo">
+            <img src="assets/imgs/logo.png" alt="logo" />
+            <span
+              ><b class="nome-maq">Maq</b><b class="nome-temp">Temp</b></span
+            >
+          </div>
+        </a>
+        <div class="textos-esquerda">
+          <span class="texto-laranja">TECNOLOGIA IoT PARA INDÚSTRIA</span>
+          <h1 class="titulo-esquerda">
+            Crie sua conta e proteja <br />seus ativos industriais hoje
+          </h1>
+          <p class="paragrafo-esquerda">
+            Evite paradas não planejadas, proteja seus operadores e tome
+            decisões <br />
+            baseadas em dados em tempo real antes que a falha aconteça.
+          </p>
 
-                <div class="metricas">
-                    <div class="metrica">
-                        <span class="metrica-numero">24/7</span>
-                        <span class="metrica-legenda">Monitoramento Ativo</span>
-                    </div>
-                    <div class="metrica">
-                        <span class="metrica-numero">&lt;2s</span>
-                        <span class="metrica-legenda">Latência de Alerta</span>
-                </div>
-                </div>  
+          <div class="metricas">
+            <div class="metrica">
+              <span class="metrica-numero">24/7</span>
+              <span class="metrica-legenda">Monitoramento Ativo</span>
             </div>
-            
-              
-        </div>
-    
-        <div class="lado-direito">
-            
-            <div class="campos">
-                <h1 class="titulo">Comece agora mesmo</h1>
-                <p class="p1">Inscreva-se para configurar seus primeiros sensores de temperatura Arduino e LM35</p>
-
-                <label for="input_nome">Nome Completo</label> <br>
-                <input type="text" id="input_nome" placeholder="Digite seu nome completo"><br>
-
-                <label for="input_nome">CPF</label> <br>
-                <input type="text" id="input_cpf" placeholder="Informe seu CPF"><br>
-
-                <label for="input_nome">Telefone</label> <br>
-                <input type="text" id="input_telefone" placeholder="(DD)99999-9999"><br>
-
-                <label for="input_email">E-mail corporativo</label> <br>
-                <input type="text" id="input_email" placeholder="exemplo@suaempresa.com.br"><br>
-
-                <label for="input_senha">Crie uma senha</label> <br>
-                <input type="text" id="input_senha" placeholder="No mínimo 8 caracteres"><br>
-
-                <label for="input_confirmarSenha">Confirme sua senha</label> <br>
-                <input type="text" id="input_confirmarSenha" placeholder="Repita a senha criada"><br>
-             
-                <span>
-                <input type="checkbox" class="checkbox" id="input_checkbox">Li e aceito os Termos de Uso e as Políticas de Privacidade.
-                </span><br>
-
-                <button onclick="cadastrar()" class="botao">Criar minha conta</button>
-                <p class="login-direita">Já possui uma conta?<a href="login.html"> <b style="color: #f0822f;"> Faça login</b></a></p>
-
-
+            <div class="metrica">
+              <span class="metrica-numero">&lt;2s</span>
+              <span class="metrica-legenda">Latência de Alerta</span>
             </div>
-                
+          </div>
         </div>
+      </div>
+
+      <div class="lado-direito">
+        <div class="campos">
+          <h1 class="titulo">Comece agora mesmo</h1>
+          <p class="p1">
+            Inscreva-se para configurar seus primeiros sensores de temperatura
+            Arduino e LM35
+          </p>
+
+          <label for="input_nome">Nome Completo</label> <br />
+          <input
+            type="text"
+            id="input_nome"
+            placeholder="Digite seu nome completo"
+          /><br />
+
+          <label for="input_nome">CPF</label> <br />
+          <input
+            type="text"
+            id="input_cpf"
+            placeholder="Informe seu CPF"
+          /><br />
+
+          <label for="input_nome">Telefone</label> <br />
+          <input
+            type="text"
+            id="input_telefone"
+            placeholder="(DD)99999-9999"
+          /><br />
+
+          <label for="input_email">E-mail corporativo</label> <br />
+          <input
+            type="text"
+            id="input_email"
+            placeholder="exemplo@suaempresa.com.br"
+          /><br />
+
+          <label for="input_senha">Crie uma senha</label> <br />
+          <input
+            type="text"
+            id="input_senha"
+            placeholder="No mínimo 8 caracteres"
+          /><br />
+
+          <label for="input_confirmarSenha">Confirme sua senha</label> <br />
+          <input
+            type="text"
+            id="input_confirmarSenha"
+            placeholder="Repita a senha criada"
+          /><br />
+
+          <span>
+            <input type="checkbox" class="checkbox" id="input_checkbox" />Li e
+            aceito os Termos de Uso e as Políticas de Privacidade. </span
+          ><br />
+
+          <button onclick="cadastrar()" class="botao">Criar minha conta</button>
+          <p class="login-direita">
+            Já possui uma conta?<a href="login.html">
+              <b style="color: #f0822f"> Faça login</b></a
+            >
+          </p>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
 
 <script>
+  let temCharEspecial = false;
+  let temCaracteres = false;
+  let temLetraMinuscula = false;
+  let temLetraMaiuscula = false;
+  let senhaTemSeguranca = false;
+  let emailValido;
+  let cpfValido;
+  let telefoneValido;
 
-        let temCharEspecial = false;
-        let temCaracteres = false;
-        let temLetraMinuscula = false;
-        let temLetraMaiuscula = false;
-        let senhaTemSeguranca = false;
-        let emailValido;
-        let cpfValido;
-        let telefoneValido;
+  function validarSenha() {
+    let senha = input_senha.value;
+    let confirmacaoSenha = input_confirmarSenha.value;
+    let senhaConfirmada = true;
+    let charEspeciais = [
+      "!",
+      "@",
+      "#",
+      "$",
+      "%",
+      "^",
+      "&",
+      "*",
+      "(",
+      ")",
+      "-",
+      "_",
+      "=",
+      "+",
+      "[",
+      "]",
+      "{",
+      "}",
+      "|",
+      ";",
+      ":",
+      "'",
+      ",",
+      ".",
+      "<",
+      ">",
+      "/",
+      "?",
+      "`",
+      "~",
+    ];
 
-    function validarSenha() {
-        let senha = input_senha.value;
-        let confirmacaoSenha = input_confirmarSenha.value;
-        let senhaConfirmada = true;
-        let charEspeciais = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", "|", ";",
-        ":", "'", ",", ".", "<", ">", "/", "?", "`", "~"];
-
-        if (senha.length >= 8) {
-            temCaracteres = true;
-        } else {
-            temCaracteres = false;
-            alert("A senha precisa conter 8 caracteres!");
-        }
-
-        if (senha != senha.toLowerCase()) {
-            temLetraMaiuscula = true;
-        } else {
-            temLetraMaiuscula = false;
-            alert("A senha precisa conter letra maiúscula!");
-        }
-
-        if (senha != senha.toUpperCase()) {
-            temLetraMinuscula = true;
-        } else {
-            alert("A senha precisa conter letra minúscula!");
-            temLetraMinuscula = false;
-        }
-
-        temCharEspecial = false;
-        for (let i = 0; i < charEspeciais.length; i++) {
-            if (senha.includes(charEspeciais[i])) {
-                temCharEspecial = true;
-            }
-        }
-
-        if (!temCharEspecial) {
-            temCharEspecial = false;
-            alert("A senha precisa conter caracter especial!");
-        } 
-
-        if (senha != confirmacaoSenha) {
-            alert("As senhas não coincidem!");
-            senhaConfirmada = false;
-        }
-
-        if (temCharEspecial && temCaracteres && temLetraMaiuscula && temLetraMinuscula && senhaConfirmada) {
-            senhaTemSeguranca = true;
-        } else {
-            senhaTemSeguranca = false;
-        }
-
+    if (senha.length >= 8) {
+      temCaracteres = true;
+    } else {
+      temCaracteres = false;
+      alert("A senha precisa conter 8 caracteres!");
     }
 
-    function validarEmail() {
-        let email = input_email.value.trim();
-        emailValido = true;
-
-        if(!email.includes('@'))  {
-            alert("O email precisa conter '@'");
-            emailValido = false;
-        }
-
-        if( !(email.endsWith('.com') || email.endsWith('.com.br')) ) {
-            alert("Email inválido!");
-            emailValido = false;
-            
-        }
-
-            if(email.indexOf('@') > email.indexOf('.com')) {
-            alert("O '@' precisa vir antes do '.com'");
-            emailValido = false;
-        }
+    if (senha != senha.toLowerCase()) {
+      temLetraMaiuscula = true;
+    } else {
+      temLetraMaiuscula = false;
+      alert("A senha precisa conter letra maiúscula!");
     }
 
-    function validarTelefone() {
-        let telefone = input_telefone.value.trim();
-        let telefoneTipoNumerico = Number(telefone);
-        telefoneValido = true;
+    if (senha != senha.toUpperCase()) {
+      temLetraMinuscula = true;
+    } else {
+      alert("A senha precisa conter letra minúscula!");
+      temLetraMinuscula = false;
+    }
 
+    temCharEspecial = false;
+    for (let i = 0; i < charEspeciais.length; i++) {
+      if (senha.includes(charEspeciais[i])) {
+        temCharEspecial = true;
+      }
+    }
 
-        if (isNaN(telefoneTipoNumerico)) {
-            alert("O telefone precisa conter apenas números!");
-            telefoneValido = false;
-        };
+    if (!temCharEspecial) {
+      temCharEspecial = false;
+      alert("A senha precisa conter caracter especial!");
+    }
 
-        if (telefone.length != 11) {
-            alert("O telefone precisa ser composto por 11 números!");
-            telefoneValido = false;
-        };
-    };
+    if (senha != confirmacaoSenha) {
+      alert("As senhas não coincidem!");
+      senhaConfirmada = false;
+    }
 
-    function validarCpf() {
-        let cpf = input_cpf.value.trim(); 
-        let cpfTipoNumerico = Number(cpf); 
-        cpfValido = true;
+    if (
+      temCharEspecial &&
+      temCaracteres &&
+      temLetraMaiuscula &&
+      temLetraMinuscula &&
+      senhaConfirmada
+    ) {
+      senhaTemSeguranca = true;
+    } else {
+      senhaTemSeguranca = false;
+    }
+  }
 
-        if (isNaN(cpfTipoNumerico)) {
-            alert("O CPF precisa conter apenas números!");
-            cpfValido = false;
-        };
+  function validarEmail() {
+    let email = input_email.value.trim();
+    emailValido = true;
 
-        if (cpf.length != 11) {
-            alert("Digite apenas os 11 dÍgitos do CPF!");
-            cpfValido = false;
-        };
-    };
+    if (!email.includes("@")) {
+      alert("O email precisa conter '@'");
+      emailValido = false;
+    }
 
-    function cadastrar() {
-        let nomeCompleto = input_nome.value.trim();
-        let senha = input_senha.value;
-        let confirmacaoSenha = input_confirmarSenha.value;
-        let email = input_email.value.trim();
-        let cpf = input_cpf.value.trim();
-        let telefone = input_telefone.value.trim();
-        let checkbox = input_checkbox.checked;
+    if (!(email.endsWith(".com") || email.endsWith(".com.br"))) {
+      alert("Email inválido!");
+      emailValido = false;
+    }
 
-        if (nomeCompleto == "" || email == "" || senha == "" || confirmacaoSenha == "" || telefone == "" || cpf == "") {
-            alert("Todos os campos precisam ser preenchidos!")
-        } else {
+    if (email.indexOf("@") > email.indexOf(".com")) {
+      alert("O '@' precisa vir antes do '.com'");
+      emailValido = false;
+    }
+  }
 
-            validarSenha();
-            validarEmail();
-            validarCpf();
-            validarTelefone();
+  function validarTelefone() {
+    let telefone = input_telefone.value.trim();
+    let telefoneTipoNumerico = Number(telefone);
+    telefoneValido = true;
 
-            if(!checkbox) {
-            alert("Você precisa aceitar os termos de uso!")
-        }
+    if (isNaN(telefoneTipoNumerico)) {
+      alert("O telefone precisa conter apenas números!");
+      telefoneValido = false;
+    }
 
-            if (senhaTemSeguranca && emailValido && cpfValido && telefoneValido && checkbox) {
-            fetch("/usuarios/cadastrar", {
-            method: "POST",
-            headers: {
+    if (telefone.length != 11) {
+      alert("O telefone precisa ser composto por 11 números!");
+      telefoneValido = false;
+    }
+  }
+
+  function validarCpf() {
+    let cpf = input_cpf.value.trim();
+    let cpfTipoNumerico = Number(cpf);
+    cpfValido = true;
+
+    if (isNaN(cpfTipoNumerico)) {
+      alert("O CPF precisa conter apenas números!");
+      cpfValido = false;
+    }
+
+    if (cpf.length != 11) {
+      alert("Digite apenas os 11 dÍgitos do CPF!");
+      cpfValido = false;
+    }
+  }
+
+  function cadastrar() {
+    let nomeCompleto = input_nome.value.trim();
+    let senha = input_senha.value;
+    let confirmacaoSenha = input_confirmarSenha.value;
+    let email = input_email.value.trim();
+    let cpf = input_cpf.value.trim();
+    let telefone = input_telefone.value.trim();
+    let checkbox = input_checkbox.checked;
+
+    if (
+      nomeCompleto == "" ||
+      email == "" ||
+      senha == "" ||
+      confirmacaoSenha == "" ||
+      telefone == "" ||
+      cpf == ""
+    ) {
+      alert("Todos os campos precisam ser preenchidos!");
+    } else {
+      validarSenha();
+      validarEmail();
+      validarCpf();
+      validarTelefone();
+
+      if (!checkbox) {
+        alert("Você precisa aceitar os termos de uso!");
+      }
+
+      if (
+        senhaTemSeguranca &&
+        emailValido &&
+        cpfValido &&
+        telefoneValido &&
+        checkbox
+      ) {
+        fetch("/usuarios/cadastrar", {
+          method: "POST",
+          headers: {
             "Content-Type": "application/json",
-        },
-            body: JSON.stringify({
+          },
+          body: JSON.stringify({
             // crie um atributo que recebe o valor recuperado aqui
             // Agora vá para o arquivo routes/usuario.js
             nomeServer: nomeCompleto,
@@ -230,23 +306,25 @@
             telefoneServer: telefone,
             emailServer: email,
             senhaServer: senha,
-            confirmacaoServer: confirmacaoSenha
-      }),
-    }).then(function (resposta) {
-            if (resposta.ok) {
-            alert("Cadastro realizado com sucesso! Redirecionando para o login...");
-            setTimeout(() => {
-            window.location = "login.html";
-                }, 1000);
-            } else {
-            throw "Houve um erro ao tentar realizar o cadastro!";
-            }
+            confirmacaoServer: confirmacaoSenha,
+          }),
         })
-        .catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
-        });
-    }        
-}
-}
-  
+          .then(function (resposta) {
+            if (resposta.ok) {
+              alert(
+                "Cadastro realizado com sucesso! Redirecionando para o login...",
+              );
+              setTimeout(() => {
+                window.location = "login.html";
+              }, 1000);
+            } else {
+              throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+          })
+          .catch(function (erro) {
+            console.log(`#ERRO: ${erro}`);
+          });
+      }
+    }
+  }
 </script>
