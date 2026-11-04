@@ -67,7 +67,7 @@ CREATE TABLE usuario (
     senha VARCHAR(255) NOT NULL,
     statuss VARCHAR(10) DEFAULT 'Ativo',
     fkResponsavel INT,
-    fkEmpresa INT NOT NULL,
+    fkEmpresa INT,
     CONSTRAINT chkEmail CHECK (email LIKE '%@%'),
     CONSTRAINT chkStatusUsuario CHECK (statuss IN ('Ativo', 'Inativo')),
     FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa),
