@@ -1,0 +1,1414 @@
+/* GUIA DE LEITURA
+   .nome seleciona uma classe; #nome seleciona um id; h1 seleciona uma tag.
+   .menu nav a seleciona links dentro da navegação do menu.
+   O símbolo > seleciona apenas filhos diretos.
+   :hover é o estado ao passar o mouse; :active é o instante de pressionar.
+   :focus-visible destaca o foco de teclado. ::before e ::after criam detalhes decorativos.
+   :root guarda variáveis acessíveis na página inteira.
+   nth-last-of-type(3), (2) e (1) identificam os três últimos divs de cenário.
+   A cascata mantém a ordem: as regras de identidade visual ao final ajustam as regras iniciais.
+   @media aplica regras só quando a condição de largura ou preferência é atendida.
+   px é uma medida fixa; % depende do contêiner; vw e vh dependem da janela.
+*/
+:root {
+
+        /* Variável CSS de cor. Pode ser reutilizada com var(--azul-escuro); a última definição substitui a anterior. */
+    --azul-escuro: #0b2a4a;
+
+        /* Variável CSS de cor. Pode ser reutilizada com var(--azul); a última definição substitui a anterior. */
+    --azul: #1565c0;
+
+        /* Variável CSS de cor. Pode ser reutilizada com var(--azul-claro); a última definição substitui a anterior. */
+    --azul-claro: #e8f1fb;
+
+        /* Variável CSS de cor. Pode ser reutilizada com var(--cinza-texto); a última definição substitui a anterior. */
+    --cinza-texto: #4a5568;
+
+        /* Variável CSS de cor. Pode ser reutilizada com var(--cinza-borda); a última definição substitui a anterior. */
+    --cinza-borda: #d9e0e8;
+
+        /* Variável CSS de cor. Pode ser reutilizada com var(--branco); a última definição substitui a anterior. */
+    --branco: #ffffff;
+
+ 
+        /* Variável CSS de cor. Pode ser reutilizada com var(--conservador); a última definição substitui a anterior. */
+    --conservador: #f59e0b;
+ 
+        /* Variável CSS de cor. Pode ser reutilizada com var(--realista); a última definição substitui a anterior. */
+    --realista: #1565c0;
+     
+        /* Variável CSS de cor. Pode ser reutilizada com var(--otimista); a última definição substitui a anterior. */
+    --otimista: #16a34a;
+     
+
+}
+
+
+ 
+
+* {
+
+        /* Espaço externo; auto centraliza quando existe uma largura limitada. */
+    margin: 0;
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 0;
+
+        /* border-box inclui bordas e padding no tamanho definido. */
+    box-sizing: border-box;
+
+
+}
+
+
+ 
+body {
+
+        /* Fonte do texto; inherit herda a fonte do elemento pai. */
+    font-family: "Segoe UI", Arial, sans-serif;
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--cinza-texto);
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--branco);
+
+
+}
+
+
+ 
+ 
+
+.tela {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+
+        /* Altura mínima; calc permite calcular medidas com unidades diferentes. */
+    min-height: 100vh;
+
+
+}
+
+
+ 
+.lado-azul {
+
+        /* Proporção de espaço que o elemento ocupa dentro de um contêiner flex. */
+    flex: 1;
+
+
+}
+
+
+ 
+.lado-branco {
+
+        /* Proporção de espaço que o elemento ocupa dentro de um contêiner flex. */
+    flex: 1.3;
+
+
+}
+
+
+ 
+.lado-azul {
+
+        /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: linear-gradient(160deg, var(--azul-escuro), var(--azul));
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--branco);
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 40px;
+
+ 
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+
+        /* Direção dos filhos: row em linha e column em coluna. */
+    flex-direction: column;
+
+        /* Distribuição dos elementos no eixo principal do contêiner flex. */
+    justify-content: space-between;
+
+ 
+        /* sticky mantém o painel preso durante a rolagem; static usa o fluxo normal. */
+    position: sticky;
+
+        /* Distância do topo usada pelo posicionamento. */
+    top: 0;
+
+        /* Altura; 100vh corresponde à altura da janela. */
+    height: 100vh;
+
+
+}
+
+
+ 
+.logo {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+
+        /* Alinhamento no eixo transversal do contêiner flex. */
+    align-items: center;
+
+        /* Distância entre os itens de um layout flex ou grid. */
+    gap: 12px;
+
+
+}
+
+
+ 
+.logo-img {
+
+        /* Largura; 100% ocupa a largura disponível do contêiner. */
+    width: 48px;
+
+        /* Altura; 100vh corresponde à altura da janela. */
+    height: 48px;
+
+
+}
+
+
+ 
+.logo-texto {
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 28px;
+
+        /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 700;
+
+
+}
+
+
+ 
+.logo-texto span {
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #E87722;
+
+
+}
+
+
+ 
+.tag {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: inline-block;
+
+        /* Cor de fundo do elemento. */
+    background-color: rgba(255, 255, 255, 0.15);
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 6px 14px;
+
+        /* Arredonda os cantos. */
+    border-radius: 20px;
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 16px;
+
+
+}
+
+
+ 
+.lado-azul-rodape p {
+
+        /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.6;
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 10px;
+
+
+}
+
+
+ 
+.lado-azul-rodape .obs {
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+
+        /* Transparência: 1 totalmente visível, 0 invisível. */
+    opacity: 0.8;
+
+
+}
+
+
+ 
+ 
+.lado-branco {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+
+        /* Distribuição dos elementos no eixo principal do contêiner flex. */
+    justify-content: center;
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 40px 30px;
+
+        /* Cor de fundo do elemento. */
+    background-color: #f7f9fc;
+
+
+}
+
+
+ 
+.form-box {
+
+        /* Largura; 100% ocupa a largura disponível do contêiner. */
+    width: 100%;
+
+        /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: 560px;
+
+
+}
+
+
+ 
+.form-box h2 {
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--azul-escuro);
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 28px;
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 6px;
+
+
+}
+
+
+ 
+.subtitulo {
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 24px;
+
+
+}
+
+
+ 
+.campo {
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 18px;
+
+
+}
+
+
+ 
+.campo label {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: block;
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 14px;
+
+        /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 600;
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--azul-escuro);
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 6px;
+
+
+}
+
+
+ 
+.campo input {
+
+        /* Largura; 100% ocupa a largura disponível do contêiner. */
+    width: 100%;
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 12px 14px;
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 15px;
+
+        /* Define espessura, estilo e cor da borda. */
+    border: 1px solid var(--cinza-borda);
+
+        /* Arredonda os cantos. */
+    border-radius: 8px;
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--branco);
+
+        /* Suaviza a mudança das propriedades indicadas durante o tempo definido. */
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+
+}
+
+
+ 
+.campo input:focus {
+
+        /* Contorno de foco; ajuda a localizar o elemento ao navegar pelo teclado. */
+    outline: none;
+
+        /* Cor das bordas. */
+    border-color: var(--azul);
+
+        /* Sombra do elemento; none remove a sombra. */
+    box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.15);
+
+
+}
+
+
+ 
+.divisor {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+
+        /* Alinhamento no eixo transversal do contêiner flex. */
+    align-items: center;
+
+        /* Distância entre os itens de um layout flex ou grid. */
+    gap: 12px;
+
+        /* Espaço externo; auto centraliza quando existe uma largura limitada. */
+    margin: 26px 0 18px;
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+
+        /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 600;
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--azul);
+
+
+}
+
+
+ 
+.divisor::before,
+.divisor::after {
+
+        /* Conteúdo criado por um pseudo-elemento; texto vazio permite desenhar uma linha decorativa. */
+    content: "";
+
+        /* Proporção de espaço que o elemento ocupa dentro de um contêiner flex. */
+    flex: 1;
+
+        /* Altura; 100vh corresponde à altura da janela. */
+    height: 1px;
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--cinza-borda);
+
+
+}
+
+
+ 
+.nota {
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+
+        /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.6;
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--azul-claro);
+
+        /* Borda à esquerda para destacar um bloco. */
+    border-left: 4px solid var(--azul);
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 12px 14px;
+
+        /* Arredonda os cantos. */
+    border-radius: 6px;
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 14px;
+
+
+}
+
+
+ 
+.btn-principal {
+
+        /* Largura; 100% ocupa a largura disponível do contêiner. */
+    width: 100%;
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 14px;
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 16px;
+
+        /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 700;
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--branco);
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--azul);
+
+        /* Define espessura, estilo e cor da borda. */
+    border: none;
+
+        /* Arredonda os cantos. */
+    border-radius: 8px;
+
+        /* pointer mostra o cursor de ação clicável. */
+    cursor: pointer;
+
+        /* Suaviza a mudança das propriedades indicadas durante o tempo definido. */
+    transition: background-color 0.2s, transform 0.1s;
+
+
+}
+
+
+ 
+.btn-principal:hover {
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--azul-escuro);
+
+
+}
+
+
+ 
+.btn-principal:active {
+
+        /* Transformação visual: scale muda a escala e translateY desloca na vertical. */
+    transform: scale(0.98);
+
+
+}
+
+
+ 
+  
+.resultado {
+
+        /* Espaço externo acima do elemento. */
+    margin-top: 28px;
+
+
+}
+
+
+ 
+.resultado-titulo {
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 18px;
+
+        /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 700;
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--azul-escuro);
+
+        /* Espaço externo; auto centraliza quando existe uma largura limitada. */
+    margin: 26px 0 12px;
+
+
+}
+
+
+ 
+.cartao {
+
+        /* Cor de fundo do elemento. */
+    background-color: var(--branco);
+
+        /* Define espessura, estilo e cor da borda. */
+    border: 1px solid var(--cinza-borda);
+
+        /* Arredonda os cantos. */
+    border-radius: 12px;
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 18px 20px;
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 16px;
+
+        /* Sombra do elemento; none remove a sombra. */
+    box-shadow: 0 2px 8px rgba(11, 42, 74, 0.06);
+
+
+}
+
+
+ 
+.cartao h3 {
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 18px;
+
+        /* Espaço externo abaixo do elemento. */
+    margin-bottom: 12px;
+
+
+}
+
+
+ 
+.linha {
+
+        /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+
+        /* Distribuição dos elementos no eixo principal do contêiner flex. */
+    justify-content: space-between;
+
+        /* Distância entre os itens de um layout flex ou grid. */
+    gap: 16px;
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 9px 0;
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 14px;
+
+        /* Borda inferior para separar elementos. */
+    border-bottom: 1px solid #edf1f5;
+
+
+}
+
+
+ 
+.linha:last-child {
+
+        /* Borda inferior para separar elementos. */
+    border-bottom: none;
+
+
+}
+
+
+ 
+.linha strong {
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--azul-escuro);
+
+        /* Alinhamento horizontal do texto. */
+    text-align: right;
+
+
+}
+
+
+ 
+.aviso {
+
+        /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+
+        /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.6;
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #8a5a00;
+
+        /* Cor de fundo do elemento. */
+    background-color: #fff6e0;
+
+        /* Borda à esquerda para destacar um bloco. */
+    border-left: 4px solid var(--conservador);
+
+        /* Espaço interno entre o conteúdo e a borda. */
+    padding: 12px 14px;
+
+        /* Arredonda os cantos. */
+    border-radius: 6px;
+
+        /* Espaço externo acima do elemento. */
+    margin-top: 10px;
+
+
+}
+
+
+ 
+ 
+
+ 
+
+.resultado > div:nth-last-of-type(3) {
+ 
+        /* Borda superior para separar ou identificar um bloco. */
+    border-top: 6px solid var(--conservador);
+
+
+}
+
+
+.resultado > div:nth-last-of-type(3) h3 {
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--conservador);
+
+
+}
+
+
+ 
+
+.resultado > div:nth-last-of-type(2) {
+
+        /* Borda superior para separar ou identificar um bloco. */
+    border-top: 6px solid var(--realista);
+
+
+}
+
+
+.resultado > div:nth-last-of-type(2) h3 {
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--realista);
+
+
+}
+
+
+ 
+
+.resultado > div:nth-last-of-type(1) {
+
+        /* Borda superior para separar ou identificar um bloco. */
+    border-top: 6px solid var(--otimista);
+
+
+}
+
+
+.resultado > div:nth-last-of-type(1) h3 {
+
+        /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: var(--otimista);
+
+
+}
+
+
+ 
+
+.resultado > div:nth-last-of-type(-n+3) {
+
+        /* Suaviza a mudança das propriedades indicadas durante o tempo definido. */
+    transition: transform 0.2s, box-shadow 0.2s;
+
+
+}
+
+
+ 
+.resultado > div:nth-last-of-type(-n+3):hover {
+
+        /* Transformação visual: scale muda a escala e translateY desloca na vertical. */
+    transform: translateY(-4px);
+
+        /* Sombra do elemento; none remove a sombra. */
+    box-shadow: 0 8px 20px rgba(11, 42, 74, 0.12);
+
+
+}
+
+
+ 
+ 
+
+:root {
+     /* Variável CSS de cor. Pode ser reutilizada com var(--azul-escuro); a última definição substitui a anterior. */
+    --azul-escuro: #0a1a3a;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--azul); a última definição substitui a anterior. */
+    --azul: #b84b0b;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--azul-claro); a última definição substitui a anterior. */
+    --azul-claro: #f4f6fa;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--cinza-texto); a última definição substitui a anterior. */
+    --cinza-texto: #495b76;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--cinza-borda); a última definição substitui a anterior. */
+    --cinza-borda: #dce4ef;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--conservador); a última definição substitui a anterior. */
+    --conservador: #956100;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--realista); a última definição substitui a anterior. */
+    --realista: #214773;
+     /* Variável CSS de cor. Pode ser reutilizada com var(--otimista); a última definição substitui a anterior. */
+    --otimista: #16734e;
+ 
+}
+
+
+html {
+     /* smooth suaviza a rolagem; auto respeita a preferência por menos movimento. */
+    scroll-behavior: smooth;
+     /* Reserva espaço acima do destino ao navegar para uma âncora. */
+    scroll-padding-top: 30px;
+ 
+}
+
+
+body {
+     /* Fonte do texto; inherit herda a fonte do elemento pai. */
+    font-family: 'Inter', sans-serif;
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.6;
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #f4f6fa;
+ 
+}
+
+
+h1, h2, h3, .marca {
+     /* Fonte do texto; inherit herda a fonte do elemento pai. */
+    font-family: 'Outfit', sans-serif;
+ 
+}
+
+
+a {
+     /* Remove ou altera decorações dos links, como o sublinhado. */
+    text-decoration: none;
+ 
+}
+
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+     /* Contorno de foco; ajuda a localizar o elemento ao navegar pelo teclado. */
+    outline: 3px solid #e8761e;
+     /* Distância entre o contorno de foco e o elemento. */
+    outline-offset: 4px;
+ 
+}
+
+
+.menu {
+     /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+     /* Alinhamento no eixo transversal do contêiner flex. */
+    align-items: center;
+     /* Distribuição dos elementos no eixo principal do contêiner flex. */
+    justify-content: space-between;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 28px;
+     /* Altura mínima; calc permite calcular medidas com unidades diferentes. */
+    min-height: 80px;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 18px 4%;
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #0a1a3a;
+     /* Borda inferior para separar elementos. */
+    border-bottom: 1px solid #ffffff18;
+ 
+}
+
+
+.marca {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #fff;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 26px;
+     /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 700;
+     /* nowrap impede a quebra do texto em várias linhas. */
+    white-space: nowrap;
+ 
+}
+
+
+.marca span {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #e8761e;
+ 
+}
+
+
+.menu nav {
+     /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+     /* Permite que os elementos passem para a próxima linha. */
+    flex-wrap: wrap;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 26px;
+ 
+}
+
+
+.menu nav a {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #c6d0e2;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+ 
+}
+
+
+.menu nav a:hover, .menu nav a[aria-current] {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #ffb77f;
+ 
+}
+
+
+.voltar {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #fff;
+     /* Define espessura, estilo e cor da borda. */
+    border: 1px solid #71829f;
+     /* Arredonda os cantos. */
+    border-radius: 8px;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 9px 16px;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+     /* nowrap impede a quebra do texto em várias linhas. */
+    white-space: nowrap;
+ 
+}
+
+
+.voltar:hover {
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #ffffff12;
+ 
+}
+
+
+.tela {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: 1600px;
+     /* Espaço externo; auto centraliza quando existe uma largura limitada. */
+    margin: auto;
+     /* Altura mínima; calc permite calcular medidas com unidades diferentes. */
+    min-height: calc(100vh - 80px);
+ 
+}
+
+
+.lado-azul {
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: clamp(32px, 5vw, 72px);
+     /* Largura mínima; zero permite encolher dentro do layout. */
+    min-width: 0;
+     /* Altura mínima; calc permite calcular medidas com unidades diferentes. */
+    min-height: 640px;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 60px;
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: linear-gradient(160deg, #08162ce8 5%, #08162c80 70%, #08162ce6), url('fundoFabrica.jpg') center / cover;
+ 
+}
+
+
+.etiqueta {
+     /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: block;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 10px;
+     /* Distância adicional entre as letras. */
+    letter-spacing: 1.6px;
+     /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 600;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #a9440b;
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 18px;
+ 
+}
+
+
+.lado-azul .etiqueta {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #ffb77f;
+ 
+}
+
+
+h1 {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: clamp(35px, 3.7vw, 52px);
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.1;
+     /* Distância adicional entre as letras. */
+    letter-spacing: -1.5px;
+     /* Espaço externo; auto centraliza quando existe uma largura limitada. */
+    margin: 28px 0 24px;
+ 
+}
+
+
+h1 span {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #ffad70;
+ 
+}
+
+
+.abertura > p {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: 430px;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #d2daea;
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.85;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 16px;
+ 
+}
+
+
+.passos {
+     /* Modo de organização: flex distribui os filhos; block ocupa uma linha. */
+    display: flex;
+     /* Direção dos filhos: row em linha e column em coluna. */
+    flex-direction: column;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 14px;
+     /* Espaço externo acima do elemento. */
+    margin-top: 36px;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 12px;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #d2daea;
+ 
+}
+
+
+.passos span {
+     /* Borda à esquerda para destacar um bloco. */
+    border-left: 2px solid #e8761e;
+     /* Espaço interno à esquerda. */
+    padding-left: 14px;
+ 
+}
+
+
+.lado-azul-rodape {
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #102345dc;
+     /* Define espessura, estilo e cor da borda. */
+    border: 1px solid #8199c044;
+     /* Arredonda os cantos. */
+    border-radius: 14px;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 24px;
+ 
+}
+
+
+.tag {
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: transparent;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #ffb77f;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 0;
+     /* Arredonda os cantos. */
+    border-radius: 0;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 11px;
+ 
+}
+
+
+.lado-azul-rodape p {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 14px;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #e1e7f0;
+ 
+}
+
+
+.lado-azul-rodape .obs {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 11px;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #bcc9df;
+     /* Transparência: 1 totalmente visível, 0 invisível. */
+    opacity: 1;
+ 
+}
+
+
+.lado-branco {
+     /* Largura mínima; zero permite encolher dentro do layout. */
+    min-width: 0;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: clamp(28px, 5vw, 64px);
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #f4f6fa;
+ 
+}
+
+
+.form-box {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: 700px;
+ 
+}
+
+
+.form-box h2 {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: clamp(28px, 3vw, 38px);
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.2;
+     /* Distância adicional entre as letras. */
+    letter-spacing: -1px;
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 16px;
+ 
+}
+
+
+.subtitulo {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 14px;
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.8;
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 32px;
+ 
+}
+
+
+.campo {
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 22px;
+ 
+}
+
+
+.campo label {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 13px;
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 9px;
+ 
+}
+
+
+.campo input {
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 15px 16px;
+     /* Fonte do texto; inherit herda a fonte do elemento pai. */
+    font-family: inherit;
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #0a1a3a;
+     /* Cor das bordas. */
+    border-color: #bdc9db;
+ 
+}
+
+
+.campo input:focus {
+     /* Sombra do elemento; none remove a sombra. */
+    box-shadow: none;
+     /* Contorno de foco; ajuda a localizar o elemento ao navegar pelo teclado. */
+    outline: 3px solid #e8761e;
+     /* Distância entre o contorno de foco e o elemento. */
+    outline-offset: 3px;
+ 
+}
+
+
+.divisor {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 11px;
+     /* uppercase mostra o texto em letras maiúsculas. */
+    text-transform: uppercase;
+     /* Distância adicional entre as letras. */
+    letter-spacing: 1px;
+     /* Espaço externo; auto centraliza quando existe uma largura limitada. */
+    margin: 30px 0 22px;
+ 
+}
+
+
+.nota {
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #fff;
+     /* Define espessura, estilo e cor da borda. */
+    border: 1px solid #dce4ef;
+     /* Borda à esquerda para destacar um bloco. */
+    border-left: 3px solid #c5d0e0;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 12px;
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.8;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 16px 18px;
+     /* Arredonda os cantos. */
+    border-radius: 8px;
+ 
+}
+
+
+.btn-principal {
+     /* Fonte do texto; inherit herda a fonte do elemento pai. */
+    font-family: inherit;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 14px;
+     /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 600;
+     /* Espaço externo acima do elemento. */
+    margin-top: 24px;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 16px 22px;
+ 
+}
+
+
+.btn-principal:hover {
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #943b08;
+ 
+}
+
+
+.resultado {
+     /* Espaço externo acima do elemento. */
+    margin-top: 36px;
+     /* Espaço interno acima. */
+    padding-top: 12px;
+     /* Borda superior para separar ou identificar um bloco. */
+    border-top: 1px solid #dce4ef;
+ 
+}
+
+
+.resultado-titulo {
+     /* Fonte do texto; inherit herda a fonte do elemento pai. */
+    font-family: 'Outfit', sans-serif;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 22px;
+     /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 600;
+ 
+}
+
+
+.cartao {
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 24px;
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 18px;
+     /* Sombra do elemento; none remove a sombra. */
+    box-shadow: 0 8px 28px #0a1a3a05;
+ 
+}
+
+
+.cartao h3 {
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 22px;
+     /* Espaço externo abaixo do elemento. */
+    margin-bottom: 16px;
+ 
+}
+
+
+.linha {
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 12px 0;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 12px;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 20px;
+ 
+}
+
+
+.linha span {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: 58%;
+ 
+}
+
+
+.linha strong {
+     /* Espessura do texto: valores maiores deixam a letra mais forte. */
+    font-weight: 600;
+     /* tabular-nums usa números com largura uniforme para facilitar comparações. */
+    font-variant-numeric: tabular-nums;
+     /* Permite quebrar textos longos para evitar transbordamento. */
+    overflow-wrap: anywhere;
+ 
+}
+
+
+.aviso {
+     /* Cor das letras; var(...) reutiliza uma variável de cor. */
+    color: #72500e;
+     /* Fundo: pode combinar cor, gradiente e imagem; cover preenche a área. */
+    background: #fff7e8;
+     /* Define espessura, estilo e cor da borda. */
+    border: 1px solid #eddbb9;
+     /* Arredonda os cantos. */
+    border-radius: 8px;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 12px;
+     /* Altura das linhas de texto; sem unidade, multiplica o tamanho da fonte. */
+    line-height: 1.8;
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 16px 18px;
+ 
+}
+
+
+/* Telas de até 1000px: reorganiza as duas colunas e o cabeçalho. */
+@media (max-width: 1000px) {
+ .menu {
+     /* Permite que os elementos passem para a próxima linha. */
+    flex-wrap: wrap;
+ 
+}
+
+ .menu nav {
+     /* Muda a ordem visual dentro de um contêiner flex. */
+    order: 3;
+     /* Largura; 100% ocupa a largura disponível do contêiner. */
+    width: 100%;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 20px;
+ 
+}
+
+ .tela {
+     /* Direção dos filhos: row em linha e column em coluna. */
+    flex-direction: column;
+ 
+}
+
+ .lado-azul {
+     /* sticky mantém o painel preso durante a rolagem; static usa o fluxo normal. */
+    position: static;
+     /* Altura; 100vh corresponde à altura da janela. */
+    height: auto;
+     /* Altura mínima; calc permite calcular medidas com unidades diferentes. */
+    min-height: auto;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 36px;
+ 
+}
+
+ .lado-azul-rodape {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: 600px;
+ 
+}
+
+ .passos {
+     /* Direção dos filhos: row em linha e column em coluna. */
+    flex-direction: row;
+     /* Permite que os elementos passem para a próxima linha. */
+    flex-wrap: wrap;
+ 
+}
+
+ .form-box {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: none;
+ 
+}
+
+ 
+}
+
+
+/* Telas de até 480px: reduz espaços e coloca cada valor abaixo do rótulo. */
+@media (max-width: 480px) {
+ .menu nav {
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 12px;
+ 
+}
+
+ .voltar {
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 8px;
+     /* Tamanho do texto; clamp define mínimo, valor flexível e máximo. */
+    font-size: 11px;
+ 
+}
+
+ .cartao {
+     /* Espaço interno entre o conteúdo e a borda. */
+    padding: 18px;
+ 
+}
+
+ .linha {
+     /* Direção dos filhos: row em linha e column em coluna. */
+    flex-direction: column;
+     /* Distância entre os itens de um layout flex ou grid. */
+    gap: 4px;
+ 
+}
+
+ .linha span {
+     /* Limita a largura para evitar linhas ou painéis largos demais. */
+    max-width: none;
+ 
+}
+
+ .linha strong {
+     /* Alinhamento horizontal do texto. */
+    text-align: left;
+ 
+}
+
+ 
+}
+
+
+/* Acessibilidade: desativa rolagem suave quando o usuário solicita menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+ html {
+     /* smooth suaviza a rolagem; auto respeita a preferência por menos movimento. */
+    scroll-behavior: auto;
+ 
+}
+
+ 
+}
+
