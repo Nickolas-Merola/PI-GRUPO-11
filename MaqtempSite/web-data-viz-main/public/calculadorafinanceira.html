@@ -1,0 +1,291 @@
+<!-- HTML estrutura a página; CSS define o visual; JavaScript realiza os cálculos. Comentários são orientações para estudo e não aparecem na tela. -->
+<!-- Informa ao navegador que este documento usa HTML5. -->
+<!DOCTYPE html>
+<!-- Define português brasileiro como idioma, ajudando leitores de tela e ferramentas de tradução. -->
+<html lang="pt-BR">
+<!-- Reúne configurações da página. Esses elementos não são o conteúdo visível principal. -->
+<head>
+    <!-- Permite exibir acentos e outros caracteres corretamente. -->
+<meta charset="UTF-8">
+    <!-- Ajusta a área de exibição à largura do dispositivo. -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define o nome exibido na aba do navegador. -->
+<title>Simulador financeiro | MaqTemp</title>
+    <!-- Antecipa a conexão ao serviço de fontes. As fontes externas exigem acesso à internet. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Carrega Inter para os textos e Outfit para títulos e marca. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- Conecta o arquivo CSS desta pasta ao HTML. -->
+<link rel="stylesheet" href="css/simulador.css">
+</head>
+<!-- Início do conteúdo que aparece na janela do navegador. -->
+<body>
+<!-- Cabeçalho: class liga o elemento às regras de aparência do CSS. -->
+<header class="menu">
+<a class="marca" href="../web-data-viz-main/public/index.html">Maq<span>Temp</span>
+</a>
+<!-- Agrupa os links. aria-label identifica esta navegação para leitores de tela. -->
+<nav aria-label="Navegação principal">
+<a href="../web-data-viz-main/public/index.html">Início</a>
+<a href="../web-data-viz-main/public/index.html#solucao">Solução</a>
+<a href="../web-data-viz-main/public/index.html#contato">Contato</a>
+<!-- O # leva ao elemento com id simulacao na mesma página. aria-current identifica a página atual. -->
+<a href="#simulacao" aria-current="page">Simulador financeiro</a>
+</nav>
+<a class="voltar" href="../web-data-viz-main/public/index.html">← Voltar ao início</a>
+</header>
+    <!-- Contêiner principal: organiza apresentação e calculadora lado a lado no computador. -->
+<div class="tela">
+
+        <!-- Lado azul -->
+        <!-- Painel de apresentação com imagem industrial e camada escura para manter os textos legíveis. -->
+<div class="lado-azul">
+            <!-- Agrupa a etiqueta, o título principal h1 e a explicação da calculadora. -->
+<div class="abertura">
+                <span class="etiqueta">MAQTEMP · SIMULADOR FINANCEIRO</span>
+                <h1>Entenda o impacto.<br>
+<span>Planeje o próximo passo.</span>
+</h1>
+                <p>Transforme os dados da sua operação em cenários para avaliar o monitoramento de temperatura.</p>
+                <!-- Mostra a sequência de utilização. Os spans são pequenos trechos estilizados pelo CSS. -->
+<div class="passos">
+<span>01 · Informe os dados</span>
+<span>02 · Compare os cenários</span>
+<span>03 · Avalie o investimento</span>
+</div>
+            </div>
+            <!-- Exibe o resumo da finalidade e informa que os resultados são estimativas acadêmicas. -->
+<div class="lado-azul-rodape">
+                <div class="tag">Monitoramento de temperatura</div>
+                <p>Compare investimento inicial, economia estimada e tempo de retorno em três cenários.</p>
+                <p class="obs">Simulação acadêmica baseada nas premissas informadas. Os valores não representam uma proposta comercial.</p>
+            </div>
+        </div>
+
+        <!-- Lado branco -->
+        <!-- Painel claro que contém os campos de entrada e os resultados. -->
+<div class="lado-branco">
+            <!-- Limita a largura do conteúdo. O id é único e permite que o link do menu encontre esta área. -->
+<div class="form-box" id="simulacao">
+<span class="etiqueta">SEU CENÁRIO, EM NÚMEROS</span>
+                <h2>Simule o impacto financeiro.</h2>
+                <p class="subtitulo">Informe os dados abaixo para calcular o impacto financeiro.</p>
+
+                <div class="campo">
+                    <!-- O for associa o rótulo ao input de mesmo id. Clicar no rótulo coloca o foco no campo. -->
+<label for="ipt_faturamento">Informe o faturamento bruto anual da empresa (R$):</label>
+                    <!-- Recebe o faturamento como texto para aceitar o formato brasileiro. placeholder é apenas um exemplo, não um valor preenchido. -->
+<input type="text" id="ipt_faturamento" placeholder="Ex.: 100000000">
+                </div>
+
+                <div class="campo">
+                    <label for="ipt_qtdFalhas">Quantas falhas por superaquecimento a empresa tem por ano?</label>
+                    <!-- Quantidade anual de falhas, lida pelo JavaScript por meio deste id. -->
+<input type="text" id="ipt_qtdFalhas" placeholder="Ex.: 3">
+                </div>
+
+                <!-- Separa visualmente os dados da empresa dos dados do monitoramento. -->
+<div class="divisor">
+<span>Dados do Monitoramento</span>
+</div>
+
+                <div class="campo">
+                    <label for="ipt_qtdMaquinas">Informe quantas máquinas serão monitoradas:</label>
+                    <!-- Quantidade de máquinas utilizada para estimar o custo de implantação. -->
+<input type="text" id="ipt_qtdMaquinas" placeholder="Ex.: 5">
+                </div>
+
+                <!-- Explica as premissas usadas pelo modelo. O CSS destaca esse texto em uma caixa. -->
+<p class="nota">
+                   Como calculamos: o custo de manutenção da indústria brasileira gira em torno de 4% do faturamento bruto, conforme o Documento Nacional da Abraman. Consideramos que 30% desse custo é de manutenção corretiva não planejada (hipótese da equipe), ou seja, cerca de 1,2% do faturamento por ano.
+                </p>
+
+                <!-- explicação dos cenários -->
+                <!-- Explica as premissas usadas pelo modelo. O CSS destaca esse texto em uma caixa. -->
+<p class="nota">
+                    Cenários: o resultado é mostrado em três cenários. A detecção é a parte das falhas que o monitoramento consegue antecipar (50%, 70% e 90%) e o fator é quantas vezes a manutenção corretiva custa mais que a planejada (2x, 2x e 3x). O fator 2x vem de um trabalho que cita a Abraman, que aponta que a corretiva custa pelo menos o dobro da preditiva. Os demais valores são hipóteses da equipe.
+                </p>
+
+                <!-- onclick chama calcular ao clicar. O JavaScript valida os valores e gera o resultado. -->
+<button class="btn-principal" onclick="calcular()">Calcular impacto financeiro</button>
+                <!-- Área inicialmente vazia: recebe os resultados. aria-live polite anuncia atualizações sem interromper o leitor de tela. -->
+<div id="div_exibir" role="region" aria-label="Resultado da simulação" aria-live="polite">
+</div>
+            </div>
+        </div>
+
+    </div>
+
+        <!-- O script contém as funções executadas no navegador. let cria variáveis locais; return devolve um valor ou encerra a função. -->
+    <script>
+        // Recebe texto no formato brasileiro: remove pontos de milhar, troca vírgula decimal por ponto e converte para Number. Exemplo: 1.000,50 vira 1000.5.
+        function lerNumero(texto){
+            let limpo = texto.replaceAll(".", "").replaceAll(",", ".");
+            return Number(limpo);
+        }
+
+        // Cria uma linha de resultado em HTML. As crases permitem inserir variáveis com ${...}; span mostra o rótulo e strong destaca o valor.
+        function linha(rotulo, valor){
+            let html = `<div class="linha"><span>${rotulo}</span><strong>${valor}</strong></div>`;
+            return html;
+        }
+
+        // formatação dos valores
+        // Prepara um valor para exibição em reais. toFixed(2) mantém duas casas decimais; esta função não adiciona separadores de milhar.
+        function formatarReais(valor){
+            let texto = valor.toFixed(2);
+            return "R$ " + texto.replaceAll(".", ",");
+        }
+
+        // cartão de UM cenário. É chamada 3 vezes dentro do calcular, uma para cada cenário.
+        // deteccao = parte das falhas que o monitoramento antecipa (0.5 = 50%)
+        // fator = quantas vezes a corretiva custa mais que a manutenção planejada
+        
+// Calcula e monta um cenário. Os parâmetros são os dados recebidos pela função. custoPorFalha é recebido, mas não é utilizado nesta função.
+        function cartaoCenario(nome, deteccao, fator, prejuizoAnual, custoPorFalha, investimentoTotal){
+
+    // Calcula a parcela economizada ao trocar uma corretiva por manutenção planejada. Com fator 2, a redução é de 50%.
+        let reducao = 1 - (1 / fator);
+
+    // Economia estimada no ano
+    let evitado = prejuizoAnual * deteccao * reducao;
+
+    // Remuneração anual da MaqTemp (20%)
+    let precoMaqTemp = evitado * 0.20;
+
+    // Economia que fica com o cliente
+    let economiaCliente = evitado - precoMaqTemp;
+
+    // Gasto total do cliente no primeiro ano
+    let gastoTotal = investimentoTotal + precoMaqTemp;
+
+    // Ganho líquido do cliente no primeiro ano
+    let ganho = economiaCliente - investimentoTotal;
+
+    // ROI sobre o gasto total do primeiro ano
+    // O operador ternário usa condição ? valorSeVerdadeiro : valorSeFalso. A verificação evita divisão por zero.
+        let roi = gastoTotal > 0 ? ganho / gastoTotal : 0;
+    // Converte a proporção em percentual e arredonda a exibição para zero casas decimais.
+        let roiTexto = (roi * 100).toFixed(0) + "%";
+
+    // Payback considerando a economia restante do cliente
+    let dias;
+    let payback;
+
+    // Se não houver economia positiva, não calcula prazo de retorno; o bloco else trata o caso contrário.
+        if (economiaCliente <= 0){
+        payback = "Não há retorno positivo estimado";
+    } else {
+        // Divide o investimento pela economia anual e converte anos em dias, supondo economia distribuída uniformemente pelo ano.
+        dias = (investimentoTotal / economiaCliente) * 365;
+
+        if (dias < 1){
+            payback = "menos de 1 dia";
+        } else {
+            // Arredonda o prazo para o inteiro mais próximo, para apresentar uma estimativa simples.
+        let diasArredondado = Math.round(dias);
+            payback = "aproximadamente " + diasArredondado +
+            (diasArredondado == 1 ? " dia" : " dias");
+        }
+    }
+
+ 
+
+    // Monta o texto que informa as hipóteses utilizadas no cenário. O sinal + junta os textos.
+        let premissas = "detecção " + (deteccao * 100).toFixed(0) +
+    "% | fator " + fator + "x";
+
+    // Monta o HTML do cartão usando as funções linha e formatarReais. O texto entre crases pode ocupar várias linhas.
+        let cartao =
+        `<div class="cartao">
+            <h3>${nome}</h3>
+            ${linha('Premissas', premissas)}
+            ${linha('Economia bruta estimada no ano', formatarReais(evitado))}
+            ${linha('Remuneração anual MaqTemp (20%)', formatarReais(precoMaqTemp))}
+            ${linha('Investimento inicial', formatarReais(investimentoTotal))}
+            ${linha('Gasto total no 1º ano', formatarReais(gastoTotal))}
+            ${linha('Economia restante do cliente', formatarReais(economiaCliente))}
+            ${linha('Ganho líquido no 1º ano', formatarReais(ganho))}
+            ${linha('ROI do cliente', roiTexto)}
+            ${linha('Tempo de retorno', payback)}
+           
+        </div>`;
+
+    // Devolve o HTML ao ponto que chamou a função; ainda não insere o cartão na página.
+        return cartao;
+}
+
+
+        // Função executada pelo clique no botão. Lê os campos, valida, calcula os custos e apresenta os três cenários.
+        function calcular(){
+            // value contém o texto digitado. Neste código, o navegador disponibiliza os elementos pelos seus IDs; lerNumero converte cada entrada para cálculo.
+        let faturamento = lerNumero(ipt_faturamento.value);
+            let qtdFalhas = lerNumero(ipt_qtdFalhas.value);
+            let qtdMaquinas = lerNumero(ipt_qtdMaquinas.value);
+
+            // O ! significa negação e || significa OU. Se qualquer entrada não for maior que zero, mostra um aviso e interrompe o cálculo.
+        if (!(faturamento > 0) || !(qtdFalhas > 0) || !(qtdMaquinas > 0)){
+                div_exibir.innerHTML = '<p class="aviso">Preencha o faturamento, a quantidade de falhas por ano e a quantidade de máquinas com valores maiores que zero.</p>';
+                return;
+            }
+
+           // custo anual das manutenções corretivas não planejadas:
+        // 1,2% do faturamento = 4% (custo total de manutenção, Abraman) x 30% (parte corretiva, hipótese da equipe)
+        // Aplica a premissa de 1,2% do faturamento: 4% multiplicados por 30%. É uma hipótese da simulação, não uma perda medida da empresa.
+        let custoCorretiva = faturamento * 0.012;
+
+        // prejuízo anual e custo de cada falha:
+         let prejuizoAnual = custoCorretiva;
+         // Distribui o custo anual estimado entre as falhas informadas. A quantidade de falhas altera esse custo por evento, não o total anual desta fórmula.
+        let custoPorFalha = custoCorretiva / qtdFalhas;
+
+            // cálculos para a implementação da MaqTemp:
+            // Estima R$ 30 de sensor por máquina. Os valores unitários abaixo são os parâmetros de custo definidos neste simulador.
+        let custoSensor = qtdMaquinas * 30;
+            // Estima R$ 400 de instalação por máquina.
+        let custoInstalacao = qtdMaquinas * 400;
+            // Estima R$ 120 de equipamentos por máquina.
+        let custoEquipamentos = qtdMaquinas * 120;
+            // Soma sensor, instalação e equipamentos para obter o investimento inicial de todas as máquinas.
+        let investimentoTotal = custoSensor + custoInstalacao + custoEquipamentos;
+
+            // formatando os valores em reais:
+            let custoPorFalhaFormatado = formatarReais(custoPorFalha);
+            let prejuizoAnualFormatado = formatarReais(prejuizoAnual);
+            let investimentoFormatado = formatarReais(investimentoTotal);
+
+            // cartão para cada cenário
+            // Executa a mesma função com hipóteses diferentes: 50% e fator 2; 70% e fator 2; 90% e fator 3. Os resultados dependem dessas hipóteses.
+        let cartaoConservador = cartaoCenario('Conservador', 0.5, 2, prejuizoAnual, custoPorFalha, investimentoTotal);
+            let cartaoRealista = cartaoCenario('Realista', 0.7, 2, prejuizoAnual, custoPorFalha, investimentoTotal);
+            let cartaoOtimista = cartaoCenario('Otimista', 0.9, 3, prejuizoAnual, custoPorFalha, investimentoTotal);
+
+            // Reúne o resumo dos custos, o investimento e os três cartões em uma única estrutura HTML.
+        let resultado =
+                `<div class="resultado">
+                    <p class="resultado-titulo">Prejuízo atual</p>
+                    <div class="cartao">
+                        ${linha('Custo estimado de cada falha', custoPorFalhaFormatado)}
+                        ${linha('Prejuízo anual estimado', prejuizoAnualFormatado)}
+                    </div>
+
+                    <p class="resultado-titulo">Investimento</p>
+                    <div class="cartao">
+                        ${linha('Seu investimento inicial', investimentoFormatado)}
+                    </div>
+
+                    <p class="resultado-titulo">Com o monitoramento, por cenário</p>
+                    ${cartaoConservador}
+                    ${cartaoRealista}
+                    ${cartaoOtimista}
+
+                    <p class="aviso">Os cenários são estimativas e não garantem resultado. Eles variam quantas falhas o monitoramento consegue antecipar e quanto a manutenção corretiva custa a mais que a planejada. O resultado real depende de quantas falhas o monitoramento conseguir antecipar.</p>
+                </div>`;
+
+            // Substitui o conteúdo da área de resultados pelo HTML calculado. Não envia dados ao servidor nem grava no banco.
+        div_exibir.innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
