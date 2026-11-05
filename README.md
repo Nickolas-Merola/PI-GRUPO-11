@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-📄 Documentação do projeto | [Word](https://bandteccom-my.sharepoint.com/:w:/g/personal/thayssa_souza_sptech_school/cQruWjXV7ZyCR4S1-XbqS2hdEgUBLANHJ4C747pBFUSNK5ELsw)
+📄 Documentação do projeto | [Word](https://bandteccom-my.sharepoint.com/:w:/g/personal/thayssa_souza_sptech_school/cQpOCU2A5yvmQY5so640fg0rEgUBQ_WIIOourXqrlJPDy0BQYg)
 🖼️ Slide de apresentação | [PowerPoint](https://bandteccom-my.sharepoint.com/:p:/g/personal/thayssa_souza_sptech_school/cQrDwic_l9GDT5z05eID6SF8EgUBxpwE8-3sQuaX_kO19t5y7Q) 
 🗂️ Organização do projeto | [Trello](https://trello.com/b/N3scdzCw/projeto-de-pesquisa-e-inovacao-sptech) 
 🖥️ Prototipagem do site institucional | [Figma](https://www.figma.com/design/n1EVWY1g1Wg38WiW71ELkF/Sistema-de-Monitoramento-de-Temperatura?node-id=0-1&p=f&t=Epxpq4fvEQsNANjP-0)
