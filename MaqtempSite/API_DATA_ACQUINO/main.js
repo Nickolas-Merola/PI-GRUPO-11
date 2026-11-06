@@ -8,7 +8,6 @@ require('dotenv').config();
 const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
-const portaBanco = process.env.PORT;
 const senha = process.env.SENHA;
 const user = process.env.USERAPI;
 
@@ -17,13 +16,13 @@ const HABILITAR_OPERACAO_INSERIR = false;
 
 // true: gera dados falsos, sem precisar do Arduino (modo treino)
 // false: lê os dados reais do Arduino pela porta serial
-const HABILITAR_SENSORES_SIMULADOS = false;
+const HABILITAR_SENSORES_SIMULADOS = true;
 
 const ACRESCIMO_POR_SENSOR = 10;
 
 // faixas usadas nos KPIs (as mesmas do dashboard)
 const LIMITE_AVISO = 80;
-const LIMITE_EMERGENCIA = 90;
+const LIMITE_EMERGENCIA = 90.01;
 
 // pool único, compartilhado pela leitura serial E pelo servidor (KPIs)
 const poolBancoDados = mysql.createPool({
@@ -35,13 +34,9 @@ const poolBancoDados = mysql.createPool({
 }).promise();
 
 const classificarTemperatura = (temperatura) => {
-    if (temperatura >= 18 && temperatura <= 27) {
-        return 'Normal';
-    }
-    if ((temperatura >= 15 && temperatura < 18) || (temperatura > 27 && temperatura <= 32)) {
-        return 'Atenção';
-    }
-    return 'Alerta';
+    if (temperatura < 80) return 'Normal';
+   if (temperatura <= 90) return 'Aviso';
+   return 'Emergência';
 };
 
 // função para comunicação serial
@@ -74,8 +69,8 @@ const serial = async (valoresLm35, ValoresLm35Espelhados) => {
                     const situacao = classificarTemperatura(temperatura);
 
                     await poolBancoDados.execute(
-                        'INSERT INTO leituraTemperatura (fkSensor,fkMotor,temperatura,situacao) VALUES (?,?,?,?)',
-                        [contador, contador, temperatura, situacao]
+                        'INSERT INTO metricas (fkSensor,temperatura,situacao) VALUES (?,?,?)',
+                        [contador, temperatura, situacao]
                     );
                     console.log(`Sensor ${contador} | ${temperatura.toFixed(2)} ºC | ${situacao}`);
                 }
@@ -91,7 +86,7 @@ const serial = async (valoresLm35, ValoresLm35Espelhados) => {
         console.log('*** MODO SIMULADO: os dados são falsos, o Arduino NÃO está sendo lido ***');
         setInterval(() => {
             const tcrt5000 = Math.round(Math.random());
-            const lm35 = (18 + Math.random() * 4).toFixed(2);
+            const lm35 = (55 + Math.random() * 40).toFixed(2);
             tratarLinha(`${tcrt5000};${lm35}`);
         }, 1000);
         return;
@@ -154,8 +149,8 @@ const servidor = (valoresLm35, ValoresLm35Espelhados) => {
                     COALESCE(SUM(temperatura > ?), 0)        AS alertas,
                     COALESCE(ROUND(100 * SUM(temperatura >= ?) / COUNT(*)), 0) AS risco,
                     COUNT(*)                                 AS total
-                 FROM leituraTemperatura
-                 WHERE fkMotor = ?`,
+                 FROM metricas
+                 WHERE fkSensor = ?`,
                 [LIMITE_EMERGENCIA, LIMITE_AVISO, motor]
             );
 

@@ -183,3 +183,18 @@ SELECT e.nome, c.tipo_contrato
 FROM empresas e
 JOIN contrato c ON c.fkEmpresa = e.idEmpresa
 WHERE c.status_contrato = 1 AND c.status_pagamento = 0;
+
+SELECT e.nome AS empresa,
+       en.nomeEndereco AS local,
+       m.modeloMotor AS motor,
+       m.potencia,
+       s.modeloSensor AS sensor,
+       me.temperatura,
+       me.situacao,
+       me.dtLeitura
+FROM metricas me
+JOIN sensores s ON s.idSensor = me.fkSensor
+JOIN motores m ON m.fkSensor = s.idSensor
+JOIN enderecos en ON en.idEndereco = m.fkEndereco
+JOIN empresas e ON e.idEmpresa = en.fkEmpresa
+ORDER BY me.dtLeitura DESC;
