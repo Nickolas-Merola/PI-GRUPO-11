@@ -12,13 +12,13 @@ const senha = process.env.SENHA;
 const user = process.env.USERAPI;
 
 // habilita ou desabilita a inserção de dados no banco de dados
-const HABILITAR_OPERACAO_INSERIR = false;
+const HABILITAR_OPERACAO_INSERIR = true;
 
 // true: gera dados falsos, sem precisar do Arduino (modo treino)
 // false: lê os dados reais do Arduino pela porta serial
-const HABILITAR_SENSORES_SIMULADOS = true;
+const HABILITAR_SENSORES_SIMULADOS = false;
 
-const ACRESCIMO_POR_SENSOR = 10;
+const ACRESCIMO_POR_SENSOR = 60;
 
 // faixas usadas nos KPIs (as mesmas do dashboard)
 const LIMITE_AVISO = 80;
@@ -64,7 +64,7 @@ const serial = async (valoresLm35, ValoresLm35Espelhados) => {
                 // no contexto real você usaria o select com where para pegar o sensor daquele usuário
                 const total = linhas[0].total;
 
-                for (let contador = 1; contador <= total; contador++) {
+                for (let contador = 1; contador <= total-2; contador++) {
                     const temperatura = lm35 + (contador - 1) * ACRESCIMO_POR_SENSOR;
                     const situacao = classificarTemperatura(temperatura);
 
@@ -86,7 +86,7 @@ const serial = async (valoresLm35, ValoresLm35Espelhados) => {
         console.log('*** MODO SIMULADO: os dados são falsos, o Arduino NÃO está sendo lido ***');
         setInterval(() => {
             const tcrt5000 = Math.round(Math.random());
-            const lm35 = (55 + Math.random() * 40).toFixed(2);
+            const lm35 = (55 + Math.random() * 4).toFixed(2);
             tratarLinha(`${tcrt5000};${lm35}`);
         }, 1000);
         return;
