@@ -126,17 +126,12 @@ CREATE TABLE metricas (
     dtLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
     situacao VARCHAR(10),
     PRIMARY KEY (idLeitura, fkSensor),
-    CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta')),
     FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
 );
 
+ALTER TABLE metricas ADD CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta'));
+
 INSERT INTO metricas (fkSensor, temperatura, situacao) VALUES
-(1, 62.50, 'Normal'),
-(1, 64.10, 'Normal'),
-(1, 81.30, 'Atenção'),
-(2, 85.50, 'Atenção'),
-(3, 92.90, 'Alerta'),
-(3, 70.00, 'Normal'),
 (4, 58.00, 'Normal');
 
 -- ---------------------------------------------------------------------------------------------------------------------

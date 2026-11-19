@@ -126,17 +126,12 @@ CREATE TABLE metricas (
     dtLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
     situacao VARCHAR(10),
     PRIMARY KEY (idLeitura, fkSensor),
-    CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta')),
     FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
 );
 
+ALTER TABLE metricas ADD CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta'));
+
 INSERT INTO metricas (fkSensor, temperatura, situacao) VALUES
-(1, 62.50, 'Normal'),
-(1, 64.10, 'Normal'),
-(1, 81.30, 'Atenção'),
-(2, 85.50, 'Atenção'),
-(3, 92.90, 'Alerta'),
-(3, 70.00, 'Normal'),
 (4, 58.00, 'Normal');
 
 -- ---------------------------------------------------------------------------------------------------------------------
@@ -183,18 +178,3 @@ SELECT e.nome, c.tipo_contrato
 FROM empresas e
 JOIN contrato c ON c.fkEmpresa = e.idEmpresa
 WHERE c.status_contrato = 1 AND c.status_pagamento = 0;
-
-SELECT e.nome AS empresa,
-       en.nomeEndereco AS local,
-       m.modeloMotor AS motor,
-       m.potencia,
-       s.modeloSensor AS sensor,
-       me.temperatura,
-       me.situacao,
-       me.dtLeitura
-FROM metricas me
-JOIN sensores s ON s.idSensor = me.fkSensor
-JOIN motores m ON m.fkSensor = s.idSensor
-JOIN enderecos en ON en.idEndereco = m.fkEndereco
-JOIN empresas e ON e.idEmpresa = en.fkEmpresa
-ORDER BY me.dtLeitura DESC;
