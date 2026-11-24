@@ -8,15 +8,15 @@ require('dotenv').config();
 const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
-const senha = process.env.SENHA;
-const user = process.env.USERAPI;
+const senha = process.env.DB_PASSWORD;
+const user = process.env.DB_USER;
 
 // habilita ou desabilita a inserção de dados no banco de dados
 const HABILITAR_OPERACAO_INSERIR = true;
 
 // true: gera dados falsos, sem precisar do Arduino (modo treino)
 // false: lê os dados reais do Arduino pela porta serial
-const HABILITAR_SENSORES_SIMULADOS = false;
+const HABILITAR_SENSORES_SIMULADOS = true;
 
 const ACRESCIMO_POR_SENSOR = 60;
 
@@ -26,17 +26,17 @@ const LIMITE_EMERGENCIA = 90.01;
 
 // pool único, compartilhado pela leitura serial E pelo servidor (KPIs)
 const poolBancoDados = mysql.createPool({
-    host: '10.18.33.111',
-    user:'API_DATAACQUINO',
-    password: 'Api_ArqComp11',
+    host: 'IP',
+    user: user,
+    password: senha,
     database: 'maqtemp',
     port: 3307
 }).promise();
 
-const classificarTemperatura = (temperatura) => {
-    if (temperatura < 80) return 'Normal';
-   if (temperatura <= 90) return 'Aviso';
-   return 'Emergência';
+const classificarTemperatura = (t) => {
+    if (t < 80) return 'Normal';
+    if (t <= 90) return 'Atenção';
+    return 'Alerta';
 };
 
 // função para comunicação serial
