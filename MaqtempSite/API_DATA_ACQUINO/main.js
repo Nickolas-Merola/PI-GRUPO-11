@@ -26,9 +26,9 @@ const LIMITE_EMERGENCIA = 90.01;
 
 // pool único, compartilhado pela leitura serial E pelo servidor (KPIs)
 const poolBancoDados = mysql.createPool({
-    host: '127.0.0.1',
-    user: user,
-    password: senha,
+    host: '10.18.33.111',
+    user:'API_DATAACQUINO',
+    password: 'Api_ArqComp11',
     database: 'maqtemp',
     port: 3307
 }).promise();
