@@ -26,7 +26,7 @@ const LIMITE_EMERGENCIA = 90.01;
 
 // pool único, compartilhado pela leitura serial E pelo servidor (KPIs)
 const poolBancoDados = mysql.createPool({
-    host: 'IP',
+    host: '10.18.32.245',
     user: user,
     password: senha,
     database: 'maqtemp',
