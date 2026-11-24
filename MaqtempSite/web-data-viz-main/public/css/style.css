@@ -1,21 +1,22 @@
-/* 
+/*
 Como funciona o CSS ->
-seletor { 
-propriedade:valor; 
+seletor {
+propriedade:valor;
 }
 
 seletor -> Diz quem vai receber a estilização
 Propriedade -> Diz oq vai mudar
 valor -> Diz como
-MDN -> Utlizar para pesquisar oq cada propriedade faz 
+MDN -> Utlizar para pesquisar oq cada propriedade faz
 "propriedade x mdn" para pesquisar oq ela faz
 
 variavel no css: --nome: valor;
 
-O :root é o elemento mais alto da página, o próprio html, 
+O :root é o elemento mais alto da página, o próprio html,
 que contém todos os outros. Variáveis declaradas ali valem para a página toda.
 
-
+Este arquivo é usado pelas duas telas da dashboard:
+dashboard.html (visão geral da planta) e motor.html (detalhe de um motor)
 */
 * {
     box-sizing: border-box; /*Define como a altura e largura de um elemento é definida*/
@@ -26,16 +27,23 @@ que contém todos os outros. Variáveis declaradas ali valem para a página toda
 :root{
     --azul-escuro: #0b1f3a;
     --laranja: #ee8128;
-    --fundo: #f2f5f9;
+    --fundo: #f0f3f8;
     --branco: #ffffff;
     --texto: #0b1f3a;
     --texto-suave: #4b5f7e;
     --borda: #dde4ee;
     --cor-clara: #a9b9d2;
+    /* cores dos textos e etiquetas de cada faixa */
     --normal: #17734d;
     --aviso:#8a6500;
-    --emergencia:#b82a2a;
+    --emergencia:#c62828;
     --sem-leitura:#5d6c82;
+    /* cores mais vivas, usadas nos quadrados dos motores e nas barras */
+    --forte-normal: #1b7752;
+    --forte-aviso: #cc9a06;
+    --forte-emergencia: #c62828;
+    --forte-sem-leitura: #9aa6ba;
+    /* cores clarinhas, usadas no fundo do gráfico */
     --claro-normal: #e0f2e9;
     --claro-aviso:#fbefc4;
     --claro-emergencia:#fbe1e1;
@@ -47,18 +55,26 @@ body{
     color: var(--texto); /*Cor dos textos*/
     margin: 0;
 }
+a{
+    color: inherit;
+}
+button, select, input{
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+}
 .painel{
     background-color: var(--branco);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--borda);
-    /*As 3 propriedades basicas do border é: style, color e width*/
-    border-radius: 8px; /*Define o arredondamento da borda*/
-    padding: 14px; /*Define a área de preenchimento isso é o espaço entre o conteudo e a borda*/
+    border: 1px solid var(--borda);
+    /*As 3 propriedades basicas do border é: style, color e width (aqui escritas juntas)*/
+    border-radius: 12px; /*Define o arredondamento da borda*/
+    padding: 24px; /*Define a área de preenchimento isso é o espaço entre o conteudo e a borda*/
 }
+
+/* ===================== CABEÇALHO ===================== */
 /*
-Como o Flexbox funciona. Normalmente os elementos de bloco (div, header) ficam empilhados, 
-um embaixo do outro. Quando você coloca display: flex num elemento, ele vira um container 
+Como o Flexbox funciona. Normalmente os elementos de bloco (div, header) ficam empilhados,
+um embaixo do outro. Quando você coloca display: flex num elemento, ele vira um container
 flex, e os filhos diretos dele passam a ficar lado a lado, em linha.
 Eixo Principal: Direção do enfileiramento dos itens, normalmente horizontal
 -> justify-content
@@ -67,45 +83,20 @@ Eixo Cruzado: Perpendicular a ele, vertical
 */
 .topo{
     display: flex;/*Virou um container, as classes filhas ficam lado a lado, o flex organiza os elementos*/
-    align-items: center; 
+    align-items: center;
     /*Faz com que os itens dentro do topo fiquem no centro daquele container de maneira vertical*/
-    gap: 24px;/*Faz o espaçamento entre os blocos*/
-    /* justify-content: space-between; */
-    /*O justify-content define como o navegador distribui o espaço entre os itens
-    e o space-between faz com que os itens sejam distribuidas de maneira uniforme e o espaço
-    entre cada par de itens que estão um ao lado do outro seja o mesmo*/
+    gap: 36px;/*Faz o espaçamento entre os blocos*/
     color: var(--branco);
     background-color: var(--azul-escuro);
-    padding: 10px 16px;
+    padding: 14px 40px;
     /*padding: [vertical] [horizontal]
-    O padding determina o espaço vazio dentro da caixa, então quando colocamos que o padding horizontal
-    tem 10px estamos falando que temos 10px de espaços vazios lá tanto para a esquerda quanto para a direita
-    Já o vertical define o quão proximo as laterais de cima e embaixo do bloco vão ficar
-    do seu texto, porem tudo isso é dentro do bloco para ajustar a parte externa usamos o margin
-    Margin é o espaço de fora que afasta os "vizinhos"
-    O padding define qual a margem dentro da caixa com o seu conteudo até as laterais
-    Para teste: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/padding*/
-}
-.filtros{
-    margin-left: auto;
-    /*A margem esquerda recebe uma parte do espaço horizontal não utilizado
-    auto normalmente é 0
-    Isso fez com que a classe filtros ussase todo o espaço disponivel 
-    na esquerda para jogar o elemento para o fim (direita)
-    */
-    display: flex;
-    align-items: center;/*Faz com que os itens fiquem no centro do bloco/div assim como o start faz eles ficarem la no topo do bloco*/
-    gap: 12px;
-}
-.filtros select{
-    border-radius: 5px;
-    background-color: var(--cor-clara);
-    padding: 5px;
+    O padding determina o espaço vazio dentro da caixa*/
 }
 .logo{
     font-family: Outfit, sans-serif;
-    font-size: 22px; 
+    font-size: 30px;
     font-weight: 700;
+    text-decoration: none;
     /*Aqui eu defini ql a fonte, o seu tamanho e a espessura dela*/
 }
 .logo span:last-child{
@@ -113,233 +104,581 @@ Eixo Cruzado: Perpendicular a ele, vertical
 }
 .empresa{
     display: flex; /*Transforma em um container e o flex-direction define a direção dos blocos*/
-    flex-direction: column; 
-    /*Empilha os itens como uma coluna e define o eixo principal como vertical, uma interação legal é
-    column-reverse que faz a mesma coisa porem inverte a ordem da coluna tipo o DESC no BD.
-    Tem o row tambem que especifica que o eixo principal do contêiner flexível seja o mesmo que a direção do texto*/
+    flex-direction: column;
+    /*Empilha os itens como uma coluna e define o eixo principal como vertical*/
 }
-.empresa span:last-child{
-    font-size: 14px;
-    color: var(--cor-clara);
+.empresa strong{
+    font-size: 22px;
 }
-.periodos{
+.empresa span{
+    font-size: 15px;
+    color: #d5deea;
+}
+.topo-direita{
+    margin-left: auto;
+    /*A margem esquerda recebe todo o espaço horizontal que sobrou,
+    isso joga o bloco para o fim (direita)*/
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 36px;
+    font-size: 15px;
+    color: #d5deea;
 }
-.periodos option{
-    font-family: Outfit, sans-serif;
-    font-weight: 600;
+.topo-direita select{
+    background-color: transparent;
+    color: var(--branco);
+    border: 1px solid #36507a;
+    border-radius: 6px;
+    padding: 4px 6px;
+    cursor: pointer;
 }
-/*
-O flexbox direciona em uma diração, ja o grid organiza em linhas e colunas.
-Para a estrutura da tela (lateral + centro), o Grid é a ferramenta certa. 
-O Flexbox é melhor para alinhar itens dentro de uma faixa, como no cabeçalho.
-*/
-.corpo{
-    display: grid;
-    grid-template-columns: 340px 1fr;/*grid-template-columns do CSS define os nomes das linhas e funções de dimensionamento do grid columns*/
-    gap: 12px;
-    padding: 12px;/*Para os paineis n encostarem nas bordas*/
+.topo-direita option{
+    color: var(--texto);
 }
-/*Utilizei o fr pq ele ocupa o resto daquela tela, é mais simples de ler do que os pixels
-Além de ele se adaptar ao resto da tela*/
-.lateral{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.atualizacao{
+    white-space: nowrap;/*Não deixa o texto quebrar linha*/
+    font-variant-numeric: tabular-nums; /*Define uma largura igual para todos os numeros
+    e essa função ajuda a mudança de horario se manter estatica no sentido da ocupação de espaço*/
 }
-.centro{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.botao-sair{
+    background-color: transparent;
+    border: 1px solid #36507a;
+    border-radius: 6px;
+    padding: 5px 12px;
+    cursor: pointer;
+    color: #d5deea;
 }
-.contadores{
-    display: grid;
-    grid-template-columns:
-    repeat(4, 1fr);
-    gap: 8px; 
+.botao-sair:hover{
+    background-color: #16305a;
+}
+
+/* ===================== ESTRUTURA DA PÁGINA ===================== */
+.conteudo{
+    padding: 28px 40px 40px;
+    max-width: 1600px;
+    margin: 0 auto; /*centraliza o conteúdo em telas muito largas*/
+}
+/* Enquanto os dados de outro motor estão chegando, a tela fica "apagada" */
+.conteudo.carregando{
+    opacity: 0.55;
+    transition: opacity 0.2s;
+}
+h1{
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
 }
 h2{
-    font-family: Outfit, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 10px 0;/*[Cima][Direita][Baixo][Esquerda]
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 16px 0;/*[Cima][Direita][Baixo][Esquerda]
     Margin é o espaço que esta fora da caixa e empurra os blocos para longe
     já o padding é o espaço vazio dentro do bloco*/
 }
-.contador{
-    display: flex;
-    flex-direction: column;
-}
-.contador span{
-    font-size: 12px;
-}
-.contador strong{
-    font-family: Outfit, sans-serif;
-    font-weight: 600;
-    font-size: 26px;
-}
-.contador.normal{
-    color: var(--normal);
-}
-.contador.aviso{
-    color: var(--aviso);
-}
-.contador.emergencia{
-    color: var(--emergencia);
-}
-.contador.sem-leitura{
-    color: var(--sem-leitura);
-}
-/*OBS
-Quando usamos .contador.normal quer dizer que aquela div tem 2 classes como por exemplo .aluno.veterano 
-ele é aluno que também é veterano
-Já quando usamos .contadores .normal quer dizer que aquela procura o elemento .normal que esta 
-dentro do .contadores
-*/
-.motor{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 9px 8px;
-    border: 1px solid transparent;
-    border-radius: 6px;/*Arredonda os cantos*/
-    cursor: pointer;/*Muda a mao do bottão*/
-    text-align: left;/*Alinhamento do texto*/
-    background-color: transparent;
-}
-button{
-    font-family: inherit;
-    color: inherit;
-    font-size: inherit;
-}
-.periodos button{
-    background-color: var(--azul-escuro);
-    color: var(--branco);
-    border-radius: 10px;
-    padding: 5px;
-    cursor: pointer;
-}
-.etiqueta{
-    display: inline-block;/*O inline-block é uma mistura entre o inline e o block o inline serve
-    para deixar lado a lado e o block para dar a configuração do width e height 
-    Inline ex: <span> <a> <img>
-    Block ex: <div> <p> <h1> - O block quebra a linha*/
-    padding: 1px 8px;/*vertical e horizontal*/
-    border-radius: 99px;
-    font-size: 12px;
-    font-weight: 600;
-}
-.etiqueta.normal{
-    color: var(--claro-normal);
-    background-color: var(--normal);
-}
-.etiqueta.emergencia{
-    color: var(--claro-emergencia);
-    background-color: var(--emergencia);
-}
-.etiqueta.aviso{
-    color: var(--claro-aviso);
-    background-color: var(--aviso);
-}
-.etiqueta.sem-leitura{
-    color: var(--claro-sem-leitura);
-    background-color: var(--sem-leitura);
-}
-.motor-temp{
-    font-family: Outfit, sans-serif;
-    font-size: 28px;
-    font-weight: 600;
-}
-.motor.selecionado{
-    border-color: var(--laranja);
-}
-.motor:hover{
-    background-color: var(--fundo);
-}
-/*O hover serve como uma pseudo-classe que tem a função de aplicar um estilo diferente
-quando o usuario posicionar o cursor do mouse sobre ele*/
-.motores{
-    display: flex;
-    flex-direction: column;/*Faz com que os motores fiquem empilhados e não um ao lado do outro*/
-    gap: 4px;
-}
-.motor-info{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.modelo{
-    font-size: 12px;
+.subtitulo{
+    font-size: 17px;
     color: var(--texto-suave);
+    margin: 6px 0 24px;
 }
+.mensagem-erro{
+    background-color: var(--claro-emergencia);
+    color: var(--emergencia);
+    border: 1px solid #f1b9b9;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: none;
+}
+/*
+O flexbox direciona em uma diração, ja o grid organiza em linhas e colunas.
+Para a estrutura da tela, o Grid é a ferramenta certa.
+O Flexbox é melhor para alinhar itens dentro de uma faixa, como no cabeçalho.
+*/
 .kpis{
     display: grid;
-    grid-template-columns:
-    repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 22px;
 }
+/*Utilizei o fr pq ele ocupa o resto daquela tela, é mais simples de ler do que os pixels
+Além de ele se adaptar ao resto da tela*/
+.grade-principal{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+/* ===================== INDICADORES (KPIs) ===================== */
 .kpi{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
+    min-height: 200px;
 }
-.kpis strong{
-    font-family: Outfit, sans-serif;
-    font-size: 28px;
-    font-weight: 600;
-}
-.kpis span{
-    font-size: 11px;
+.kpi-titulo{
+    font-size: 14px;
     font-weight: 600;
     color: var(--texto-suave);
     text-transform: uppercase;/*Deixa em maiuscula*/
     letter-spacing: 0.06em;/*Espaço entre as letras*/
 }
+.kpi-valor{
+    display: flex;
+    align-items: baseline;/*alinha pela "linha de base" do texto, número grande e texto pequeno ficam na mesma linha*/
+    gap: 10px;
+    margin-top: 6px;
+}
+.kpi-valor strong{
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1;
+}
+.kpi-valor span{
+    font-size: 18px;
+    color: var(--texto-suave);
+}
+.kpi p{
+    margin: 4px 0 0;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--texto);
+}
+.texto-normal{ color: var(--normal); }
+.texto-aviso{ color: var(--aviso); }
+.texto-emergencia{ color: var(--emergencia); }
+.texto-sem-leitura{ color: var(--sem-leitura); }
+.texto-neutro{ color: var(--texto); }
+/* comparação com o período anterior: subir é ruim (vermelho), cair é bom (verde) */
+.piorou{
+    color: var(--emergencia);
+    font-weight: 700;
+}
+.melhorou{
+    color: var(--normal);
+    font-weight: 700;
+}
+
+/* Régua de temperatura: verde até 80, amarelo de 80 a 90, vermelho acima de 90.
+A régua vai de 40 a 100 °C, então 80 °C fica em 66,7% e 90 °C em 83,3% */
+.escala{
+    position: relative;
+    /*Quando é relative os filhos com position absolute se posicionam em relação a ele*/
+    margin-top: auto;
+    padding-top: 14px;
+    height: 46px;
+}
+.escala-faixas{
+    display: flex;
+    height: 10px;
+}
+.escala-faixas span:nth-child(1){ width: 66.7%; background-color: var(--forte-normal); }
+.escala-faixas span:nth-child(2){ width: 16.6%; background-color: var(--forte-aviso); }
+.escala-faixas span:nth-child(3){ width: 16.7%; background-color: var(--forte-emergencia); }
+.escala-rotulo{
+    position: absolute;
+    top: 30px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    transform: translateX(-50%);/*centraliza o texto em cima do ponto*/
+}
+.marcador{
+    position: absolute;
+    top: 9px;
+    width: 4px;
+    height: 20px;
+    margin-left: -2px;
+    background-color: var(--azul-escuro);
+    border: 1px solid var(--branco);
+    border-radius: 2px;
+}
+.escala .marcador{
+    display: none; /*só aparece quando o JS coloca um valor*/
+}
+/* Barra de porcentagem com a meta (ex.: meta ≤ 10%) */
+.barra-meta{
+    position: relative;
+    margin-top: 16px;
+    height: 10px;
+    background-color: var(--borda);
+    border-radius: 2px;
+}
+.barra-cheia{
+    height: 100%;
+    width: 0%;
+    background-color: var(--laranja);
+    border-radius: 2px;
+    transition: width 0.4s;
+}
+.barra-meta .marcador{
+    top: -5px;
+}
+.legenda-meta{
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin-top: 8px;
+}
+
+/* ===================== ETIQUETAS ===================== */
+.etiqueta{
+    display: inline-block;/*O inline-block é uma mistura entre o inline e o block o inline serve
+    para deixar lado a lado e o block para dar a configuração do width e height
+    Inline ex: <span> <a> <img>
+    Block ex: <div> <p> <h1> - O block quebra a linha*/
+    padding: 2px 12px;/*vertical e horizontal*/
+    border-radius: 99px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--branco);
+    white-space: nowrap;
+}
+.etiqueta.normal{ background-color: var(--normal); }
+.etiqueta.aviso{ background-color: var(--aviso); }
+.etiqueta.emergencia{ background-color: var(--emergencia); }
+.etiqueta.sem-leitura{ background-color: var(--sem-leitura); }
+.etiqueta.inativo{
+    background-color: var(--claro-sem-leitura);
+    color: var(--sem-leitura);
+}
+/*OBS
+Quando usamos .etiqueta.normal quer dizer que aquela tag tem 2 classes como por exemplo .aluno.veterano
+ele é aluno que também é veterano
+Já quando usamos .contadores .normal quer dizer que aquela procura o elemento .normal que esta
+dentro do .contadores
+*/
+
+/* ===================== VISÃO GERAL: FILTROS E MAPA DE MOTORES ===================== */
+.filtros-mapa{
+    display: flex;
+    flex-wrap: wrap;/*se não couber numa linha, os itens descem para a próxima*/
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.chip{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 1px solid var(--borda);
+    border-radius: 99px;
+    background-color: var(--branco);
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.chip:hover{
+    background-color: var(--fundo);
+}
+.chip.ativo{
+    background-color: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+    color: var(--branco);
+}
+.bolinha{
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+.bolinha.normal{ background-color: var(--forte-normal); }
+.bolinha.aviso{ background-color: var(--forte-aviso); }
+.bolinha.emergencia{ background-color: var(--forte-emergencia); }
+.bolinha.sem-leitura{ background-color: var(--forte-sem-leitura); }
+.busca{
+    margin-left: auto;
+    width: 340px;
+    max-width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 17px;
+}
+.busca:focus{
+    outline: 2px solid var(--laranja);
+    border-color: transparent;
+}
+.grade-motores{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+    /*auto-fill cria quantas colunas couberem, cada uma com no mínimo 44px.
+    Assim a grade funciona com 4 ou com 500 motores e em qualquer tamanho de tela*/
+    gap: 8px;
+}
+.quadrado{
+    position: relative;
+    aspect-ratio: 1 / 0.88;/*deixa o quadrado quase quadrado, igual ao mockup*/
+    border-radius: 4px;
+    border: 3px solid transparent;
+    display: block;
+}
+.quadrado.normal{ background-color: var(--forte-normal); }
+.quadrado.aviso{ background-color: var(--forte-aviso); }
+.quadrado.emergencia{ background-color: var(--forte-emergencia); }
+.quadrado.sem-leitura{ background-color: var(--forte-sem-leitura); }
+.quadrado:hover{
+    filter: brightness(1.12);
+}
+/*O hover serve como uma pseudo-classe que tem a função de aplicar um estilo diferente
+quando o usuario posicionar o cursor do mouse sobre ele*/
+.quadrado.selecionado{
+    border-color: var(--laranja);
+    box-shadow: 0 0 0 2px #fbd3ae;
+}
+/* Balãozinho com nome e temperatura: o texto vem do atributo data-dica do HTML */
+.quadrado::after{
+    content: attr(data-dica);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    display: none; /*escondido de verdade (com opacity 0 ele ainda empurrava a página para o lado no celular)*/
+    z-index: 5;
+}
+.quadrado:hover::after,
+.quadrado:focus::after{
+    display: block;
+}
+.nota{
+    font-size: 16px;
+    color: var(--texto-suave);
+    margin: 18px 0 0;
+    line-height: 1.4;
+}
+.vazio{
+    color: var(--texto-suave);
+    padding: 20px 0;
+}
+
+/* ===================== LISTAS (mais críticos / alertas do período) ===================== */
+.lista{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--borda);
+}
+.lista li{
+    border-bottom: 1px solid var(--borda);
+}
+.lista .item{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    text-decoration: none;
+}
+.lista a.item:hover{
+    background-color: var(--fundo);
+}
+.item-nome{
+    font-size: 19px;
+    font-weight: 700;
+}
+.item-temp{
+    margin-left: auto;
+    font-size: 22px;
+    font-weight: 800;
+}
+.item-hora{
+    margin-left: auto;
+    font-size: 16px;
+    color: var(--texto-suave);
+}
+.ver-todos{
+    margin-top: 16px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.ver-todos:hover{
+    text-decoration: underline;
+}
+
+/* ===================== DETALHE DO MOTOR ===================== */
+.navegacao{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 24px;
+}
+.botao-voltar{
+    padding: 12px 18px;
+    background-color: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.botao-voltar:hover{
+    background-color: var(--fundo);
+}
+.trilha{
+    font-size: 17px;
+    color: var(--texto-suave);
+}
+.trilha a{
+    text-decoration: none;
+}
+.trilha a:hover{
+    text-decoration: underline;
+}
+.trilha strong{
+    color: var(--texto);
+}
+.seletor-motor{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--texto-suave);
+}
+.seletor-motor select{
+    min-width: 260px;
+    padding: 11px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background-color: var(--branco);
+    color: var(--texto);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.seletor-motor select:focus{
+    outline: 2px solid var(--laranja);
+}
+.titulo-motor{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 8px;
+}
+.agora{
+    font-size: 19px;
+    color: var(--texto-suave);
+}
+.agora strong{
+    font-size: 30px;
+    font-weight: 800;
+}
+.info-motor{
+    font-size: 15px;
+    color: var(--texto-suave);
+    margin: 0 0 24px;
+}
+.legenda{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px; /*[entre linhas] [entre colunas]*/
+    font-size: 16px;
+    color: var(--texto-suave);
+    margin-bottom: 16px;
+}
+.legenda span{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.legenda i{
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+}
 .grafico-caixa{
-    height: 300px;
+    height: 420px;
     position: relative;
     /*Posicionamento do objeto, quando é static ele segue o fluxo
     porém quando é relative vc determina onde ele vai ficar utilizando left top bottom right*/
 }
-.lista-alertas{
-    margin: 0px;
-    padding: 0px 0px;
-}
-.lista-alertas li{
-    display: flex;
+.grafico-vazio{
+    position: absolute;
+    inset: 0;/*top, right, bottom e left = 0 (ocupa a caixa toda)*/
+    display: none;
     align-items: center;
-    gap: 8px;
-    border-top: 1px solid var(--borda);
-    padding: 7px 0px;
-}
-.lista-alertas li:first-child{
-    border-top: none;
-}
-.hora{
-    margin-left: auto;
+    justify-content: center;
     color: var(--texto-suave);
-    font-size: 12px;
+    font-size: 17px;
+    background-color: rgba(255, 255, 255, 0.85);
 }
-.atualizacao{
-    font-size: 12px;
-    color: var(--cor-clara);
-    white-space: nowrap;/*Define como os espaços em branco são tratados 
-    e o nowrap recolhe esses espaços em branco e retira as possiveis quebras de linha*/
-    font-variant-numeric: tabular-nums; /*Define uma largura para todos os numeros
-    e essa função ajuda a mudança de horario se manter estatica no sentido da ocupação de espaço
-    É como se definisse o tamanho do container de cada numero*/
+.lista-alertas .item-temp{
+    margin-left: 0;
 }
-.barra{
-    height: 6px;
-    background-color: var(--azul-escuro);
-    border-radius: 3px;
-    overflow: hidden;/*Corta oq ficar para fora*/
-    margin-top: 6px;
+
+/* ===================== TELAS MENORES ===================== */
+/* @media aplica as regras só quando a tela tem no máximo aquela largura */
+@media (max-width: 1280px){
+    .kpis{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .kpi-valor strong{
+        font-size: 40px;
+    }
 }
-.barra-cheia{
-    height: 100%;
-    background-color: var(--laranja);
-    border-radius: 3px;
+@media (max-width: 1000px){
+    .grade-principal{
+        grid-template-columns: 1fr;
+    }
+    .topo{
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        padding: 12px 20px;
+    }
+    .topo-direita{
+        margin-left: 0;
+        width: 100%;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    .conteudo{
+        padding: 20px;
+    }
+    .seletor-motor{
+        margin-left: 0;
+    }
+}
+@media (max-width: 640px){
+    .kpis{
+        grid-template-columns: 1fr;
+    }
+    .kpi{
+        min-height: 0;
+    }
+    h1{
+        font-size: 28px;
+    }
+    .empresa strong{
+        font-size: 18px;
+    }
+    .busca{
+        margin-left: 0;
+        width: 100%;
+    }
+    .grade-motores{
+        grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+        gap: 6px;
+    }
+    .seletor-motor,
+    .seletor-motor select{
+        width: 100%;
+        min-width: 0;
+    }
+    .grafico-caixa{
+        height: 320px;
+    }
+    .painel{
+        padding: 18px;
+    }
 }
