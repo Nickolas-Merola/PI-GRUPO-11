@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MaqTemp · Detalhe do motor</title>
+    <link rel="shortcut icon" href="assets/icon/favicon2.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="topo">
+      <a class="logo" href="dashboard.html"><span>Maq</span><span>Temp</span></a>
+      <div class="empresa">
+        <strong>Monitoramento de Temperatura dos Motores</strong>
+        <span id="empresa-local">Carregando empresa...</span>
+      </div>
+      <div class="topo-direita">
+        <label>Período:
+          <select id="slct-periodo">
+            <option value="1">última 1h</option>
+            <option value="6">últimas 6h</option>
+            <option value="24" selected>últimas 24h</option>
+            <option value="168">últimos 7 dias</option>
+          </select>
+        </label>
+        <span class="atualizacao">Atualizado às <span id="relogio">--:--:--</span></span>
+        <button type="button" class="botao-sair" onclick="sair()">Sair</button>
+      </div>
+    </header>
+
+    <main class="conteudo" id="conteudo">
+      <div class="navegacao">
+        <a class="botao-voltar" href="dashboard.html">‹ Voltar à visão geral</a>
+        <nav class="trilha"><a href="dashboard.html">Visão geral</a> › <strong id="trilha-motor">Motor</strong></nav>
+        <label class="seletor-motor">Motor
+          <select id="slct-motor" aria-label="Escolher outro motor">
+            <option value="">Carregando motores...</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="mensagem-erro" class="mensagem-erro"></div>
+
+      <div class="titulo-motor">
+        <h1 id="titulo-motor">Motor</h1>
+        <span id="etiqueta-situacao" class="etiqueta sem-leitura">--</span>
+        <span id="etiqueta-inativo" class="etiqueta inativo" style="display: none;">Inativo</span>
+        <span class="agora">Agora: <strong id="temp-agora">--</strong></span>
+      </div>
+      <p class="info-motor" id="info-motor"></p>
+
+      <div class="kpis">
+        <article class="painel kpi">
+          <span class="kpi-titulo">Temperatura máxima (<span class="rotulo-periodo">24h</span>)</span>
+          <div class="kpi-valor"><strong id="kpi-max">--</strong></div>
+          <p id="kpi-max-detalhe"></p>
+          <div class="escala">
+            <div class="escala-faixas"><span></span><span></span><span></span></div>
+            <div class="marcador" id="kpi-max-marcador"></div>
+            <span class="escala-rotulo" style="left: 66.7%;">80</span>
+            <span class="escala-rotulo" style="left: 83.3%;">90 °C</span>
+          </div>
+        </article>
+
+        <article class="painel kpi">
+          <span class="kpi-titulo">Temperatura média (<span class="rotulo-periodo">24h</span>)</span>
+          <div class="kpi-valor"><strong id="kpi-media">--</strong></div>
+          <p id="kpi-media-detalhe"></p>
+          <div class="escala">
+            <div class="escala-faixas"><span></span><span></span><span></span></div>
+            <div class="marcador" id="kpi-media-marcador"></div>
+            <span class="escala-rotulo" style="left: 66.7%;">80</span>
+            <span class="escala-rotulo" style="left: 83.3%;">90 °C</span>
+          </div>
+        </article>
+
+        <article class="painel kpi">
+          <span class="kpi-titulo">Número de alertas (<span class="rotulo-periodo">24h</span>)</span>
+          <div class="kpi-valor"><strong id="kpi-alertas" class="texto-neutro">--</strong></div>
+          <p id="kpi-alertas-detalhe"></p>
+          <p id="kpi-alertas-comparacao"></p>
+        </article>
+
+        <article class="painel kpi">
+          <span class="kpi-titulo">Tempo em zona de risco (≥ 80 °C)</span>
+          <div class="kpi-valor"><strong id="kpi-risco">--</strong></div>
+          <p id="kpi-risco-detalhe"></p>
+          <div class="barra-meta">
+            <div class="barra-cheia" id="kpi-risco-barra"></div>
+            <div class="marcador" style="left: 10%;"></div>
+          </div>
+          <span class="legenda-meta">meta ≤ 10%</span>
+        </article>
+      </div>
+
+      <div class="grade-principal">
+        <section class="painel">
+          <h2 id="titulo-grafico">Temperatura · últimas 24h</h2>
+          <div class="legenda">
+            <span><i style="background-color: #34507a;"></i>Temperatura</span>
+            <span><i style="background-color: var(--claro-normal);"></i>Normal &lt; 80 °C</span>
+            <span><i style="background-color: var(--claro-aviso);"></i>Aviso 80–90 °C</span>
+            <span><i style="background-color: var(--claro-emergencia);"></i>Emergência &gt; 90 °C</span>
+          </div>
+          <div class="grafico-caixa">
+            <canvas id="grafico-temperatura"></canvas>
+            <div class="grafico-vazio" id="grafico-vazio">Nenhuma leitura deste motor no período.</div>
+          </div>
+        </section>
+
+        <section class="painel">
+          <h2>Alertas do período</h2>
+          <ul class="lista lista-alertas" id="lista-alertas"></ul>
+          <p class="nota">Os alertas também aparecem como círculos no gráfico, nos mesmos horários.</p>
+        </section>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+    <!-- Plugin oficial do Chart.js para desenhar as faixas coloridas, as linhas de 80/90 °C e os círculos dos alertas -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <script src="js/comum.js"></script>
+    <script src="js/motor.js"></script>
+  </body>
+</html>
