@@ -1,29 +1,31 @@
 var dashboardModel = require("../models/dashboardModel");
 
-function buscarEmpresa(req, res) {
+// Unidades liberadas para o usuário (seletor de unidade + cabeçalho)
+function buscarUnidades(req, res) {
     var idUsuario = req.params.idUsuario;
 
-    dashboardModel.buscarEmpresa(idUsuario).then(function (resultado) {
+    dashboardModel.buscarUnidades(idUsuario).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
-            res.status(404).send("Usuário sem empresa vinculada!");
+            res.status(404).send("Usuário sem unidade liberada!");
         }
     }).catch(function (erro) {
         console.log(erro);
-        console.log("Houve um erro ao buscar a empresa.", erro.sqlMessage);
+        console.log("Houve um erro ao buscar as unidades.", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
     });
 }
 
 function buscarKpisGerais(req, res) {
     var idUsuario = req.params.idUsuario;
+    var idEndereco = req.params.idEndereco;
 
-    dashboardModel.buscarKpisGerais(idUsuario).then(function (resultado) {
+    dashboardModel.buscarKpisGerais(idUsuario, idEndereco).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
-            res.status(404).send("Usuário não encontrado!");
+            res.status(404).send("Unidade não liberada para este usuário!");
         }
     }).catch(function (erro) {
         console.log(erro);
@@ -34,7 +36,9 @@ function buscarKpisGerais(req, res) {
 
 function buscarMotores(req, res) {
     var idUsuario = req.params.idUsuario;
-    dashboardModel.buscarMotores(idUsuario).then(function (resultado) {
+    var idEndereco = req.params.idEndereco;
+
+    dashboardModel.buscarMotores(idUsuario, idEndereco).then(function (resultado) {
         res.status(200).json(resultado);
     }).catch(function (erro) {
         console.log(erro);
@@ -128,7 +132,7 @@ function buscarAlertas(req, res) {
 }
 
 module.exports = {
-    buscarEmpresa,
+    buscarUnidades,
     buscarKpisGerais,
     buscarMotores,
     buscarMotor,

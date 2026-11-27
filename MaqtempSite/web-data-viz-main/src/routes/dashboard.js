@@ -3,21 +3,22 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
-// Nome da empresa
-router.get("/empresa/:idUsuario", function (req, res) {
-    dashboardController.buscarEmpresa(req, res);
+// Unidades que o usuário pode ver (seletor de unidade e cabeçalho)
+router.get("/unidades/:idUsuario", function (req, res) {
+    dashboardController.buscarUnidades(req, res);
 });
 
-// Os 4 KPIs da visão geral
-router.get("/kpis/:idUsuario", function (req, res) {
+// Os 4 KPIs da visão geral de uma unidade
+router.get("/kpis/:idUsuario/:idEndereco", function (req, res) {
     dashboardController.buscarKpisGerais(req, res);
 });
 
-// Motores da empresa com a última leitura
-router.get("/motores/:idUsuario", function (req, res) {
+// Motores de uma unidade com a última leitura
+router.get("/motores/:idUsuario/:idEndereco", function (req, res) {
     dashboardController.buscarMotores(req, res);
 });
 
+// Dados de um motor (só se ele estiver numa unidade liberada)
 router.get("/motor/:idUsuario/:idMotor", function (req, res) {
     dashboardController.buscarMotor(req, res);
 });
