@@ -53,7 +53,7 @@ CREATE TABLE enderecos (
 
 INSERT INTO enderecos (nomeEndereco, cidade, rua, bairro, numero, cep, fkEmpresa) VALUES
 ('Fábrica Matriz', 'São Paulo', 'Rua Haddock Lobo', 'Consolação', 595, '01414001', 1),
-('Unidade Osasco', 'Osasco', 'Av. dos Autonomistas', 'Centro', 800, '06020010', 2);
+('Unidade Osasco', 'Osasco', 'Av. dos Autonomistas', 'Centro', 800, '06020010', 2),
 ('Unidade Guarulhos', 'Guarulhos', 'Av. Tiradentes', 'Centro', 1200, '07090000', 1);
 
 
@@ -119,7 +119,8 @@ INSERT INTO motores (fkEndereco, fkSensor, modeloMotor, potencia, statuss) VALUE
 (1, 1, 'WEG W22', 15.00, 'Ativo'),
 (1, 2, 'WEG W22 Plus', 30.00, 'Inativo'),
 (1, 3, 'WEG W22', 15.00, 'Ativo'),
-(2, 4, 'WEG W22', 22.00, 'Ativo');
+(2, 4, 'WEG W22', 22.00, 'Ativo'),
+(3, 5, 'WEG W22', 18.50, 'Ativo');gti
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
