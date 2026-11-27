@@ -129,10 +129,30 @@ CREATE TABLE metricas (
     FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
 );
 
-ALTER TABLE metricas ADD CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta'));
-
 INSERT INTO metricas (fkSensor, temperatura, situacao) VALUES
 (4, 58.00, 'Normal');
+
+CREATE TABLE acesso_unidade (
+    fkUsuario INT NOT NULL,
+    fkEndereco INT NOT NULL,
+    nivelAcesso VARCHAR(15) DEFAULT 'Visualizar',
+    dtLiberacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (fkUsuario, fkEndereco),
+    CONSTRAINT chkNivelAcesso CHECK (nivelAcesso IN ('Visualizar', 'Gerenciar')),
+    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (fkEndereco) REFERENCES enderecos(idEndereco)
+);
+
+INSERT INTO acesso_unidade (fkUsuario, fkEndereco, nivelAcesso) VALUES
+(1, 1, 'Gerenciar'),   -- Felipe: Fábrica Matriz
+(1, 3, 'Gerenciar'),   -- Felipe: Unidade Guarulhos
+(2, 1, 'Visualizar'),  -- Cecilia: Fábrica Matriz
+(3, 2, 'Gerenciar');   -- Rafael: Unidade Osasco
+
+
+
+
+
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
@@ -178,3 +198,10 @@ SELECT e.nome, c.tipo_contrato
 FROM empresas e
 JOIN contrato c ON c.fkEmpresa = e.idEmpresa
 WHERE c.status_contrato = 1 AND c.status_pagamento = 0;
+
+-- Plantas que um usuário pode ver (vai para o model da dashboard)
+SELECT e.idEndereco, e.nomeEndereco, a.nivelAcesso
+FROM acesso_unidade a
+JOIN enderecos e ON e.idEndereco = a.fkEndereco
+WHERE a.fkUsuario = 1;
+ALTER TABLE metricas ADD CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta'));
