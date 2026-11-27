@@ -54,6 +54,9 @@ CREATE TABLE enderecos (
 INSERT INTO enderecos (nomeEndereco, cidade, rua, bairro, numero, cep, fkEmpresa) VALUES
 ('Fábrica Matriz', 'São Paulo', 'Rua Haddock Lobo', 'Consolação', 595, '01414001', 1),
 ('Unidade Osasco', 'Osasco', 'Av. dos Autonomistas', 'Centro', 800, '06020010', 2);
+('Unidade Guarulhos', 'Guarulhos', 'Av. Tiradentes', 'Centro', 1200, '07090000', 1);
+
+
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
@@ -94,6 +97,7 @@ INSERT INTO sensores (modeloSensor, posicao, statuss) VALUES
 ('LM35', 'Carcaça', 'Ativo'),
 ('LM35', 'Carcaça', 'Ativo'),
 ('LM35', 'Carcaça', 'Ativo'),
+('LM35', 'Carcaça', 'Ativo'),
 ('LM35', 'Carcaça', 'Ativo');
 
 -- ---------------------------------------------------------------------------------------------------------------------
@@ -129,10 +133,76 @@ CREATE TABLE metricas (
     FOREIGN KEY (fkSensor) REFERENCES sensores(idSensor)
 );
 
-ALTER TABLE metricas ADD CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta'));
-
 INSERT INTO metricas (fkSensor, temperatura, situacao) VALUES
 (4, 58.00, 'Normal');
+
+INSERT INTO metricas (fkSensor, temperatura, situacao, dtLeitura) VALUES
+(2, 55.00, 'Normal', NOW() - INTERVAL 3000 MINUTE),
+(2, 54.20, 'Normal', NOW() - INTERVAL 2940 MINUTE),
+(1, 62.50, 'Normal', NOW() - INTERVAL 1410 MINUTE),
+(1, 64.00, 'Normal', NOW() - INTERVAL 1290 MINUTE),
+(1, 66.20, 'Normal', NOW() - INTERVAL 1170 MINUTE),
+(1, 68.90, 'Normal', NOW() - INTERVAL 1050 MINUTE),
+(1, 73.40, 'Normal', NOW() - INTERVAL 930 MINUTE),
+(1, 78.10, 'Normal', NOW() - INTERVAL 810 MINUTE),
+(1, 84.30, 'Atenção', NOW() - INTERVAL 690 MINUTE),
+(1, 81.70, 'Atenção', NOW() - INTERVAL 570 MINUTE),
+(1, 76.00, 'Normal', NOW() - INTERVAL 450 MINUTE),
+(1, 70.20, 'Normal', NOW() - INTERVAL 330 MINUTE),
+(1, 68.50, 'Normal', NOW() - INTERVAL 210 MINUTE),
+(1, 69.80, 'Normal', NOW() - INTERVAL 90 MINUTE),
+(1, 70.40, 'Normal', NOW() - INTERVAL 50 MINUTE),
+(1, 71.00, 'Normal', NOW() - INTERVAL 40 MINUTE),
+(1, 70.60, 'Normal', NOW() - INTERVAL 30 MINUTE),
+(1, 71.90, 'Normal', NOW() - INTERVAL 20 MINUTE),
+(1, 72.30, 'Normal', NOW() - INTERVAL 10 MINUTE),
+(1, 71.30, 'Normal', NOW() - INTERVAL 2 MINUTE),
+(3, 70.10, 'Normal', NOW() - INTERVAL 1410 MINUTE),
+(3, 72.40, 'Normal', NOW() - INTERVAL 1290 MINUTE),
+(3, 74.00, 'Normal', NOW() - INTERVAL 1170 MINUTE),
+(3, 76.80, 'Normal', NOW() - INTERVAL 1050 MINUTE),
+(3, 79.50, 'Normal', NOW() - INTERVAL 930 MINUTE),
+(3, 82.00, 'Atenção', NOW() - INTERVAL 810 MINUTE),
+(3, 85.40, 'Atenção', NOW() - INTERVAL 690 MINUTE),
+(3, 87.90, 'Atenção', NOW() - INTERVAL 570 MINUTE),
+(3, 83.20, 'Atenção', NOW() - INTERVAL 450 MINUTE),
+(3, 80.60, 'Atenção', NOW() - INTERVAL 330 MINUTE),
+(3, 84.70, 'Atenção', NOW() - INTERVAL 210 MINUTE),
+(3, 88.30, 'Atenção', NOW() - INTERVAL 90 MINUTE),
+(3, 89.60, 'Atenção', NOW() - INTERVAL 50 MINUTE),
+(3, 90.80, 'Alerta', NOW() - INTERVAL 40 MINUTE),
+(3, 91.50, 'Alerta', NOW() - INTERVAL 30 MINUTE),
+(3, 92.10, 'Alerta', NOW() - INTERVAL 20 MINUTE),
+(3, 93.40, 'Alerta', NOW() - INTERVAL 10 MINUTE),
+(3, 92.80, 'Alerta', NOW() - INTERVAL 2 MINUTE),
+(4, 52.30, 'Normal', NOW() - INTERVAL 1410 MINUTE),
+(4, 55.10, 'Normal', NOW() - INTERVAL 1050 MINUTE),
+(4, 59.80, 'Normal', NOW() - INTERVAL 690 MINUTE),
+(4, 61.20, 'Normal', NOW() - INTERVAL 330 MINUTE),
+(4, 57.40, 'Normal', NOW() - INTERVAL 90 MINUTE),
+(4, 58.60, 'Normal', NOW() - INTERVAL 30 MINUTE),
+(4, 57.90, 'Normal', NOW() - INTERVAL 10 MINUTE),
+(5, 74.80, 'Normal', NOW() - INTERVAL 690 MINUTE),
+(5, 81.20, 'Atenção', NOW() - INTERVAL 330 MINUTE),
+(5, 83.50, 'Atenção', NOW() - INTERVAL 30 MINUTE),
+(5, 82.10, 'Atenção', NOW() - INTERVAL 2 MINUTE);
+
+CREATE TABLE acesso_unidade (
+    fkUsuario INT NOT NULL,
+    fkEndereco INT NOT NULL,
+    nivelAcesso VARCHAR(15) DEFAULT 'Visualizar',
+    dtLiberacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (fkUsuario, fkEndereco),
+    CONSTRAINT chkNivelAcesso CHECK (nivelAcesso IN ('Visualizar', 'Gerenciar')),
+    FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (fkEndereco) REFERENCES enderecos(idEndereco)
+);
+
+INSERT INTO acesso_unidade (fkUsuario, fkEndereco, nivelAcesso) VALUES
+(1, 1, 'Gerenciar'),   -- Felipe: Fábrica Matriz
+(1, 3, 'Gerenciar'),   -- Felipe: Unidade Guarulhos
+(2, 1, 'Visualizar'),  -- Cecilia: Fábrica Matriz
+(3, 2, 'Gerenciar');   -- Rafael: Unidade Osasco
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
@@ -178,3 +248,10 @@ SELECT e.nome, c.tipo_contrato
 FROM empresas e
 JOIN contrato c ON c.fkEmpresa = e.idEmpresa
 WHERE c.status_contrato = 1 AND c.status_pagamento = 0;
+
+-- Plantas que um usuário pode ver (vai para o model da dashboard)
+SELECT e.idEndereco, e.nomeEndereco, a.nivelAcesso
+FROM acesso_unidade a
+JOIN enderecos e ON e.idEndereco = a.fkEndereco
+WHERE a.fkUsuario = 1;
+ALTER TABLE metricas ADD CONSTRAINT chkSituacao CHECK (situacao IN ('Normal', 'Atenção', 'Alerta'));
