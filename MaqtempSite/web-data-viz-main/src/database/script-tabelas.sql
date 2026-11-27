@@ -120,7 +120,6 @@ INSERT INTO motores (fkEndereco, fkSensor, modeloMotor, potencia, statuss) VALUE
 (1, 2, 'WEG W22 Plus', 30.00, 'Inativo'),
 (1, 3, 'WEG W22', 15.00, 'Ativo'),
 (2, 4, 'WEG W22', 22.00, 'Ativo'),
-(2, 4, 'WEG W22', 22.00, 'Ativo'),
 (3, 5, 'WEG W22', 18.50, 'Ativo');
 
 -- ---------------------------------------------------------------------------------------------------------------------
